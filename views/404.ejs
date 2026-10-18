@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<main class="max-w-3xl mx-auto px-4 py-20 text-center">
+  <div class="w-20 h-20 bg-emerald-100 text-emerald-700 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6">
+    🐾
+  </div>
+  <h1 class="text-4xl font-extrabold text-stone-900 tracking-tight mb-3">Page Not Found</h1>
+  <p class="text-stone-600 text-sm max-w-md mx-auto mb-8">
+    The pet care guide or article you are searching for might have moved, or you may have entered an outdated link.
+  </p>
+
+  <form action="/search" method="GET" class="max-w-md mx-auto mb-8 relative">
+    <input type="text" name="q" placeholder="Search 200+ veterinary guides..." class="w-full px-5 py-3 rounded-full bg-white border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-xs" required />
+    <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-1.5 rounded-full bg-emerald-600 text-white font-bold text-xs">
+      Search
+    </button>
+  </form>
+
+  <div class="flex items-center justify-center gap-4 text-xs font-bold">
+    <a href="/" class="text-emerald-700 hover:underline">&larr; Return to Homepage</a>
+    <span class="text-stone-300">•</span>
+    <a href="/popular" class="text-emerald-700 hover:underline">Explore Most Popular Guides</a>
+  </div>
+</main>
+
+<%- include('partials/footer') %>

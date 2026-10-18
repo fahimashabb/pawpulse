@@ -1,0 +1,84 @@
+{
+  "site": {
+    "name": "PawPulse",
+    "tagline": "The Science-Backed Pet Care & Species Wisdom Network",
+    "url": "http://localhost:4000",
+    "description": "Authoritative veterinary-reviewed pet care guides, species behavior insights, step-by-step training manuals, and inspiring stories for dogs, cats, birds, lizards, snakes, small animals, and aquatics.",
+    "contactEmail": "editorial@pawpulse.org",
+    "authorDefault": "Dr. Julian Vance, DVM & Veterinary Behaviorist",
+    "publisher": "PawPulse Media & Animal Wellness Institute",
+    "foundedYear": 2024
+  },
+  "categories": [
+    {
+      "slug": "cats",
+      "name": "Cats & Felines",
+      "icon": "🐱",
+      "badge": "Feline Wellness",
+      "description": "Feline behavioral science, sleep & dreaming twitch analysis, step-by-step gentle nail clipping, litter box psychology, and life-stage nutrition."
+    },
+    {
+      "slug": "dogs",
+      "name": "Dogs & Canines",
+      "icon": "🐶",
+      "badge": "Canine Behavioral Hub",
+      "description": "Canine cognitive development, zoomies deciphered, separation anxiety resolution, leash reactive rehabilitation, and bloat prevention protocols."
+    },
+    {
+      "slug": "birds",
+      "name": "Birds & Parrots",
+      "icon": "🦜",
+      "badge": "Avian Sanctuary",
+      "description": "Avian psychology, parrot screaming reduction, feather plucking etiology, cage enrichment, UV requirements, and household toxic avoidance."
+    },
+    {
+      "slug": "reptiles",
+      "name": "Lizards & Reptiles",
+      "icon": "🦎",
+      "badge": "Herpetology Hub",
+      "description": "Bearded dragon brumation cycles, leopard gecko tail drop biology, UVB Ferguson zones, humidity gradients, and terrarium environmental design."
+    },
+    {
+      "slug": "snakes",
+      "name": "Snakes & Serpents",
+      "icon": "🐍",
+      "badge": "Serpent Care",
+      "description": "Ball python feeding strike recovery, corn snake shedding trouble fixes, temperature microclimates, and low-stress handling methodologies."
+    },
+    {
+      "slug": "small-pets",
+      "name": "Small Pets & Mammals",
+      "icon": "🐰",
+      "badge": "Pocket Pets",
+      "description": "Rabbit GI stasis emergency identification, guinea pig vitamin C synthesis, Syrian hamster burrow dynamics, and ferret enrichment systems."
+    },
+    {
+      "slug": "aquatics",
+      "name": "Aquatics & Amphibians",
+      "icon": "🐠",
+      "badge": "Aquatic Ecosystems",
+      "description": "Nitrogen cycling mastery, betta fin rot therapeutic treatments, axolotl water cooling mechanics, and planted aquarium nutrient balancing."
+    }
+  ],
+  "monetization": {
+    "enabled": true,
+    "demoMode": true,
+    "adsenseClientId": "ca-pub-XXXXXXXXXXXXX",
+    "slots": {
+      "headerBanner": "1122334455",
+      "inContentTop": "2233445566",
+      "inContentMid": "3344556677",
+      "sidebarSticky": "4455667788",
+      "bottomSticky": "5566778899"
+    },
+    "affiliateTag": "pawpulse-20",
+    "affiliateDisclosure": "PawPulse is an independent, reader-supported publication. When you purchase products through our links, we may earn an affiliate commission at no extra cost to you. Every product featured is evaluated against clinical safety and veterinary welfare standards."
+  },
+  "automation": {
+    "enabled": true,
+    "postsPerDay": 50,
+    "intervalMinutes": 28,
+    "lastRun": null,
+    "autoPublish": true
+  }
+}

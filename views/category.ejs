@@ -1,0 +1,109 @@
+<%- include('partials/header') %>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+  <!-- Category Hero Banner -->
+  <div class="bg-gradient-to-r from-emerald-900 to-teal-950 text-white rounded-3xl p-8 sm:p-12 mb-10 shadow-sm relative overflow-hidden">
+    <div class="relative z-10 max-w-2xl space-y-3">
+      <div class="flex items-center gap-2">
+        <span class="text-4xl"><%= category.icon %></span>
+        <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-300 bg-emerald-800/60 px-3 py-1 rounded-full">
+          <%= category.badge %>
+        </span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white m-0">
+        <%= category.name %>
+      </h1>
+      <p class="text-sm sm:text-base text-emerald-100/90 leading-relaxed m-0">
+        <%= category.description %>
+      </p>
+      <div class="pt-2 text-xs text-emerald-300 font-semibold flex items-center gap-2">
+        <span>📚 <%= totalCount %> Expert Guides in this Archive</span>
+        <span>•</span>
+        <span>Peer-Reviewed Protocols</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col lg:flex-row gap-10">
+
+    <!-- Articles Stream -->
+    <div class="flex-1 min-w-0">
+      
+      <% if (articles && articles.length > 0) { %>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <% articles.forEach(art => { %>
+            <article class="bg-white rounded-2xl border border-stone-200/80 overflow-hidden shadow-xs hover:shadow-md transition duration-300 flex flex-col group">
+              <div class="relative h-48 overflow-hidden bg-stone-100">
+                <img src="<%= art.featured_image %>" alt="<%= art.title %>" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" />
+                <div class="absolute top-3 left-3 flex gap-1.5">
+                  <span class="px-2.5 py-1 rounded-lg bg-stone-900/80 backdrop-blur-xs text-white text-[10px] font-extrabold uppercase tracking-wider">
+                    <%= art.pet_type %>
+                  </span>
+                  <% if (art.schema_type === 'HowTo') { %>
+                    <span class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white text-[10px] font-extrabold uppercase tracking-wider">
+                      How-To
+                    </span>
+                  <% } %>
+                </div>
+              </div>
+
+              <div class="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 class="text-base font-extrabold text-stone-900 leading-snug group-hover:text-emerald-600 transition mb-2">
+                    <a href="/blog/<%= art.slug %>"><%= art.title %></a>
+                  </h3>
+                  <p class="text-xs text-stone-600 line-clamp-3 leading-relaxed mb-4">
+                    <%= art.excerpt %>
+                  </p>
+                </div>
+
+                <div class="pt-4 border-t border-stone-100 flex items-center justify-between text-xs text-stone-400">
+                  <div class="flex items-center gap-2">
+                    <img src="<%= art.author_avatar %>" alt="<%= art.author_name %>" class="w-6 h-6 rounded-full object-cover" />
+                    <span class="text-stone-700 font-medium truncate max-w-[120px]"><%= art.author_name %></span>
+                  </div>
+                  <span><%= art.reading_time_minutes %> min read</span>
+                </div>
+              </div>
+            </article>
+          <% }) %>
+        </div>
+
+        <!-- Pagination Controls -->
+        <% if (totalPages > 1) { %>
+          <div class="mt-12 flex items-center justify-center gap-2 text-xs font-bold">
+            <% if (currentPage > 1) { %>
+              <a href="/category/<%= category.slug %>?page=<%= currentPage - 1 %>" class="px-4 py-2 rounded-xl bg-white border border-stone-200 hover:bg-stone-50 transition">
+                &larr; Previous Page
+              </a>
+            <% } %>
+
+            <span class="px-4 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200">
+              Page <%= currentPage %> of <%= totalPages %>
+            </span>
+
+            <% if (currentPage < totalPages) { %>
+              <a href="/category/<%= category.slug %>?page=<%= currentPage + 1 %>" class="px-4 py-2 rounded-xl bg-white border border-stone-200 hover:bg-stone-50 transition">
+                Next Page &rarr;
+              </a>
+            <% } %>
+          </div>
+        <% } %>
+
+      <% } else { %>
+        <div class="p-12 text-center bg-white rounded-3xl border border-stone-200">
+          <p class="text-stone-500 text-sm">No articles in this category yet. New articles publish daily!</p>
+        </div>
+      <% } %>
+
+    </div>
+
+    <!-- Right Sidebar -->
+    <%- include('partials/sidebar') %>
+
+  </div>
+
+</main>
+
+<%- include('partials/footer') %>

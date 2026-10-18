@@ -1,0 +1,198 @@
+<%- include('partials/header') %>
+
+<!-- Reading Progress Bar -->
+<div id="reading-progress" class="fixed top-0 left-0 h-1 bg-emerald-500 z-50 w-0 transition-all duration-150"></div>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+  <!-- Breadcrumb Navigation -->
+  <nav class="flex items-center gap-2 text-xs text-stone-500 mb-6 overflow-x-auto whitespace-nowrap" aria-label="Breadcrumb">
+    <% breadcrumbs.forEach((crumb, idx) => { %>
+      <% if (idx > 0) { %>
+        <span class="text-stone-300">/</span>
+      <% } %>
+      <% if (idx === breadcrumbs.length - 1) { %>
+        <span class="text-stone-800 font-bold truncate max-w-xs sm:max-w-md"><%= crumb.name %></span>
+      <% } else { %>
+        <a href="<%= crumb.url %>" class="hover:text-emerald-600 transition"><%= crumb.name %></a>
+      <% } %>
+    <% }) %>
+  </nav>
+
+  <div class="flex flex-col lg:flex-row gap-10">
+
+    <!-- Primary Article Column -->
+    <article class="flex-1 min-w-0 bg-white rounded-3xl p-6 sm:p-10 border border-stone-200/80 shadow-xs">
+      
+      <!-- Article Header Category & Badge -->
+      <div class="flex items-center gap-2 mb-3">
+        <a href="/category/<%= category.slug %>" class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-extrabold uppercase tracking-wider hover:bg-emerald-100 transition">
+          <%= category.icon %> <%= category.name %>
+        </a>
+        <span class="text-xs text-stone-400 font-bold">•</span>
+        <span class="text-xs font-bold text-stone-500 uppercase tracking-wider"><%= article.pet_type %> Care</span>
+        <% if (article.schema_type === 'HowTo') { %>
+          <span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-extrabold uppercase tracking-wider">
+            Verified How-To Protocol
+          </span>
+        <% } %>
+      </div>
+
+      <!-- Main Article H1 Title -->
+      <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-stone-900 tracking-tight leading-tight mb-4">
+        <%= article.title %>
+      </h1>
+
+      <!-- Subtitle / Excerpt Lead -->
+      <p class="text-base sm:text-lg text-stone-600 leading-relaxed mb-6 font-normal">
+        <%= article.excerpt %>
+      </p>
+
+      <!-- Author Credentials & Medical Reviewer Verification Badge -->
+      <div class="py-4 border-y border-stone-100 mb-8 flex flex-wrap items-center justify-between gap-4 text-xs">
+        
+        <!-- Author Info -->
+        <div class="flex items-center gap-3">
+          <img src="<%= article.author_avatar %>" alt="<%= article.author_name %>" class="w-11 h-11 rounded-full object-cover border-2 border-emerald-500 shadow-xs" />
+          <div>
+            <div class="flex items-center gap-1.5">
+              <span class="font-bold text-stone-900 text-sm"><%= article.author_name %></span>
+              <span class="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded font-bold">Author</span>
+            </div>
+            <p class="text-[11px] text-stone-500 m-0"><%= article.author_role %></p>
+          </div>
+        </div>
+
+        <!-- Medical Reviewer Badge (Critical for AdSense & E-E-A-T) -->
+        <div class="flex items-center gap-2.5 bg-emerald-50/60 border border-emerald-200/80 px-3.5 py-2 rounded-xl text-emerald-900">
+          <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          <div>
+            <span class="block text-[10px] font-extrabold uppercase tracking-wider text-emerald-800">Veterinary Peer-Reviewed</span>
+            <span class="text-xs font-semibold text-emerald-950"><%= article.reviewer_name %></span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Publication Meta & Reading Time -->
+      <div class="flex items-center justify-between text-xs text-stone-400 mb-6 pb-2">
+        <div class="flex items-center gap-3">
+          <span>Published: <strong class="text-stone-700 font-semibold"><%= formatDate(article.published_at) %></strong></span>
+          <span>•</span>
+          <span>Reading time: <strong class="text-stone-700 font-semibold"><%= article.reading_time_minutes %> min</strong></span>
+          <span>•</span>
+          <span>Views: <strong class="text-stone-700 font-semibold"><%= article.views %></strong></span>
+        </div>
+        
+        <!-- Social Share Pills -->
+        <div class="hidden sm:flex items-center gap-2">
+          <span class="text-[11px] font-bold text-stone-500">Share:</span>
+          <button onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied to clipboard!');" class="p-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition">
+            📋 Copy Link
+          </button>
+        </div>
+      </div>
+
+      <!-- Featured Image with Caption -->
+      <figure class="mb-8 rounded-2xl overflow-hidden bg-stone-100 border border-stone-200/80">
+        <img src="<%= article.featured_image %>" alt="<%= article.title %>" class="w-full h-[380px] sm:h-[450px] object-cover" />
+        <figcaption class="p-3 text-[11px] text-stone-500 text-center italic bg-stone-50 border-t border-stone-100">
+          Clinical guide: <%= article.title %> — Veterinary behavioral and medical considerations for <%= article.pet_type %> guardians.
+        </figcaption>
+      </figure>
+
+      <!-- In-Article Top Advertisement Slot -->
+      <div class="mb-8">
+        <%- include('partials/ad-slot', { type: 'inContentTop' }) %>
+      </div>
+
+      <!-- Table of Contents Quick Nav -->
+      <div class="p-5 rounded-2xl bg-stone-50 border border-stone-200/80 mb-8">
+        <h4 class="text-xs uppercase font-extrabold tracking-wider text-stone-700 mb-2 flex items-center gap-1.5">
+          <span>📑</span> In This Guide:
+        </h4>
+        <ul class="space-y-1.5 text-xs text-emerald-700 font-semibold">
+          <li><a href="#section-1" class="hover:underline">1. Evolutionary Foundations & Biological Baselines</a></li>
+          <li><a href="#section-2" class="hover:underline">2. Step-by-Step Practical Management Protocol</a></li>
+          <li><a href="#section-3" class="hover:underline">3. Common Mistakes & Veterinary Warnings</a></li>
+          <li><a href="#section-gear" class="hover:underline">4. Recommended Equipment & Environmental Tools</a></li>
+          <li><a href="#section-faq" class="hover:underline">5. Frequently Asked Questions (FAQ)</a></li>
+        </ul>
+      </div>
+
+      <!-- Article Rich Body -->
+      <div class="article-body">
+        <%- article.content_html %>
+      </div>
+
+      <!-- In-Article Bottom Advertisement Slot -->
+      <div class="my-8">
+        <%- include('partials/ad-slot', { type: 'inContentMid' }) %>
+      </div>
+
+      <!-- Author Bio Footer Box -->
+      <div class="mt-12 p-6 rounded-2xl bg-stone-50 border border-stone-200/80 flex flex-col sm:flex-row items-center sm:items-start gap-4">
+        <img src="<%= article.author_avatar %>" alt="<%= article.author_name %>" class="w-16 h-16 rounded-2xl object-cover shrink-0 shadow-xs" />
+        <div class="text-center sm:text-left">
+          <div class="flex items-center justify-center sm:justify-start gap-2 mb-1">
+            <h4 class="font-extrabold text-stone-900 text-base m-0"><%= article.author_name %></h4>
+            <span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full"><%= article.author_role %></span>
+          </div>
+          <p class="text-xs text-stone-600 leading-relaxed m-0">
+            Dr. Vance has over 15 years of clinical companion and exotic animal medicine experience. He specializes in low-stress handling protocols, canine/feline ethology, and herpetological environmental architecture.
+          </p>
+        </div>
+      </div>
+
+      <!-- Tags & Species Pills -->
+      <div class="mt-8 pt-6 border-t border-stone-100 flex items-center gap-2 flex-wrap text-xs">
+        <span class="text-stone-400 font-bold text-xs">Tags:</span>
+        <a href="/category/<%= category.slug %>" class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold transition">#<%= category.slug %></a>
+        <a href="/search?q=<%= encodeURIComponent(article.pet_type) %>" class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold transition">#<%= article.pet_type.toLowerCase() %></a>
+        <a href="/popular" class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold transition">#veterinary-guides</a>
+        <a href="/about" class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold transition">#peer-reviewed</a>
+      </div>
+
+      <!-- Related Articles Section -->
+      <% if (relatedArticles && relatedArticles.length) { %>
+        <div class="mt-14 pt-10 border-t border-stone-200">
+          <h3 class="text-xl font-extrabold text-stone-900 tracking-tight mb-6">Related <%= category.name %> Guides</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <% relatedArticles.forEach(rel => { %>
+              <a href="/blog/<%= rel.slug %>" class="group block rounded-2xl bg-stone-50 border border-stone-200/80 overflow-hidden hover:shadow-md transition">
+                <div class="h-32 overflow-hidden bg-stone-200">
+                  <img src="<%= rel.featured_image %>" alt="<%= rel.title %>" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" loading="lazy" />
+                </div>
+                <div class="p-3.5">
+                  <span class="text-[10px] uppercase font-bold text-emerald-600 block mb-1"><%= rel.pet_type %></span>
+                  <h4 class="text-xs font-bold text-stone-900 line-clamp-2 leading-snug group-hover:text-emerald-600 transition">
+                    <%= rel.title %>
+                  </h4>
+                </div>
+              </a>
+            <% }) %>
+          </div>
+        </div>
+      <% } %>
+
+    </article>
+
+    <!-- Right Sidebar with Most Popular Guides & Sticky Ads -->
+    <%- include('partials/sidebar') %>
+
+  </div>
+
+</main>
+
+<script>
+  // Simple reading progress indicator
+  window.addEventListener('scroll', () => {
+    const docEl = document.documentElement;
+    const scrollTotal = docEl.scrollHeight - docEl.clientHeight;
+    const progress = (window.scrollY / scrollTotal) * 100;
+    const bar = document.getElementById('reading-progress');
+    if (bar) bar.style.width = Math.min(100, Math.max(0, progress)) + '%';
+  });
+</script>
+
+<%- include('partials/footer') %>

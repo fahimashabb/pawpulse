@@ -1,0 +1,187 @@
+<%- include('partials/header') %>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+  <!-- Flash Message Alert -->
+  <% if (flash) { %>
+    <div class="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-sm font-bold flex items-center justify-between shadow-xs">
+      <div class="flex items-center gap-2">
+        <span>✅</span>
+        <span><%= flash %></span>
+      </div>
+      <a href="/admin/automation" class="text-xs text-emerald-700 hover:underline">Dismiss</a>
+    </div>
+  <% } %>
+
+  <!-- Admin Header -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-stone-200">
+    <div>
+      <div class="flex items-center gap-2 mb-1">
+        <span class="w-3 h-3 rounded-full bg-emerald-500 <%= status.isRunning ? 'animate-ping' : '' %>"></span>
+        <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-700">Autonomous Content Engine</span>
+      </div>
+      <h1 class="text-3xl font-extrabold text-stone-900 tracking-tight m-0">
+        Automation & Publishing Control Center
+      </h1>
+      <p class="text-xs text-stone-500 mt-1">
+        Autonomous pipeline generating, researching, and publishing 50+ SEO-optimized pet blogs per day.
+      </p>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="flex items-center gap-3">
+      <form action="/admin/automation/toggle-scheduler" method="POST">
+        <button type="submit" class="px-4 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-2 <%= status.isRunning ? 'bg-amber-100 hover:bg-amber-200 text-amber-900' : 'bg-emerald-600 hover:bg-emerald-700 text-white' %>">
+          <span><%= status.isRunning ? '⏸️' : '▶️' %></span>
+          <span><%= status.isRunning ? 'Pause 50/Day Automation' : 'Resume 50/Day Automation' %></span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Metric Overview Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+    
+    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs">
+      <span class="text-xs font-bold text-stone-400 uppercase tracking-wider block mb-1">Total Articles Live</span>
+      <div class="text-3xl font-extrabold text-stone-900"><%= status.totalArticlesInDb %></div>
+      <span class="text-[11px] text-emerald-600 font-semibold mt-1 block">✓ Search Engine Ready & Indexed</span>
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs">
+      <span class="text-xs font-bold text-stone-400 uppercase tracking-wider block mb-1">Daily Target</span>
+      <div class="text-3xl font-extrabold text-stone-900"><%= status.targetPostsPerDay %> <span class="text-sm font-normal text-stone-400">/ day</span></div>
+      <span class="text-[11px] text-stone-500 font-semibold mt-1 block">Scheduled every ~<%= status.intervalMinutes %> mins</span>
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs">
+      <span class="text-xs font-bold text-stone-400 uppercase tracking-wider block mb-1">Published This Session</span>
+      <div class="text-3xl font-extrabold text-emerald-600"><%= status.publishedToday %></div>
+      <span class="text-[11px] text-stone-500 font-semibold mt-1 block">Last: <%= status.lastPublishedTime ? formatDate(status.lastPublishedTime) : 'Ready' %></span>
+    </div>
+
+    <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs">
+      <span class="text-xs font-bold text-stone-400 uppercase tracking-wider block mb-1">Scheduler Status</span>
+      <div class="text-3xl font-extrabold <%= status.isRunning ? 'text-emerald-600' : 'text-amber-600' %>">
+        <%= status.isRunning ? 'Active' : 'Paused' %>
+      </div>
+      <span class="text-[11px] text-stone-500 font-semibold mt-1 block">Continuous Auto-Publishing</span>
+    </div>
+
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10">
+    
+    <!-- Left Column: Manual Triggers & Custom Generation -->
+    <div class="lg:col-span-6 space-y-6">
+
+      <!-- 1-Click Batch Trigger -->
+      <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-2xl">⚡</span>
+          <h3 class="text-lg font-extrabold text-stone-900 m-0">Instant Batch Publisher</h3>
+        </div>
+        <p class="text-xs text-stone-500 leading-relaxed mb-4">
+          Need to publish 50 articles immediately? Click the button below to initiate full research, SEO schema generation, and publication across cats, dogs, reptiles, birds, snakes, and small pets.
+        </p>
+
+        <form action="/admin/automation/publish-batch" method="POST" onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').innerText='Generating 50 Articles... Please wait ~10s';">
+          <input type="hidden" name="count" value="50" />
+          <button type="submit" class="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm rounded-xl transition shadow-md flex items-center justify-center gap-2">
+            <span>🚀 Publish Batch of 50 Articles Now</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Custom Topic Publisher -->
+      <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-2xl">✍️</span>
+          <h3 class="text-lg font-extrabold text-stone-900 m-0">Generate Custom Topic Guide</h3>
+        </div>
+        <p class="text-xs text-stone-500 leading-relaxed mb-4">
+          Type any specific pet question or symptom. The engine will research the topic, format clinical steps, create FAQs, and publish it instantly.
+        </p>
+
+        <form action="/admin/automation/publish-custom" method="POST" class="space-y-3">
+          <input 
+            type="text" 
+            name="prompt" 
+            placeholder="e.g. Why does my cockatiel hiss when I walk by? Complete Behavioral Protocol" 
+            required 
+            class="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 text-xs text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          />
+          <button type="submit" class="w-full py-3 px-4 bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs rounded-xl transition">
+            Generate & Publish Custom Guide &rarr;
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Species Inventory Breakdown -->
+    <div class="lg:col-span-6 bg-white p-6 rounded-3xl border border-stone-200 shadow-xs">
+      <h3 class="text-lg font-extrabold text-stone-900 mb-4">Article Inventory by Species Hub</h3>
+      <div class="space-y-3">
+        <% categoryCounts.forEach(cc => { %>
+          <div class="flex items-center justify-between p-3 rounded-xl bg-stone-50 border border-stone-100">
+            <div class="flex items-center gap-2">
+              <span class="text-base font-bold text-stone-900"><%= cc.name %></span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                <%= cc.count %> Articles
+              </span>
+              <a href="/category/<%= cc.slug %>" class="text-xs font-bold text-stone-400 hover:text-emerald-600 transition">View &rarr;</a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Publishing Activity Logs -->
+  <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-extrabold text-stone-900 m-0">Publishing Activity & Audit Logs</h3>
+      <span class="text-xs text-stone-400">Real-time system telemetry</span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs">
+        <thead>
+          <tr class="border-b border-stone-200 text-stone-400 uppercase tracking-wider font-bold">
+            <th class="py-3 px-4">Timestamp</th>
+            <th class="py-3 px-4">Count</th>
+            <th class="py-3 px-4">Status</th>
+            <th class="py-3 px-4">Log Details</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-stone-100">
+          <% if (logs && logs.length > 0) { %>
+            <% logs.forEach(log => { %>
+              <tr class="hover:bg-stone-50 transition">
+                <td class="py-3 px-4 text-stone-500 whitespace-nowrap"><%= formatDate(log.timestamp) %></td>
+                <td class="py-3 px-4 font-bold text-stone-900">+<%= log.articles_count %></td>
+                <td class="py-3 px-4">
+                  <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase <%= log.status === 'SUCCESS' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800' %>">
+                    <%= log.status %>
+                  </span>
+                </td>
+                <td class="py-3 px-4 text-stone-600"><%= log.details %></td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+            <tr>
+              <td colspan="4" class="py-6 text-center text-stone-400">No logs recorded yet.</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<%- include('partials/footer') %>

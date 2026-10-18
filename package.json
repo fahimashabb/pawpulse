@@ -1,0 +1,33 @@
+{
+  "name": "pawpulse-pet-network",
+  "version": "1.0.0",
+  "description": "High-Authority Monetized Pet Magazine & Automated Publishing Engine",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node scripts/export-static.js",
+    "seed": "node database/seed-200-articles.js",
+    "publish:batch": "node scripts/publish-daily.js --count=50",
+    "auto:daemon": "node scripts/run-automation.js"
+  },
+  "keywords": [
+    "pet-care",
+    "pet-blog",
+    "seo",
+    "veterinary-guides",
+    "cats",
+    "dogs",
+    "reptiles",
+    "birds",
+    "monetization"
+  ],
+  "author": "PawPulse Editorial Team",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "marked": "^15.0.7"
+  }
+}

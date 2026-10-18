@@ -1,0 +1,87 @@
+/* Custom typography and editorial styles for PawPulse */
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Article Body Typography */
+.article-body {
+  font-family: 'Merriweather', Georgia, serif;
+  font-size: 1.0625rem; /* 17px */
+  line-height: 1.85;
+  color: #292524;
+}
+
+.article-body h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: #1c1917;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.article-body h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #292524;
+  margin-top: 1.8rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.article-body p {
+  margin-bottom: 1.5rem;
+}
+
+.article-body ul, .article-body ol {
+  margin-bottom: 1.75rem;
+  padding-left: 1.5rem;
+}
+
+.article-body ul {
+  list-style-type: disc;
+}
+
+.article-body ol {
+  list-style-type: decimal;
+}
+
+.article-body li {
+  margin-bottom: 0.75rem;
+}
+
+.article-body strong {
+  font-weight: 700;
+  color: #1c1917;
+}
+
+.article-body a {
+  color: #059669;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+
+.article-body a:hover {
+  color: #047857;
+}
+
+/* Custom Scrollbar for Species Bar */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Ad Placement Containers */
+.ad-placement-wrapper {
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,0 +1,69 @@
+<%# Reusable Ad Slot Component %>
+<% 
+  const slotType = typeof type !== 'undefined' ? type : 'in-content'; 
+  const isDemo = config.monetization.demoMode;
+%>
+
+<div class="ad-placement-wrapper my-8 mx-auto text-center">
+  <div class="text-[10px] uppercase font-bold tracking-widest text-stone-400 dark:text-stone-500 mb-1.5 flex items-center justify-center gap-1">
+    <span>ADVERTISEMENT</span>
+    <span class="text-stone-300 dark:text-stone-700">•</span>
+    <a href="/about#affiliate" class="hover:underline">Ad Policies</a>
+  </div>
+
+  <% if (!isDemo && config.monetization.adsenseClientId) { %>
+    <!-- Live Google AdSense Display Unit -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-ad-client="<%= config.monetization.adsenseClientId %>"
+         data-ad-slot="<%= config.monetization.slots[slotType] || '1234567890' %>"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  <% } else { %>
+    <!-- Native High-Converting Pet Sponsor Unit (Demo Mode / Guaranteed Display) -->
+    <% if (slotType === 'header-leaderboard') { %>
+      <div class="bg-gradient-to-r from-emerald-900 to-teal-800 text-white rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm max-w-4xl mx-auto border border-emerald-700/50">
+        <div class="flex items-center gap-3.5 text-left">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-2xl shrink-0">
+            🛡️
+          </div>
+          <div>
+            <span class="text-[10px] uppercase bg-emerald-700/60 text-emerald-200 px-2 py-0.5 rounded font-bold">Featured Pet Sponsor</span>
+            <h4 class="text-sm sm:text-base font-bold m-0 text-white">Compare Top 5 Pet Insurance Plans with 90% Vet Coverage</h4>
+            <p class="text-xs text-emerald-200/80 m-0">Zero wait periods for accidents. Get a free, instant 30-second quote.</p>
+          </div>
+        </div>
+        <a href="#sponsor-link" class="shrink-0 bg-amber-400 hover:bg-amber-300 text-stone-950 font-bold px-4 py-2 rounded-lg text-xs shadow-md transition whitespace-nowrap">
+          Compare Rates Now &rarr;
+        </a>
+      </div>
+
+    <% } else if (slotType === 'sidebar-sticky') { %>
+      <div class="bg-white dark:bg-stone-800 border-2 border-dashed border-stone-200 dark:border-stone-700 rounded-xl p-5 text-center shadow-sm">
+        <div class="w-full h-36 bg-gradient-to-tr from-amber-100 to-orange-100 dark:from-stone-700 dark:to-stone-750 rounded-lg flex items-center justify-center text-4xl mb-3">
+          📦🐾
+        </div>
+        <span class="text-[10px] uppercase font-bold tracking-wider text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded-full">Chewy Exclusive</span>
+        <h4 class="text-sm font-bold text-stone-900 dark:text-white mt-2 mb-1">Save 35% on Your First Pet Food Autoship</h4>
+        <p class="text-xs text-stone-500 dark:text-stone-400 mb-3">Free 1-3 day shipping on high-protein, veterinary-grade pet nutrition.</p>
+        <a href="#sponsor-link" class="block w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition">
+          Claim 35% Discount &rarr;
+        </a>
+      </div>
+
+    <% } else { %>
+      <!-- Standard In-Content Responsive Banner -->
+      <div class="bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 max-w-2xl mx-auto shadow-sm">
+        <div class="text-left">
+          <span class="text-[10px] uppercase tracking-wider text-emerald-700 dark:text-emerald-400 font-bold">Recommended Service</span>
+          <h4 class="text-sm sm:text-base font-bold text-stone-900 dark:text-white mt-0.5 mb-1">Talk to a Licensed Vet 24/7 from Home</h4>
+          <p class="text-xs text-stone-600 dark:text-stone-400 m-0">No waiting rooms. Instant answers on canine, feline, and exotic symptoms.</p>
+        </div>
+        <a href="#sponsor-link" class="shrink-0 bg-stone-900 dark:bg-emerald-600 hover:bg-stone-800 dark:hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-lg text-xs transition">
+          Chat with a Vet ($1) &rarr;
+        </a>
+      </div>
+    <% } %>
+  <% } %>
+</div>
