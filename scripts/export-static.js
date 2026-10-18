@@ -49,6 +49,7 @@ async function renderTemplate(viewName, data) {
     ...data,
     config,
     categories: config.categories,
+    baseUrl: process.env.BASE_URL !== undefined ? process.env.BASE_URL : (config.site.baseUrl || ''),
     formatDate,
     currentPath: data.currentPath || '/'
   };

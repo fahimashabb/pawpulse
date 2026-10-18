@@ -29,7 +29,7 @@
           <ul class="space-y-2 text-xs">
             <% categories.slice(0, 4).forEach(cat => { %>
               <li>
-                <a href="/category/<%= cat.slug %>" class="hover:text-emerald-400 transition flex items-center gap-1.5">
+                <a href="<%= baseUrl %>/category/<%= cat.slug %>" class="hover:text-emerald-400 transition flex items-center gap-1.5">
                   <span><%= cat.icon %></span>
                   <span><%= cat.name %></span>
                 </a>
@@ -44,14 +44,14 @@
           <ul class="space-y-2 text-xs">
             <% categories.slice(4).forEach(cat => { %>
               <li>
-                <a href="/category/<%= cat.slug %>" class="hover:text-emerald-400 transition flex items-center gap-1.5">
+                <a href="<%= baseUrl %>/category/<%= cat.slug %>" class="hover:text-emerald-400 transition flex items-center gap-1.5">
                   <span><%= cat.icon %></span>
                   <span><%= cat.name %></span>
                 </a>
               </li>
             <% }) %>
             <li>
-              <a href="/popular" class="hover:text-emerald-400 transition flex items-center gap-1.5 font-bold text-amber-400">
+              <a href="<%= baseUrl %>/popular" class="hover:text-emerald-400 transition flex items-center gap-1.5 font-bold text-amber-400">
                 <span>🔥</span>
                 <span>All Trending Articles</span>
               </a>
@@ -63,12 +63,12 @@
         <div>
           <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Authority & Platform</h4>
           <ul class="space-y-2 text-xs">
-            <li><a href="/about" class="hover:text-emerald-400 transition">Editorial Guidelines</a></li>
-            <li><a href="/about#veterinary-board" class="hover:text-emerald-400 transition">Veterinary Review Board</a></li>
-            <li><a href="/admin/automation" class="text-emerald-400 hover:underline font-bold">Automation Control Room</a></li>
-            <li><a href="/sitemap.xml" class="hover:text-emerald-400 transition">XML Sitemap (SEO)</a></li>
-            <li><a href="/rss.xml" class="hover:text-emerald-400 transition">RSS 2.0 Feed</a></li>
-            <li><a href="/robots.txt" class="hover:text-emerald-400 transition">Robots.txt Directives</a></li>
+            <li><a href="<%= baseUrl %>/about" class="hover:text-emerald-400 transition">Editorial Guidelines</a></li>
+            <li><a href="<%= baseUrl %>/about#veterinary-board" class="hover:text-emerald-400 transition">Veterinary Review Board</a></li>
+            <li><a href="<%= baseUrl %>/admin/automation" class="text-emerald-400 hover:underline font-bold">Automation Control Room</a></li>
+            <li><a href="<%= baseUrl %>/sitemap.xml" class="hover:text-emerald-400 transition">XML Sitemap (SEO)</a></li>
+            <li><a href="<%= baseUrl %>/rss.xml" class="hover:text-emerald-400 transition">RSS 2.0 Feed</a></li>
+            <li><a href="<%= baseUrl %>/robots.txt" class="hover:text-emerald-400 transition">Robots.txt Directives</a></li>
           </ul>
         </div>
 
@@ -85,9 +85,9 @@
         <div class="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-stone-800 text-[11px] gap-2">
           <span>&copy; <%= new Date().getFullYear() %> <%= config.site.name %>. All rights reserved. Powered by Science-Backed Pet Care.</span>
           <div class="flex items-center gap-4">
-            <a href="/about" class="hover:underline">Privacy & Cookies</a>
-            <a href="/about" class="hover:underline">Terms of Service</a>
-            <a href="/admin/automation" class="text-emerald-400 font-bold hover:underline">Publishing Engine</a>
+            <a href="<%= baseUrl %>/about" class="hover:underline">Privacy & Cookies</a>
+            <a href="<%= baseUrl %>/about" class="hover:underline">Terms of Service</a>
+            <a href="<%= baseUrl %>/admin/automation" class="text-emerald-400 font-bold hover:underline">Publishing Engine</a>
           </div>
         </div>
       </div>

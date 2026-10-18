@@ -22,7 +22,7 @@
             </div>
 
             <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight group-hover:text-emerald-300 transition">
-              <a href="/blog/<%= heroMain.slug %>"><%= heroMain.title %></a>
+              <a href="<%= baseUrl %>/blog/<%= heroMain.slug %>"><%= heroMain.title %></a>
             </h1>
 
             <p class="text-sm text-stone-300 line-clamp-2 leading-relaxed">
@@ -52,7 +52,7 @@
                   <%= sub.pet_type %>
                 </span>
                 <h3 class="text-sm font-bold text-white line-clamp-2 leading-snug group-hover:text-emerald-300 transition">
-                  <a href="/blog/<%= sub.slug %>"><%= sub.title %></a>
+                  <a href="<%= baseUrl %>/blog/<%= sub.slug %>"><%= sub.title %></a>
                 </h3>
                 <div class="flex items-center gap-2 text-[10px] text-stone-400">
                   <span><%= formatDate(sub.published_at) %></span>
@@ -82,7 +82,7 @@
 
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
       <% categories.forEach(cat => { %>
-        <a href="/category/<%= cat.slug %>" class="p-4 rounded-2xl bg-white border border-stone-200/80 hover:border-emerald-500 hover:shadow-md transition text-center group flex flex-col items-center">
+        <a href="<%= baseUrl %>/category/<%= cat.slug %>" class="p-4 rounded-2xl bg-white border border-stone-200/80 hover:border-emerald-500 hover:shadow-md transition text-center group flex flex-col items-center">
           <span class="text-3xl mb-2 group-hover:scale-110 transition transform"><%= cat.icon %></span>
           <span class="text-xs font-bold text-stone-900 group-hover:text-emerald-700 transition block truncate max-w-full">
             <%= cat.name.split('&')[0].trim() %>
@@ -103,7 +103,7 @@
           <h2 class="text-2xl font-extrabold text-stone-900 tracking-tight m-0">Latest Veterinary Guides & Stories</h2>
           <p class="text-xs text-stone-500 mt-1">Clinical research, species ethology, and step-by-step care manuals</p>
         </div>
-        <a href="/popular" class="text-xs font-bold text-emerald-600 hover:underline">View Trending &rarr;</a>
+        <a href="<%= baseUrl %>/popular" class="text-xs font-bold text-emerald-600 hover:underline">View Trending &rarr;</a>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -126,7 +126,7 @@
             <div class="p-5 flex-1 flex flex-col justify-between">
               <div>
                 <h3 class="text-base font-extrabold text-stone-900 leading-snug group-hover:text-emerald-600 transition mb-2">
-                  <a href="/blog/<%= art.slug %>"><%= art.title %></a>
+                  <a href="<%= baseUrl %>/blog/<%= art.slug %>"><%= art.title %></a>
                 </h3>
                 <p class="text-xs text-stone-600 line-clamp-3 leading-relaxed mb-4">
                   <%= art.excerpt %>
@@ -158,10 +158,10 @@
           From trimming cat claws pain-free to diagnosing reptile brumation, search our comprehensive database of veterinary articles.
         </p>
         <div class="flex justify-center gap-3 flex-wrap">
-          <a href="/search?q=cat" class="px-4 py-2 bg-white text-stone-900 font-bold rounded-xl text-xs hover:bg-emerald-50 transition">Cat Guides 🐱</a>
-          <a href="/search?q=dog" class="px-4 py-2 bg-white text-stone-900 font-bold rounded-xl text-xs hover:bg-emerald-50 transition">Dog Guides 🐶</a>
-          <a href="/search?q=reptile" class="px-4 py-2 bg-white text-stone-900 font-bold rounded-xl text-xs hover:bg-emerald-50 transition">Reptile Care 🦎</a>
-          <a href="/search?q=bird" class="px-4 py-2 bg-white text-stone-900 font-bold rounded-xl text-xs hover:bg-emerald-50 transition">Bird Insights 🦜</a>
+          <a href="<%= baseUrl %>/search?q=cat" class="px-4 py-2 bg-white text-stone-900 font-bold rounded-xl text-xs hover:bg-emerald-50 transition">Cat Guides 🐱</a>
+          <a href="<%= baseUrl %>/search?q=dog" class="px-4 py-2 bg-white text-stone-900 font-bold rounded-xl text-xs hover:bg-emerald-50 transition">Dog Guides 🐶</a>
+          <a href="<%= baseUrl %>/search?q=reptile" class="px-4 py-2 bg-white text-stone-900 font-bold rounded-xl text-xs hover:bg-emerald-50 transition">Reptile Care 🦎</a>
+          <a href="<%= baseUrl %>/search?q=bird" class="px-4 py-2 bg-white text-stone-900 font-bold rounded-xl text-xs hover:bg-emerald-50 transition">Bird Insights 🦜</a>
         </div>
       </div>
 

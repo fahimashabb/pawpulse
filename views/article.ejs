@@ -26,7 +26,7 @@
       
       <!-- Article Header Category & Badge -->
       <div class="flex items-center gap-2 mb-3">
-        <a href="/category/<%= category.slug %>" class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-extrabold uppercase tracking-wider hover:bg-emerald-100 transition">
+        <a href="<%= baseUrl %>/category/<%= category.slug %>" class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-extrabold uppercase tracking-wider hover:bg-emerald-100 transition">
           <%= category.icon %> <%= category.name %>
         </a>
         <span class="text-xs text-stone-400 font-bold">•</span>
@@ -147,10 +147,10 @@
       <!-- Tags & Species Pills -->
       <div class="mt-8 pt-6 border-t border-stone-100 flex items-center gap-2 flex-wrap text-xs">
         <span class="text-stone-400 font-bold text-xs">Tags:</span>
-        <a href="/category/<%= category.slug %>" class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold transition">#<%= category.slug %></a>
-        <a href="/search?q=<%= encodeURIComponent(article.pet_type) %>" class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold transition">#<%= article.pet_type.toLowerCase() %></a>
-        <a href="/popular" class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold transition">#veterinary-guides</a>
-        <a href="/about" class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold transition">#peer-reviewed</a>
+        <a href="<%= baseUrl %>/category/<%= category.slug %>" class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold transition">#<%= category.slug %></a>
+        <a href="<%= baseUrl %>/search?q=<%= encodeURIComponent(article.pet_type) %>" class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold transition">#<%= article.pet_type.toLowerCase() %></a>
+        <a href="<%= baseUrl %>/popular" class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold transition">#veterinary-guides</a>
+        <a href="<%= baseUrl %>/about" class="px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold transition">#peer-reviewed</a>
       </div>
 
       <!-- Related Articles Section -->
@@ -159,7 +159,7 @@
           <h3 class="text-xl font-extrabold text-stone-900 tracking-tight mb-6">Related <%= category.name %> Guides</h3>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <% relatedArticles.forEach(rel => { %>
-              <a href="/blog/<%= rel.slug %>" class="group block rounded-2xl bg-stone-50 border border-stone-200/80 overflow-hidden hover:shadow-md transition">
+              <a href="<%= baseUrl %>/blog/<%= rel.slug %>" class="group block rounded-2xl bg-stone-50 border border-stone-200/80 overflow-hidden hover:shadow-md transition">
                 <div class="h-32 overflow-hidden bg-stone-200">
                   <img src="<%= rel.featured_image %>" alt="<%= rel.title %>" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" loading="lazy" />
                 </div>

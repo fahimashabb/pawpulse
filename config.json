@@ -2,7 +2,9 @@
   "site": {
     "name": "PawPulse",
     "tagline": "The Science-Backed Pet Care & Species Wisdom Network",
-    "url": "http://localhost:4000",
+    "url": "https://fahimashabb.github.io/pawpulse",
+    "baseUrl": "/pawpulse",
+    "githubRepo": "https://github.com/fahimashabb/pawpulse",
     "description": "Authoritative veterinary-reviewed pet care guides, species behavior insights, step-by-step training manuals, and inspiring stories for dogs, cats, birds, lizards, snakes, small animals, and aquatics.",
     "contactEmail": "editorial@pawpulse.org",
     "authorDefault": "Dr. Julian Vance, DVM & Veterinary Behaviorist",

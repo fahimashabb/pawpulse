@@ -63,7 +63,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- Custom CSS for Editorial Polish -->
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="<%= baseUrl %>/css/style.css">
 
   <% if (typeof articleSchema !== 'undefined' && articleSchema) { %>
     <!-- JSON-LD Article Schema -->
@@ -103,12 +103,12 @@
         <span class="truncate">🐾 200+ Veterinary-Reviewed Guides for Dogs, Cats, Birds, Lizards, Snakes & Small Pets</span>
       </div>
       <div class="hidden sm:flex items-center gap-4 text-[11px] shrink-0 font-medium">
-        <a href="/admin/automation" class="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1">
+        <a href="<%= baseUrl %>/admin/automation" class="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
           Automated Pipeline (50/day)
         </a>
-        <a href="/about" class="hover:text-white transition">Editorial Board</a>
-        <a href="/popular" class="hover:text-white transition">Trending</a>
+        <a href="<%= baseUrl %>/about" class="hover:text-white transition">Editorial Board</a>
+        <a href="<%= baseUrl %>/popular" class="hover:text-white transition">Trending</a>
       </div>
     </div>
   </div>
@@ -119,7 +119,7 @@
       <div class="flex items-center justify-between h-20 gap-4">
         
         <!-- Logo -->
-        <a href="/" class="flex items-center gap-2.5 shrink-0 group">
+        <a href="<%= baseUrl %>/" class="flex items-center gap-2.5 shrink-0 group">
           <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center text-2xl shadow-md group-hover:scale-105 transition transform">
             🐾
           </div>
@@ -135,7 +135,7 @@
 
         <!-- Search Bar with Live Suggestions -->
         <div class="flex-1 max-w-xl mx-4 hidden md:block">
-          <form action="/search" method="GET" class="relative">
+          <form action="<%= baseUrl %>/search" method="GET" class="relative">
             <input 
               type="text" 
               name="q" 
@@ -155,11 +155,11 @@
 
         <!-- Quick Navigation -->
         <nav class="flex items-center gap-3 shrink-0">
-          <a href="/popular" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-stone-700 hover:bg-stone-100 transition">
+          <a href="<%= baseUrl %>/popular" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-stone-700 hover:bg-stone-100 transition">
             <span class="text-rose-500 font-extrabold">🔥</span>
             <span>Most Popular</span>
           </a>
-          <a href="/admin/automation" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200 text-xs font-extrabold transition">
+          <a href="<%= baseUrl %>/admin/automation" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200 text-xs font-extrabold transition">
             <span>⚙️</span>
             <span>Automation Hub</span>
           </a>
@@ -174,7 +174,7 @@
         <span class="text-[11px] font-bold text-stone-500 uppercase tracking-wider mr-1">Species:</span>
         <% categories.forEach(cat => { %>
           <% const isActive = currentPath === '/category/' + cat.slug; %>
-          <a href="/category/<%= cat.slug %>" 
+          <a href="<%= baseUrl %>/category/<%= cat.slug %>" 
              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition <%= isActive ? 'bg-emerald-600 text-white shadow-xs' : 'bg-white hover:bg-stone-200/60 text-stone-700 border border-stone-200/60' %>">
             <span><%= cat.icon %></span>
             <span><%= cat.name.split('&')[0].trim() %></span>

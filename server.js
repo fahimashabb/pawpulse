@@ -22,6 +22,7 @@ app.use(express.json());
 app.use((req, res, next) => {
   res.locals.config = config;
   res.locals.categories = config.categories;
+  res.locals.baseUrl = process.env.NODE_ENV === 'production' && !process.env.CUSTOM_DOMAIN ? (config.site.baseUrl || '') : '';
   res.locals.currentPath = req.path;
   res.locals.formatDate = (dateStr) => {
     try {
