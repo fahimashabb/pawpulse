@@ -313,6 +313,7 @@ app.post('/admin/automation/publish-batch', async (req, res) => {
   try {
     const count = parseInt(req.body.count, 10) || 50;
     const published = await publishBatch(count);
+    db.checkpoint();
     res.redirect(`/admin/automation?msg=Successfully+published+batch+of+${published.length}+articles!`);
   } catch (err) {
     res.redirect(`/admin/automation?msg=Error+publishing+batch:+${encodeURIComponent(err.message)}`);

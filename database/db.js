@@ -213,5 +213,15 @@ module.exports = {
       LIMIT ?
     `);
     return stmt.all(limit);
+  },
+
+  checkpoint() {
+    try {
+      db.exec('PRAGMA wal_checkpoint(TRUNCATE);');
+      return true;
+    } catch (err) {
+      console.warn('SQLite checkpoint warning:', err.message);
+      return false;
+    }
   }
 };

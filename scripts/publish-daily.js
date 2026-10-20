@@ -5,7 +5,7 @@
  */
 
 const { publishBatch } = require('../services/article-generator');
-const { getArticleCount } = require('../database/db');
+const { getArticleCount, checkpoint } = require('../database/db');
 
 // Parse --count argument, default to 50
 let count = 50;
@@ -26,6 +26,10 @@ const startTime = Date.now();
 
 publishBatch(count)
   .then(articles => {
+    // Flush WAL journal into main pawpulse.db file
+    checkpoint();
+    console.log(`[Database] Flushed SQLite WAL journal into pawpulse.db (Checkpoint TRUNCATE complete).`);
+
     const duration = ((Date.now() - startTime) / 1000).toFixed(1);
     console.log(`\n====================================================`);
     console.log(` Batch Complete: ${articles.length} new articles published!`);
