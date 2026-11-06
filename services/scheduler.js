@@ -32,6 +32,16 @@ function startScheduler() {
         checkpoint();
         const articleUrl = `${config.site.url}/blog/${article.slug}`;
         submitToIndexNow([articleUrl]).catch(() => {});
+
+        // Auto-refresh static build every 10 published articles
+        if (publishedToday % 10 === 0) {
+          try {
+            const { exportStaticSite } = require('../scripts/export-static');
+            exportStaticSite().catch(() => {});
+          } catch (exErr) {
+            console.warn('[Scheduler] Periodic static export notice:', exErr.message);
+          }
+        }
       } catch (cpErr) {
         console.warn('[Scheduler] Checkpoint / IndexNow non-fatal notice:', cpErr.message);
       }
