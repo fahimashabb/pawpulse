@@ -1,0 +1,9 @@
+# Force binary mode for SQLite database files to prevent CRLF line ending corruption
+*.db binary
+*.db -text
+*.sqlite binary
+*.sqlite -text
+*.db-wal binary
+*.db-wal -text
+*.db-shm binary
+*.db-shm -text

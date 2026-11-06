@@ -218,6 +218,14 @@ module.exports = {
   checkpoint() {
     try {
       db.exec('PRAGMA wal_checkpoint(TRUNCATE);');
+      try {
+        const backupPath = path.join(__dirname, 'articles_backup.json');
+        const articles = db.prepare('SELECT * FROM articles').all();
+        const logs = db.prepare('SELECT * FROM publishing_logs').all();
+        fs.writeFileSync(backupPath, JSON.stringify({ articles, logs }, null, 2));
+      } catch (backupErr) {
+        console.warn('JSON backup write warning:', backupErr.message);
+      }
       return true;
     } catch (err) {
       console.warn('SQLite checkpoint warning:', err.message);
