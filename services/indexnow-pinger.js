@@ -1,47 +1,16 @@
 /**
- * Instant Search Engine Indexing & IndexNow Protocol
- * Pings Google, Bing, and IndexNow API immediately when new articles are published
- * to accelerate indexing from weeks down to hours.
+ * Modern Search Engine Indexing & IndexNow Protocol
+ * Submits new articles directly to the global IndexNow API (Bing, Yandex, Seznam, Naver)
+ * for immediate indexing within hours.
  */
 
 const https = require('https');
-const http = require('http');
 const config = require('../config.json');
 
 const INDEXNOW_KEY = '7a9c8f1e4b2d6a3c9e8f0b1a2c3d4e5f';
 
-function pingUrl(targetUrl) {
-  return new Promise((resolve) => {
-    try {
-      const client = targetUrl.startsWith('https') ? https : http;
-      const req = client.get(targetUrl, { timeout: 8000 }, (res) => {
-        resolve({ url: targetUrl, status: res.statusCode });
-      });
-      req.on('error', (err) => {
-        resolve({ url: targetUrl, status: 'error', error: err.message });
-      });
-      req.end();
-    } catch (err) {
-      resolve({ url: targetUrl, status: 'error', error: err.message });
-    }
-  });
-}
-
 /**
- * Pings search engines about the updated sitemap.xml
- */
-async function pingSitemaps() {
-  const sitemapUrl = encodeURIComponent(`${config.site.url}/sitemap.xml`);
-  const googlePing = `https://www.google.com/ping?sitemap=${sitemapUrl}`;
-  const bingPing = `https://www.bing.com/ping?sitemap=${sitemapUrl}`;
-
-  console.log('[IndexNow] Pinging Google & Bing sitemaps...');
-  const results = await Promise.all([pingUrl(googlePing), pingUrl(bingPing)]);
-  return results;
-}
-
-/**
- * Submits URL list to IndexNow API (Bing, Yandex, Seznam, Naver)
+ * Submits URL list to IndexNow API
  */
 async function submitToIndexNow(urlList = []) {
   if (!urlList || !urlList.length) return null;
@@ -59,29 +28,33 @@ async function submitToIndexNow(urlList = []) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          'Content-Length': Buffer.byteLength(payload)
+          'Content-Length': Buffer.byteLength(payload),
+          'Connection': 'close'
         },
-        timeout: 10000
+        timeout: 8000
       }, (res) => {
-        console.log(`[IndexNow] Submission response: HTTP ${res.statusCode} for ${urlList.length} URLs.`);
-        resolve({ status: res.statusCode });
+        let body = '';
+        res.on('data', chunk => { body += chunk; });
+        res.on('end', () => {
+          console.log(`[IndexNow] Submission response: HTTP ${res.statusCode} for ${urlList.length} URLs.`);
+          resolve({ status: res.statusCode, body });
+        });
       });
 
       req.on('error', (err) => {
-        console.warn('[IndexNow] Submission non-fatal error:', err.message);
-        resolve({ status: 'error', message: err.message });
+        // Non-fatal network notice
+        resolve({ status: 'notice', message: err.message });
       });
 
       req.write(payload);
       req.end();
     } catch (err) {
-      resolve({ status: 'error', message: err.message });
+      resolve({ status: 'notice', message: err.message });
     }
   });
 }
 
 module.exports = {
   INDEXNOW_KEY,
-  pingSitemaps,
   submitToIndexNow
 };
