@@ -17,9 +17,20 @@ function calculateReadingTime(text) {
   return Math.max(1, Math.ceil(words / wordsPerMinute));
 }
 
+function safeJsonParse(data, fallback = []) {
+  if (!data) return fallback;
+  if (typeof data !== 'string') return data;
+  try {
+    return JSON.parse(data);
+  } catch {
+    return fallback;
+  }
+}
+
 function generateArticleSchema(article, siteConfig) {
   const baseUrl = siteConfig.site.url;
   const articleUrl = `${baseUrl}/blog/${article.slug}`;
+  const tags = safeJsonParse(article.tags, []);
 
   const schema = {
     '@context': 'https://schema.org',
@@ -48,7 +59,7 @@ function generateArticleSchema(article, siteConfig) {
       }
     },
     'articleSection': article.category_slug,
-    'keywords': typeof article.tags === 'string' ? JSON.parse(article.tags || '[]').join(', ') : (article.tags || []).join(', ')
+    'keywords': Array.isArray(tags) ? tags.join(', ') : ''
   };
 
   return JSON.stringify(schema, null, 2);
@@ -56,7 +67,7 @@ function generateArticleSchema(article, siteConfig) {
 
 function generateHowToSchema(article, siteConfig) {
   if (!article.how_to_json) return null;
-  const steps = typeof article.how_to_json === 'string' ? JSON.parse(article.how_to_json) : article.how_to_json;
+  const steps = safeJsonParse(article.how_to_json, []);
   if (!steps || !steps.length) return null;
 
   const baseUrl = siteConfig.site.url;
@@ -86,7 +97,7 @@ function generateHowToSchema(article, siteConfig) {
 
 function generateFAQSchema(faqsJson) {
   if (!faqsJson) return null;
-  const faqs = typeof faqsJson === 'string' ? JSON.parse(faqsJson) : faqsJson;
+  const faqs = safeJsonParse(faqsJson, []);
   if (!faqs || !faqs.length) return null;
 
   const schema = {

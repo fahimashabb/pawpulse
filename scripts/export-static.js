@@ -186,7 +186,7 @@ async function exportStaticSite() {
 
   // 7. Render All Category Archives (/category/<slug>/index.html)
   for (const cat of config.categories) {
-    const articles = db.getArticlesByCategory(cat.slug, 50, 0);
+    const articles = db.getArticlesByCategory(cat.slug, 1000, 0);
     const totalCount = db.getCategoryArticleCount(cat.slug);
     const catHtml = await renderTemplate('category', {
       title: `${cat.name} Care & Behavioral Guides — ${config.site.name}`,

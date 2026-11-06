@@ -51,6 +51,53 @@ db.exec(`
   );
 `);
 
+// Self-healing / Auto-restoration from articles_backup.json if database is ever empty
+try {
+  const countRow = db.prepare('SELECT COUNT(*) as count FROM articles').get();
+  if (countRow.count === 0) {
+    const backupPath = path.join(__dirname, 'articles_backup.json');
+    if (fs.existsSync(backupPath)) {
+      console.log('[Database] Empty database detected. Restoring from articles_backup.json...');
+      const data = JSON.parse(fs.readFileSync(backupPath, 'utf8'));
+      if (data.articles && data.articles.length > 0) {
+        db.exec('BEGIN TRANSACTION;');
+        const stmt = db.prepare(`
+          INSERT INTO articles (
+            id, slug, title, meta_title, meta_description, category_slug, pet_type,
+            content_html, excerpt, featured_image, author_name, author_role,
+            author_avatar, reviewer_name, reading_time_minutes, views,
+            is_featured, is_popular, schema_type, faqs_json, how_to_json,
+            tags, published_at, updated_at
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `);
+        for (const a of data.articles) {
+          stmt.run(
+            a.id, a.slug, a.title, a.meta_title, a.meta_description, a.category_slug, a.pet_type,
+            a.content_html, a.excerpt, a.featured_image, a.author_name, a.author_role,
+            a.author_avatar, a.reviewer_name, a.reading_time_minutes, a.views,
+            a.is_featured, a.is_popular, a.schema_type, a.faqs_json, a.how_to_json,
+            a.tags, a.published_at, a.updated_at
+          );
+        }
+        if (data.logs && data.logs.length > 0) {
+          const logStmt = db.prepare(`
+            INSERT INTO publishing_logs (id, timestamp, articles_count, status, details)
+            VALUES (?, ?, ?, ?, ?)
+          `);
+          for (const l of data.logs) {
+            logStmt.run(l.id, l.timestamp, l.articles_count, l.status, l.details);
+          }
+        }
+        db.exec('COMMIT;');
+        db.exec('PRAGMA wal_checkpoint(TRUNCATE);');
+        console.log(`[Database] Successfully auto-restored ${data.articles.length} articles!`);
+      }
+    }
+  }
+} catch (restoreErr) {
+  console.warn('[Database] Auto-restore notice:', restoreErr.message);
+}
+
 module.exports = {
   db,
   
