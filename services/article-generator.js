@@ -665,6 +665,152 @@ const VET_TEAM = [
 ];
 
 // ============================================================================
+// 3b. TOPIC-MATCHED CLINICAL PRODUCT GRAPH (Species & Archetype Grounded)
+// ============================================================================
+const TOPIC_PRODUCT_GRAPH = {
+  cats: {
+    action: [
+      { badge: 'Ergonomic Tool', name: 'Precision Angled Feline Claw Trimmer with Quick-Sensor', description: 'Hardened surgical stainless steel blades calibrated to prevent split claws and accidental quick strikes.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Behavioral Calming', name: 'Feline Facial Pheromone Calming Diffuser & Mist', description: 'Clinically proven synthetic F3 fraction analog reducing stress cortisol and struggle during grooming.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    behavior: [
+      { badge: 'Neurological Habitat', name: 'Orthopedic Multi-Tier Feline Wall Lounger & Perch', description: 'Therapeutic memory foam reducing spinal load and joint stress during deep REM sleep cycles.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Enrichment Hardware', name: 'Aerobic Predatory Simulation Laser & Feather Wand', description: 'Satisfies crepuscular predatory drives (stalk, chase, catch) to resolve night vocalizations.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    pathology: [
+      { badge: 'Renal Apparatus', name: 'Triple-Filtration Circulating Pet Fountain with Carbon Cartridge', description: 'Stimulates 300% greater voluntary hydration to protect renal nephrons and prevent urinary crystals.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Oral Hygiene', name: 'Veterinary Enzymatic Biofilm-Inhibiting Feline Toothpaste Gel', description: 'Active glucose oxidase enzymes breaking down calculus without requiring abrasive mechanical brushing.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    nutrition: [
+      { badge: 'Clinical Nutrition', name: 'High-Protein Moisture-Rich Carnivore Formula with Pure Taurine', description: 'Preserves lean muscle mass and satisfies feline hepatic amino acid metabolic requirements.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Bioactive Supplement', name: 'Cold-Pressed Wild Alaskan Salmon Oil (EPA + DHA)', description: 'Concentrated omega-3 fatty acids for epidermal barrier repair and cellular anti-inflammatory protection.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ]
+  },
+  dogs: {
+    action: [
+      { badge: 'Canine Care Gear', name: 'Veterinary Low-pH Otic Cleansing Solution with Phytosphingosine', description: 'Dissolves ceruminous debris and prevents Malassezia fungal proliferation in canine ear canals.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Ergonomic Apparatus', name: 'Professional Variable-Velocity Canine Grooming Blower', description: 'Eliminates deep moisture trapping within dense undercoats to prevent acute moist dermatitis.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    behavior: [
+      { badge: 'Behavioral Control', name: 'Front-D-Ring Anatomical No-Choke Canine Harness', description: 'Disperses pulling kinetic energy across the skeletal chest plate without compressing the cervical trachea.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Cognitive Calming', name: 'Ultra-Durable Vulcanized Rubber Food Enrichment Feeder', description: 'Promotes prolonged licking and foraging, triggering endorphin release to soothe separation anxiety.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    pathology: [
+      { badge: 'Bloat Prevention', name: 'Veterinary Maze Anti-Gulping Slow Consumption Bowl', description: 'Slows ingestion speed by 8x, preventing dangerous aerophagia and acute gastric dilatation (GDV).', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Chondroprotective', name: 'Glucosamine, Chondroitin & Green-Lipped Mussel Complex', description: 'Promotes synovial fluid viscosity and inhibits degradative cartilage enzymes in canine joints.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    nutrition: [
+      { badge: 'Dietary Fortification', name: 'Human-Grade Freeze-Dried Single-Source Organ Meat Topper', description: 'Delivers bioavailable minerals and natural B-vitamins without synthetic chemical additives.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Enteric Support', name: 'Multi-Strain Canine Digestive Enzymes & Probiotic Powder', description: '5 billion live cultures supporting nutrient absorption and firm stool formation.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ]
+  },
+  reptiles: {
+    action: [
+      { badge: 'UVB Hardware', name: 'T5 HO 10.0 Desert UVB High-Output Linear Fixture', description: 'Ferguson Zone 3-4 calibrated for dermal cholecalciferol synthesis and metabolic bone disease prevention.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Thermal Regulation', name: 'Precision PID Dimming Digital Terrarium Thermostat', description: 'Maintains basking focal points within \u00B10.5\u00B0F to prevent thermal burns and chronic hypothermia.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    behavior: [
+      { badge: 'Thermal Apparatus', name: 'Bioactive Deep Heat Infrared-A Ceramic Projector', description: 'Emits deep-penetrating infrared wavelengths mimicking natural sunlight for active reptile thermoregulation.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Environmental Design', name: 'Non-Adhesive Natural Slate Basking Tile Platform', description: 'Absorbs and slowly re-radiates thermal energy while naturally filing sharp claws.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    pathology: [
+      { badge: 'Dermatological Gear', name: 'Ceramic Humid Microclimate Shedding Chamber Cave', description: 'Provides a humid retreat to prevent retained eye caps and tail necrotic constrictions.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Veterinary Hygiene', name: 'Veterinary F10SC Disinfectant Solution & Bio-Cleaner', description: 'Hospital-grade biodegradable antimicrobial eliminating cryptosporidium and bacterial terrarium pathogens.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    nutrition: [
+      { badge: 'Metabolic Support', name: 'Ultrafine Micro-Ground Pure Calcium Carbonate Powder', description: 'Phosphorus-free calcium dust ensuring proper 2:1 dietary ratios for growing and adult reptiles.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Bioactive Nutrition', name: 'Gut-Loading Nutrient Complex for Live Feeder Insects', description: 'Pre-loads feeder crickets and roaches with essential carotenoids, minerals, and vitamin complexes.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ]
+  },
+  birds: {
+    action: [
+      { badge: 'Husbandry Gear', name: 'Avian Full-Spectrum 2.4% UVB Lighting System', description: 'Essential UV wavelengths required for avian visual tetrachromacy and endogenous vitamin D3 synthesis.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Podiatry Support', name: 'Variable-Diameter Natural Manzanita Contoured Perch', description: 'Exercises digital flexor tendons to eliminate pressure sores and avian pododermatitis (bumblefoot).', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    behavior: [
+      { badge: 'Cognitive Enrichment', name: 'All-Natural Organic Foraging & Shredding Station', description: 'Directs destructive beak energy into untreated sisal and coconut husk, preventing feather plucking.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Sensory Apparatus', name: 'Stainless Steel Acoustic Foraging Bell & Puzzle Box', description: 'Promotes problem-solving and reduces separation screaming through interactive mental stimulation.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    pathology: [
+      { badge: 'Emergency Hospital', name: 'Thermostatically Controlled Avian Critical Heat Panel', description: 'Prevents acute hypothermia during illness without disturbing visual circadian sleep cycles.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'First Aid Kit', name: 'Avian Emergency Hemostatic Coagulant Styptic Gel', description: 'Instantly seals broken blood feathers or toe injuries to prevent catastrophic blood loss.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    nutrition: [
+      { badge: 'Formulated Diet', name: 'Cold-Pressed Organic Avian Maintenance Pellets', description: 'Eliminates selective seed-sorting habits and provides complete balanced vitamins and amino acids.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Avian Mineral', name: 'Bioavailable Water-Soluble Calcium & Magnesium Solution', description: 'Prevents chronic hypocalcemia, muscle tremors, and egg-binding in breeding and adult birds.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ]
+  },
+  snakes: {
+    action: [
+      { badge: 'Safe Handling', name: '12-Inch Medical-Grade Rubber-Tipped Feeding Tongs', description: 'Facilitates safe presentation of warm frozen-thawed prey without risk of oral laceration.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Thermal Sensor', name: 'Digital Handheld Infrared Surface Thermometer Gun', description: 'Instant laser temperature spot-checks for hot basking spots and ambient hide chambers.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    behavior: [
+      { badge: 'Husbandry Gear', name: 'Heavy-Base Ceramic Anti-Tip Submersion Water Basin', description: 'Enables full-body soaking during shedding while resisting tipping and substrate flooding.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Enclosure Security', name: 'Universal Keyed Sliding Glass Terrarium Ratchet Lock', description: 'Prevents escape attempts from powerful muscular boids and colubrids.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    pathology: [
+      { badge: 'Microclimate Control', name: 'Digital Precision Dual Hygrometer & Temperature Probe', description: 'Prevents dysecdysis (incomplete shedding) through accurate continuous humidity monitoring.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Substrate Architecture', name: 'Triple-Sifted Pathogen-Free Coconut Husk Bio-Bedding', description: 'Resists fungal spore growth and maintains humidity without dust or respiratory tract irritation.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    nutrition: [
+      { badge: 'Feeding Catalyst', name: 'Bioactive Scent Induction Stimulant Dropper', description: 'Re-ignites stubborn feeding strikes in captive ball pythons through natural olfactory cues.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Thermal Digestion', name: 'Carbon-Infused Under-Tank Heat Mat with Proportional Probe', description: 'Delivers essential belly heat to activate reptilian gastric enzymes and avoid regurgitation.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ]
+  },
+  'small-pets': {
+    action: [
+      { badge: 'Dental Care', name: 'Kiln-Dried Apple Orchard Chew Sticks & Bundles', description: 'Crucial for continuous grinding of elodont incisors and prevention of molar malocclusion.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Grooming Care', name: 'Gentle Rubberized Small-Mammal Deshedding Glove', description: 'Removes loose undercoat fur to stop dangerous trichobezoar hairball impactions in rabbits.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    behavior: [
+      { badge: 'Habitat Tunnel', name: 'Multi-Chamber Natural Birch Wood Underground Burrow', description: 'Mimics natural subterranean warrens, eliminating chronic stress and pacing behavior.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Interactive Toy', name: 'Seagrass Woven Activity Mat & Foraging Tunnel', description: '100% edible untreated plant fiber providing physical enrichment and cognitive occupation.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    pathology: [
+      { badge: 'Emergency Protocol', name: 'Critical Care Herbivore Syringe Recovery Formula', description: 'High-fiber emergency diet powder vital for maintaining cecal motility during early GI stasis.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Gastrointestinal', name: 'Infant Simethicone Anti-Gas Dropper Formulation', description: 'Safely breaks down painful enteric gas bubbles during mild rabbit digestive discomfort.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    nutrition: [
+      { badge: 'Core Nutrition', name: 'Hand-Sorted First-Cut Coarse Timothy Hay Bale', description: 'Coarse abrasive fiber mandatory for rabbit and guinea pig cecal microbial fermentation.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Vitamin Synthesis', name: 'Stabilized Vitamin C Daily Supplement Tabs for Cavies', description: 'Prevents acute scurvy in guinea pigs lacking the L-gulonolactone oxidase enzyme.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ]
+  },
+  aquatics: {
+    action: [
+      { badge: 'Water Chemistry', name: 'Freshwater Master Liquid Titration Test Kit (pH, Ammonia, Nitrite)', description: 'Laboratory-grade test kit essential for monitoring biological filter cycle health.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Water Conditioning', name: 'Concentrated Dechlorinator & Heavy Metal Detoxifier', description: 'Instantly neutralizes toxic tap chloramines and protects sensitive amphibian slime coats.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    behavior: [
+      { badge: 'Aquatic Design', name: 'Zero-Flow Multi-Stage Canister Filter with Spray Bar', description: 'Provides massive biological surface area without creating stressful turbulent water currents.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Sensory Enrichment', name: 'Natural Ceramic Cave Retreat for Low-Stress Resting', description: 'Smooth non-abrasive sanctuary preventing cutaneous scrapes on fragile axolotl skin.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    pathology: [
+      { badge: 'Thermal Protection', name: 'Thermoelectric Silent Low-Flow Aquarium Chiller System', description: 'Maintains cold water temperature strictly below 68\u00B0F (20\u00B0C) to prevent axolotl fungal infections.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Healing Botanicals', name: 'Sun-Dried Organic Indian Almond Leaves (Catappa Tannins)', description: 'Releases mild antibacterial and antifungal humic substances that accelerate fin regeneration.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ],
+    nutrition: [
+      { badge: 'Clinical Nutrition', name: 'Slow-Sinking High-Protein Amphibian Soft Pellets', description: 'Formulated with whole fish meal and bloodworms for optimal juvenile and adult body condition.', cta: 'View Verified Specifications \u2192' },
+      { badge: 'Bioactive Feed', name: 'Frozen Gamma-Irradiated Whole Bloodworms & Mysis', description: 'Sterile frozen whole prey offering high palatability without transmitting aquatic parasites.', cta: 'Inspect Clinical Safety Analysis \u2192' }
+    ]
+  }
+};
+
+function getTopicProducts(species, archetype, contentData) {
+  if (contentData && Array.isArray(contentData.recommendedProducts) && contentData.recommendedProducts.length >= 2) {
+    return contentData.recommendedProducts.slice(0, 2);
+  }
+
+  const categoryCatalog = TOPIC_PRODUCT_GRAPH[species.category] || TOPIC_PRODUCT_GRAPH['dogs'];
+  let typeKey = 'action';
+  if (archetype && archetype.behaviors) typeKey = 'behavior';
+  else if (archetype && archetype.pathologies) typeKey = 'pathology';
+  else if (archetype && archetype.nutritionTopics) typeKey = 'nutrition';
+
+  return categoryCatalog[typeKey] || categoryCatalog['action'];
+}
+
+// ============================================================================
 // 4. GEMINI AI CLINICAL SYNTHESIZER
 // ============================================================================
 async function generateWithGemini({ prompt, species, category }) {
@@ -695,6 +841,20 @@ Respond with pure JSON only, without markdown code fences (\`\`\`json). The JSON
     { "q": "Frequently asked question 1", "a": "Clear veterinary answer" },
     { "q": "Frequently asked question 2", "a": "Clear veterinary answer" },
     { "q": "Frequently asked question 3", "a": "Clear veterinary answer" }
+  ],
+  "recommendedProducts": [
+    {
+      "badge": "Clinical Tool",
+      "name": "Specific commercial or veterinary tool tailored to this topic and species",
+      "description": "Why this specific apparatus is clinically required for this condition",
+      "cta": "View Verified Specifications \u2192"
+    },
+    {
+      "badge": "Therapeutic Support",
+      "name": "Specific supplement, diet, or habitat equipment tailored to this topic and species",
+      "description": "How this specific item supports healing or prevents complications",
+      "cta": "Inspect Clinical Safety Analysis \u2192"
+    }
   ],
   "tags": ["tag1", "tag2", "tag3", "tag4"]
 }`;
@@ -799,6 +959,8 @@ async function generateAndPublishSingleArticle(customPrompt = null, options = {}
   const featuredImage = getUnmatchedPhoto(species);
   const secondaryImage = getUnmatchedPhoto(species);
 
+  const products = getTopicProducts(species, archetype, contentData);
+
   // 4. Construct Rich, Structured HTML Content
   let stepsHtml = '';
   if (contentData.steps && contentData.steps.length > 0) {
@@ -878,31 +1040,31 @@ async function generateAndPublishSingleArticle(customPrompt = null, options = {}
 
     ${figureHtml}
 
-    <!-- HIGH-CTR IN-ARTICLE VETERINARY AD UNIT / SPONSOR UNIT -->
+    <!-- HIGH-CTR IN-ARTICLE VETERINARY AD UNIT / SPONSOR UNIT (TOPIC & SPECIES GROUNDED) -->
     <div class="my-10 p-6 bg-gradient-to-br from-stone-50 to-emerald-50/40 dark:from-stone-900 dark:to-emerald-950/20 border-2 border-emerald-200/70 dark:border-emerald-800/40 rounded-2xl shadow-sm">
       <div class="flex items-center justify-between border-b border-emerald-100 dark:border-emerald-900/50 pb-3 mb-4">
         <span class="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
           <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-          Clinical Equipment & Diagnostics
+          Clinical Equipment & Diagnostics for ${species.name}
         </span>
         <span class="text-[11px] bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-200 px-2.5 py-0.5 rounded-full font-bold">Veterinary Verified</span>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="bg-white dark:bg-stone-800 p-4 rounded-xl border border-stone-200 dark:border-stone-700 flex flex-col justify-between">
           <div>
-            <span class="text-xs font-bold text-emerald-600 uppercase">Primary Apparatus</span>
-            <h4 class="font-bold text-stone-900 dark:text-white text-base mt-1 mb-2">Ergonomic Precision Care System</h4>
-            <p class="text-xs text-stone-600 dark:text-stone-400">Manufactured with surgical stainless steel and hypoallergenic non-slip grips for low-stress handling.</p>
+            <span class="text-xs font-bold text-emerald-600 uppercase">${products[0].badge}</span>
+            <h4 class="font-bold text-stone-900 dark:text-white text-base mt-1 mb-2">${products[0].name || products[0].title}</h4>
+            <p class="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">${products[0].description}</p>
           </div>
-          <a href="#affiliate-check" class="mt-4 block text-center py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow-sm">View Verified Specs &rarr;</a>
+          <a href="#affiliate-check" class="mt-4 block text-center py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow-sm">${products[0].cta || 'View Verified Specs \u2192'}</a>
         </div>
         <div class="bg-white dark:bg-stone-800 p-4 rounded-xl border border-stone-200 dark:border-stone-700 flex flex-col justify-between">
           <div>
-            <span class="text-xs font-bold text-amber-600 uppercase">Dietary Support</span>
-            <h4 class="font-bold text-stone-900 dark:text-white text-base mt-1 mb-2">Bio-Active Micronutrient Complex</h4>
-            <p class="text-xs text-stone-600 dark:text-stone-400">Fortified with balanced trace minerals, probiotics, and bioavailable vitamins tailored to ${species.name}.</p>
+            <span class="text-xs font-bold text-amber-600 uppercase">${products[1].badge}</span>
+            <h4 class="font-bold text-stone-900 dark:text-white text-base mt-1 mb-2">${products[1].name || products[1].title}</h4>
+            <p class="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">${products[1].description}</p>
           </div>
-          <a href="#affiliate-check" class="mt-4 block text-center py-2 px-3 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-xs font-bold transition shadow-sm">Inspect Certificate of Analysis &rarr;</a>
+          <a href="#affiliate-check" class="mt-4 block text-center py-2.5 px-3 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-xs font-bold transition shadow-sm">${products[1].cta || 'Inspect Clinical Safety Analysis \u2192'}</a>
         </div>
       </div>
     </div>
