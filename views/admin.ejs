@@ -9,7 +9,7 @@
         <span>✅</span>
         <span><%= flash %></span>
       </div>
-      <a href="/admin/automation" class="text-xs text-emerald-700 hover:underline">Dismiss</a>
+      <a href="<%= baseUrl %>/admin/automation" class="text-xs text-emerald-700 hover:underline">Dismiss</a>
     </div>
   <% } %>
 
@@ -30,7 +30,7 @@
 
     <!-- Quick Actions -->
     <div class="flex items-center gap-3">
-      <form action="/admin/automation/toggle-scheduler" method="POST">
+      <form action="<%= baseUrl %>/admin/automation/toggle-scheduler" method="POST">
         <button type="submit" class="px-4 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-2 <%= status.isRunning ? 'bg-amber-100 hover:bg-amber-200 text-amber-900' : 'bg-emerald-600 hover:bg-emerald-700 text-white' %>">
           <span><%= status.isRunning ? '⏸️' : '▶️' %></span>
           <span><%= status.isRunning ? 'Pause 200/Day Automation' : 'Resume 200/Day Automation' %></span>
@@ -85,7 +85,7 @@
           Need to publish 200 articles immediately? Click the button below to initiate full research, SEO schema generation, and publication across cats, dogs, reptiles, birds, snakes, and small pets.
         </p>
 
-        <form action="/admin/automation/publish-batch" method="POST" onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').innerText='Generating 200 Articles... Please wait ~15s';">
+        <form action="<%= baseUrl %>/admin/automation/publish-batch" method="POST" onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').innerText='Generating 200 Articles... Please wait ~15s';">
           <input type="hidden" name="count" value="200" />
           <button type="submit" class="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm rounded-xl transition shadow-md flex items-center justify-center gap-2">
             <span>🚀 Publish Batch of 200 Articles Now</span>
@@ -109,7 +109,7 @@
           Type any specific pet question or medical symptom. Google Gemini AI will conduct deep veterinary ethology research, generate step-by-step clinical protocols, format FAQs, and publish it live.
         </p>
 
-        <form action="/admin/automation/publish-custom" method="POST" class="space-y-3" onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').innerText='Synthesizing with Gemini AI... Please wait ~4s';">
+        <form action="<%= baseUrl %>/admin/automation/publish-custom" method="POST" class="space-y-3" onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').innerText='Synthesizing with Gemini AI... Please wait ~4s';">
           <input 
             type="text" 
             name="prompt" 
@@ -161,7 +161,7 @@
               <span class="text-xs font-extrabold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
                 <%= cc.count %> Articles
               </span>
-              <a href="/category/<%= cc.slug %>" class="text-xs font-bold text-stone-400 hover:text-emerald-600 transition">View &rarr;</a>
+              <a href="<%= baseUrl %>/category/<%= cc.slug %>" class="text-xs font-bold text-stone-400 hover:text-emerald-600 transition">View &rarr;</a>
             </div>
           </div>
         <% }) %>
