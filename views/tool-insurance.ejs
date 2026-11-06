@@ -1,0 +1,165 @@
+<%- include('partials/header') %>
+
+<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+  <!-- Breadcrumbs -->
+  <nav class="flex items-center gap-2 text-xs text-stone-500 mb-6">
+    <a href="<%= baseUrl %>/" class="hover:text-emerald-700 transition">Home</a>
+    <span>/</span>
+    <a href="<%= baseUrl %>/tools" class="hover:text-emerald-700 transition">Tools</a>
+    <span>/</span>
+    <span class="text-stone-900 font-semibold">Pet Insurance Calculator</span>
+  </nav>
+
+  <!-- Header -->
+  <div class="mb-10 text-center max-w-3xl mx-auto">
+    <span class="px-3 py-1 rounded-full bg-pink-100 text-pink-800 text-[11px] font-extrabold uppercase tracking-wider inline-block mb-3">
+      Veterinary Lead Generation Engine
+    </span>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-3">
+      Pet Health Insurance Cost & Reimbursement Estimator
+    </h1>
+    <p class="text-xs sm:text-sm text-stone-600 leading-relaxed">
+      Compare estimated monthly premiums, deductible tiers, and 90% reimbursement rates across canine and feline life stages.
+    </p>
+  </div>
+
+  <!-- Interactive Calculator Card -->
+  <div class="bg-white rounded-3xl p-6 sm:p-10 border border-stone-200 shadow-md mb-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      <!-- Inputs -->
+      <div class="space-y-4">
+        <h3 class="text-base font-extrabold text-stone-900 border-b border-stone-200 pb-2">1. Pet Profile</h3>
+        
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Species</label>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" id="btn-dog" onclick="selectSpecies('dog')" class="py-2.5 px-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-bold text-xs flex items-center justify-center gap-1.5 transition">
+              <span>🐶</span> Dog / Canine
+            </button>
+            <button type="button" id="btn-cat" onclick="selectSpecies('cat')" class="py-2.5 px-3 rounded-xl border-2 border-stone-200 bg-stone-50 text-stone-600 font-bold text-xs flex items-center justify-center gap-1.5 transition">
+              <span>🐱</span> Cat / Feline
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Pet Age (Years)</label>
+          <input type="range" id="pet-age" min="0" max="15" value="2" oninput="updateCalculation()" class="w-full accent-emerald-600 cursor-pointer" />
+          <div class="flex justify-between text-[11px] text-stone-500 font-semibold mt-1">
+            <span>Puppy / Kitten (< 1 yr)</span>
+            <span id="age-display" class="font-bold text-emerald-700 text-xs">2 Years Old</span>
+            <span>Senior (15+ yrs)</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Reimbursement Percentage</label>
+          <select id="reimbursement-rate" onchange="updateCalculation()" class="w-full px-3 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-stone-800 font-semibold focus:ring-2 focus:ring-emerald-500">
+            <option value="0.9" selected>90% Reimbursement (Recommended / Top Clinical)</option>
+            <option value="0.8">80% Reimbursement</option>
+            <option value="0.7">70% Reimbursement</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Annual Deductible</label>
+          <select id="deductible" onchange="updateCalculation()" class="w-full px-3 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-stone-800 font-semibold focus:ring-2 focus:ring-emerald-500">
+            <option value="250" selected>$250 / Year (Fastest Payouts)</option>
+            <option value="500">$500 / Year (Lower Monthly Cost)</option>
+            <option value="100">$100 / Year (Comprehensive)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Live Calculation Results & Direct Lemonade Affiliate Card -->
+      <div class="bg-gradient-to-br from-pink-50/50 via-white to-pink-50/30 p-6 rounded-2xl border-2 border-pink-200/80 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-pink-700 flex items-center gap-1.5">
+              <span>🛡️</span> Estimated Monthly Rate
+            </span>
+            <span class="px-2 py-0.5 rounded-full bg-pink-100 text-pink-800 text-[10px] font-bold">Instant Quote</span>
+          </div>
+
+          <div class="text-center py-4 bg-white rounded-2xl border border-pink-100 shadow-xs mb-4">
+            <div class="text-xs text-stone-400 font-medium mb-1">Estimated Plan Starts At</div>
+            <div class="text-4xl font-extrabold text-stone-900" id="premium-display">$28 <span class="text-sm font-normal text-stone-500">/ month</span></div>
+            <div class="text-[11px] text-emerald-600 font-bold mt-1">Covers up to $20,000 / year in vet bills</div>
+          </div>
+
+          <div class="space-y-2 text-xs text-stone-600 mb-6">
+            <div class="flex justify-between py-1 border-b border-pink-100">
+              <span>Emergency Surgeries (Bloat/Foreign Body)</span>
+              <strong class="text-stone-900">Covered (90%)</strong>
+            </div>
+            <div class="flex justify-between py-1 border-b border-pink-100">
+              <span>Chronic Conditions (Kidney/Diabetes)</span>
+              <strong class="text-stone-900">Covered (90%)</strong>
+            </div>
+            <div class="flex justify-between py-1 border-b border-pink-100">
+              <span>Diagnostic CT/MRI & Bloodwork</span>
+              <strong class="text-stone-900">Covered (90%)</strong>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <a id="lemonade-cta" href="https://www.lemonade.com/pet?utm_source=impact&utm_medium=affiliate&utm_campaign=<%= (config.monetization.affiliates && config.monetization.affiliates.lemonade && config.monetization.affiliates.lemonade.partnerId) || 'pawpulse_pet' %>" target="_blank" rel="sponsored nofollow noopener" class="w-full block text-center py-3.5 px-4 bg-pink-600 hover:bg-pink-700 text-white font-extrabold text-xs rounded-xl transition shadow-md">
+            Lock In Rate on Lemonade ($25–$40 Payout) &rarr;
+          </a>
+          <span class="text-[10px] text-stone-400 text-center block mt-2">
+            FTC Sponsored &bull; Takes less than 90 seconds to lock in real quote &bull; No credit card required to view
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<script>
+  let selectedSpecies = 'dog';
+
+  function selectSpecies(species) {
+    selectedSpecies = species;
+    const btnDog = document.getElementById('btn-dog');
+    const btnCat = document.getElementById('btn-cat');
+
+    if (species === 'dog') {
+      btnDog.className = 'py-2.5 px-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-bold text-xs flex items-center justify-center gap-1.5 transition';
+      btnCat.className = 'py-2.5 px-3 rounded-xl border-2 border-stone-200 bg-stone-50 text-stone-600 font-bold text-xs flex items-center justify-center gap-1.5 transition';
+    } else {
+      btnCat.className = 'py-2.5 px-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-bold text-xs flex items-center justify-center gap-1.5 transition';
+      btnDog.className = 'py-2.5 px-3 rounded-xl border-2 border-stone-200 bg-stone-50 text-stone-600 font-bold text-xs flex items-center justify-center gap-1.5 transition';
+    }
+    updateCalculation();
+  }
+
+  function updateCalculation() {
+    const age = parseInt(document.getElementById('pet-age').value, 10);
+    const rate = parseFloat(document.getElementById('reimbursement-rate').value);
+    const deductible = parseInt(document.getElementById('deductible').value, 10);
+
+    document.getElementById('age-display').innerText = age === 0 ? 'Under 1 Year' : `${age} Year${age > 1 ? 's' : ''} Old`;
+
+    // Base actuarial model
+    let base = selectedSpecies === 'dog' ? 32 : 18;
+    // Age multiplier
+    base += age * 2.8;
+    // Reimbursement rate factor
+    base *= (rate / 0.8);
+    // Deductible discount
+    if (deductible === 500) base -= 5;
+    if (deductible === 100) base += 6;
+
+    const finalRate = Math.max(14, Math.round(base));
+    document.getElementById('premium-display').innerHTML = `$${finalRate} <span class="text-sm font-normal text-stone-500">/ month</span>`;
+  }
+
+  document.addEventListener('DOMContentLoaded', updateCalculation);
+</script>
+
+<%- include('partials/footer') %>

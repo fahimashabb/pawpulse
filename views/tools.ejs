@@ -1,0 +1,135 @@
+<%- include('partials/header') %>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+  <!-- Breadcrumb -->
+  <nav class="flex items-center gap-2 text-xs text-stone-500 mb-6">
+    <a href="<%= baseUrl %>/" class="hover:text-emerald-700 transition">Home</a>
+    <span>/</span>
+    <span class="text-stone-900 font-semibold">Veterinary Tools & Calculators</span>
+  </nav>
+
+  <!-- Hero Header -->
+  <div class="mb-12 pb-8 border-b border-stone-200">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-extrabold uppercase tracking-wider">
+        Clinical Diagnostic Suite
+      </span>
+      <span class="text-xs text-stone-400">&bull;</span>
+      <span class="text-xs text-stone-500">100% Free Veterinary Utilities</span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-4">
+      Interactive Pet Health & Care Calculators
+    </h1>
+    <p class="text-sm sm:text-base text-stone-600 max-w-3xl leading-relaxed">
+      Evidence-based mathematical tools designed by veterinary clinicians. Calculate daily caloric needs, estimate pet health insurance reimbursement premiums, and determine reptile UVB Ferguson zones with laboratory precision.
+    </p>
+  </div>
+
+  <!-- Tools Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+
+    <!-- Tool 1: Pet Insurance Estimator -->
+    <div class="bg-white rounded-3xl p-7 border border-stone-200 shadow-sm flex flex-col justify-between hover:border-emerald-500 hover:shadow-md transition group">
+      <div>
+        <div class="w-14 h-14 rounded-2xl bg-pink-50 border border-pink-200 flex items-center justify-center text-3xl mb-5 group-hover:scale-105 transition">
+          🛡️
+        </div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-2 py-0.5 rounded bg-pink-100 text-pink-800 text-[10px] font-bold uppercase">Lemonade Partner</span>
+          <span class="text-[10px] text-stone-400">90% Coverage</span>
+        </div>
+        <h3 class="text-xl font-extrabold text-stone-900 mb-2">
+          Pet Insurance Rate & Coverage Calculator
+        </h3>
+        <p class="text-xs text-stone-500 leading-relaxed mb-6">
+          Estimate monthly veterinary accident and illness coverage costs for your dog or cat. Compare deductibles, annual limits, and wellness add-ons based on breed genetics.
+        </p>
+      </div>
+      <div>
+        <a href="<%= baseUrl %>/tools/pet-insurance-calculator" class="w-full block text-center py-3 px-4 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold transition shadow-xs">
+          Launch Insurance Calculator &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Tool 2: Calorie & Nutrition Calculator -->
+    <div class="bg-white rounded-3xl p-7 border border-stone-200 shadow-sm flex flex-col justify-between hover:border-emerald-500 hover:shadow-md transition group">
+      <div>
+        <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-3xl mb-5 group-hover:scale-105 transition">
+          🥩
+        </div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase">WSAVA Formula</span>
+          <span class="text-[10px] text-stone-400">Canine & Feline</span>
+        </div>
+        <h3 class="text-xl font-extrabold text-stone-900 mb-2">
+          Clinical Daily Calorie & Portion Calculator
+        </h3>
+        <p class="text-xs text-stone-500 leading-relaxed mb-6">
+          Calculate Resting Energy Requirement (RER) and Daily Energy Requirement (DER) in kcal/day. Perfect for bloat prevention, weight management, and growth stages.
+        </p>
+      </div>
+      <div>
+        <a href="<%= baseUrl %>/tools/pet-calorie-calculator" class="w-full block text-center py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-xs">
+          Calculate Daily Calories &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Tool 3: Reptile UVB Ferguson Zone Calculator -->
+    <div class="bg-white rounded-3xl p-7 border border-stone-200 shadow-sm flex flex-col justify-between hover:border-emerald-500 hover:shadow-md transition group">
+      <div>
+        <div class="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center text-3xl mb-5 group-hover:scale-105 transition">
+          ☀️
+        </div>
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px] font-bold uppercase">Ferguson Scale</span>
+          <span class="text-[10px] text-stone-400">Lizards & Serpents</span>
+        </div>
+        <h3 class="text-xl font-extrabold text-stone-900 mb-2">
+          Reptile UVB & Ferguson Zone Calculator
+        </h3>
+        <p class="text-xs text-stone-500 leading-relaxed mb-6">
+          Identify your reptile's natural Ferguson Zone (1 to 4), required UV Index (UVI), lamp mounting distance, and screen mesh attenuation factors.
+        </p>
+      </div>
+      <div>
+        <a href="<%= baseUrl %>/tools/reptile-uvb-calculator" class="w-full block text-center py-3 px-4 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold transition shadow-xs">
+          Calculate UVB Distance &rarr;
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- High-Converting Lead Capture Banner -->
+  <div class="bg-gradient-to-br from-emerald-900 via-stone-900 to-stone-900 rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
+    <div class="relative z-10 max-w-2xl">
+      <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30 uppercase tracking-wider inline-block mb-3">
+        VIP Pet Wellness Club
+      </span>
+      <h2 class="text-2xl sm:text-3xl font-extrabold mb-3">
+        Get the 2026 Veterinary Emergency Triage Cheatsheet (Free PDF)
+      </h2>
+      <p class="text-xs sm:text-sm text-stone-300 leading-relaxed mb-6">
+        Instant-action flowcharts for canine bloat, feline urinary blockage, reptile brumation checks, and emergency vital signs. Sent straight to your inbox.
+      </p>
+      <form action="<%= baseUrl %>/api/v1/subscribe" method="POST" class="flex flex-col sm:flex-row gap-3">
+        <input 
+          type="email" 
+          name="email" 
+          placeholder="Enter your email address..." 
+          required 
+          class="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-stone-400 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:bg-white/20"
+        />
+        <button type="submit" class="py-3 px-6 bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-xs rounded-xl transition shadow-md whitespace-nowrap">
+          Download Free PDF &rarr;
+        </button>
+      </form>
+    </div>
+  </div>
+
+</main>
+
+<%- include('partials/footer') %>

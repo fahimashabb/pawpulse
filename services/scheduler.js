@@ -6,6 +6,7 @@
 
 const { generateAndPublishSingleArticle, publishBatch } = require('./article-generator');
 const { getArticleCount, checkpoint } = require('../database/db');
+const { submitToIndexNow, pingSitemaps } = require('./indexnow-pinger');
 const config = require('../config.json');
 
 let intervalId = null;
@@ -29,8 +30,13 @@ function startScheduler() {
       lastPublishedTime = new Date().toISOString();
       try {
         checkpoint();
+        const articleUrl = `${config.site.url}/blog/${article.slug}`;
+        submitToIndexNow([articleUrl]).catch(() => {});
+        if (publishedToday % 5 === 0) {
+          pingSitemaps().catch(() => {});
+        }
       } catch (cpErr) {
-        console.warn('[Scheduler] Checkpoint non-fatal notice:', cpErr.message);
+        console.warn('[Scheduler] Checkpoint / IndexNow non-fatal notice:', cpErr.message);
       }
       console.log(`[Scheduler] Live Published: "${article.title}" | Total Today: ${publishedToday}`);
     } catch (err) {

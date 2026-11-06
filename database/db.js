@@ -49,6 +49,16 @@ db.exec(`
     status TEXT NOT NULL,
     details TEXT
   );
+
+  CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
+    pet_type TEXT DEFAULT 'all',
+    source TEXT DEFAULT 'website',
+    created_at TEXT NOT NULL
+  );
+
+  CREATE INDEX IF NOT EXISTS idx_subscribers_email ON newsletter_subscribers(email);
 `);
 
 // Self-healing / Auto-restoration from articles_backup.json if database is ever empty
@@ -269,6 +279,30 @@ module.exports = {
       ORDER BY datetime(published_at) DESC
     `);
     return stmt.all();
+  },
+
+  addSubscriber(email, petType = 'all', source = 'website') {
+    try {
+      const stmt = db.prepare(`
+        INSERT INTO newsletter_subscribers (email, pet_type, source, created_at)
+        VALUES (?, ?, ?, ?)
+        ON CONFLICT(email) DO UPDATE SET pet_type = excluded.pet_type
+      `);
+      stmt.run(email.toLowerCase().trim(), petType, source, new Date().toISOString());
+      return { success: true };
+    } catch (err) {
+      console.warn('[Database] Add subscriber error:', err.message);
+      return { success: false, error: err.message };
+    }
+  },
+
+  getSubscribersCount() {
+    try {
+      const row = db.prepare('SELECT COUNT(*) as count FROM newsletter_subscribers').get();
+      return row ? row.count : 0;
+    } catch {
+      return 0;
+    }
   },
 
   checkpoint() {

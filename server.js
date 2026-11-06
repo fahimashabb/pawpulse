@@ -98,6 +98,9 @@ app.get('/blog/:slug', (req, res) => {
   const howToSchema = seoHelper.generateHowToSchema(article, config);
   const faqSchema = seoHelper.generateFAQSchema(article.faqs_json);
   const breadcrumbSchema = seoHelper.generateBreadcrumbSchema(breadcrumbs, config);
+  const productSchema = seoHelper.generateProductReviewSchema([
+    { name: `${article.pet_type} Clinical Care & Wellness Kit`, description: article.meta_description, image: article.featured_image }
+  ], config, `${config.site.url}/blog/${article.slug}`);
 
   const relatedArticles = db.getRelatedArticles(article.category_slug, article.slug, 3);
   const popularArticles = db.getPopularArticles(5);
@@ -112,6 +115,7 @@ app.get('/blog/:slug', (req, res) => {
     howToSchema,
     faqSchema,
     breadcrumbSchema,
+    productSchema,
     relatedArticles,
     popularArticles,
     pageType: 'article'
@@ -234,6 +238,69 @@ app.get('/affiliates', (req, res) => {
   });
 });
 
+// 6f. Clinical Reviews & Equipment Buying Guides Hub (High-Intent Affiliate Money-Maker)
+app.get('/reviews', (req, res) => {
+  res.render('reviews', {
+    title: `Best Veterinary Pet Gear & Equipment Buying Guides (2026) — ${config.site.name}`,
+    metaDescription: 'Comprehensive clinical reviews, comparison matrices, and veterinary testing for pet health insurance, orthopedic beds, cat fountains, and reptile lighting.',
+    pageType: 'website'
+  });
+});
+
+// 6g. Interactive Pet Health & Diet Tools Hub
+app.get('/tools', (req, res) => {
+  res.render('tools', {
+    title: `Interactive Pet Health & Care Calculators — ${config.site.name}`,
+    metaDescription: 'Free veterinary calculators: Pet insurance rate estimator, WSAVA daily calorie formula, and reptile UVB Ferguson zone calculator.',
+    pageType: 'website'
+  });
+});
+
+// 6h. Tool 1: Pet Insurance Rate & Coverage Calculator
+app.get('/tools/pet-insurance-calculator', (req, res) => {
+  res.render('tool-insurance', {
+    title: `Pet Health Insurance Cost & Rate Estimator (2026) — ${config.site.name}`,
+    metaDescription: 'Calculate estimated monthly pet insurance premiums with 90% veterinary reimbursement for dogs and cats.',
+    pageType: 'website'
+  });
+});
+
+// 6i. Tool 2: Pet Calorie & Daily Portion Calculator
+app.get('/tools/pet-calorie-calculator', (req, res) => {
+  res.render('tool-calories', {
+    title: `Veterinary Daily Calorie & Feeding Calculator — ${config.site.name}`,
+    metaDescription: 'Calculate scientifically calibrated RER and DER daily calorie intake and feeding portion sizes for dogs and cats.',
+    pageType: 'website'
+  });
+});
+
+// 6j. Tool 3: Reptile UVB Ferguson Zone Calculator
+app.get('/tools/reptile-uvb-calculator', (req, res) => {
+  res.render('tool-uvb', {
+    title: `Reptile UVB Ferguson Zone & Lamp Distance Calculator — ${config.site.name}`,
+    metaDescription: 'Determine exact UV Index (UVI), Ferguson Zones, and T5 HO linear tube mounting distances for bearded dragons, geckos, and chameleons.',
+    pageType: 'website'
+  });
+});
+
+// IndexNow Verification Token
+app.get('/7a9c8f1e4b2d6a3c9e8f0b1a2c3d4e5f.txt', (req, res) => {
+  res.type('text/plain').send('7a9c8f1e4b2d6a3c9e8f0b1a2c3d4e5f\n');
+});
+
+// Newsletter Lead Capture API
+app.post('/api/v1/subscribe', (req, res) => {
+  const { email, pet_type, petType } = req.body;
+  if (!email || !email.includes('@')) {
+    return res.status(400).json({ success: false, error: 'Valid email address required.' });
+  }
+  const result = db.addSubscriber(email, pet_type || petType || 'all');
+  if (req.headers.accept && req.headers.accept.includes('text/html')) {
+    return res.redirect('/?subscribed=1');
+  }
+  res.json({ success: true, message: 'Subscribed successfully! Check inbox for Veterinary Emergency Cheatsheet.' });
+});
+
 // 7. Dynamic Sitemap.xml (Auto-generated for search engines)
 app.get('/sitemap.xml', (req, res) => {
   const articles = db.getAllArticles(2000, 0);
@@ -244,6 +311,11 @@ app.get('/sitemap.xml', (req, res) => {
 
   // Static core pages
   xml += `  <url>\n    <loc>${baseUrl}/</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>\n`;
+  xml += `  <url>\n    <loc>${baseUrl}/reviews</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.9</priority>\n  </url>\n`;
+  xml += `  <url>\n    <loc>${baseUrl}/tools</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.9</priority>\n  </url>\n`;
+  xml += `  <url>\n    <loc>${baseUrl}/tools/pet-insurance-calculator</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
+  xml += `  <url>\n    <loc>${baseUrl}/tools/pet-calorie-calculator</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
+  xml += `  <url>\n    <loc>${baseUrl}/tools/reptile-uvb-calculator</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
   xml += `  <url>\n    <loc>${baseUrl}/popular</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
   xml += `  <url>\n    <loc>${baseUrl}/affiliates</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
   xml += `  <url>\n    <loc>${baseUrl}/about</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>\n`;

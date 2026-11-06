@@ -1,0 +1,136 @@
+<%- include('partials/header') %>
+
+<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+  <!-- Breadcrumbs -->
+  <nav class="flex items-center gap-2 text-xs text-stone-500 mb-6">
+    <a href="<%= baseUrl %>/" class="hover:text-emerald-700 transition">Home</a>
+    <span>/</span>
+    <a href="<%= baseUrl %>/tools" class="hover:text-emerald-700 transition">Tools</a>
+    <span>/</span>
+    <span class="text-stone-900 font-semibold">Reptile UVB Calculator</span>
+  </nav>
+
+  <!-- Header -->
+  <div class="mb-10 text-center max-w-3xl mx-auto">
+    <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-extrabold uppercase tracking-wider inline-block mb-3">
+      Ferguson Zone Photobiology Standards
+    </span>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-3">
+      Reptile UVB Ferguson Zone & Distance Calculator
+    </h1>
+    <p class="text-xs sm:text-sm text-stone-600 leading-relaxed">
+      Determine correct UV Index (UVI) gradients, lamp wattage, and basking perch distances to prevent Metabolic Bone Disease (MBD).
+    </p>
+  </div>
+
+  <!-- Interactive Calculator Card -->
+  <div class="bg-white rounded-3xl p-6 sm:p-10 border border-stone-200 shadow-md mb-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      <!-- Inputs -->
+      <div class="space-y-4">
+        <h3 class="text-base font-extrabold text-stone-900 border-b border-stone-200 pb-2">1. Species & Enclosure Specs</h3>
+        
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Reptile Species</label>
+          <select id="reptile-select" onchange="calculateUvb()" class="w-full px-4 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs font-bold text-stone-800 focus:ring-2 focus:ring-emerald-500">
+            <option value="bearded-dragon" selected>Bearded Dragon (Pogona vitticeps) - Zone 3/4</option>
+            <option value="leopard-gecko">Leopard Gecko (Eublepharis macularius) - Zone 1</option>
+            <option value="ball-python">Ball Python (Python regius) - Zone 1/2</option>
+            <option value="crested-gecko">Crested Gecko (Correlophus ciliatus) - Zone 1</option>
+            <option value="veiled-chameleon">Veiled Chameleon (Chamaeleo calyptratus) - Zone 3</option>
+            <option value="russian-tortoise">Russian / Greek Tortoise (Testudo sp.) - Zone 3/4</option>
+            <option value="corn-snake">Corn Snake (Pantherophis guttatus) - Zone 1/2</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Mounting Position</label>
+          <select id="screen-type" onchange="calculateUvb()" class="w-full px-3 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-stone-800 font-semibold focus:ring-2 focus:ring-emerald-500">
+            <option value="mesh" selected>On Top of Wire Mesh Screen (Blocks ~35% UVB)</option>
+            <option value="inside">Mounted Under Screen / Inside Terrarium (Direct)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Lamp Technology</label>
+          <select id="lamp-type" onchange="calculateUvb()" class="w-full px-3 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-stone-800 font-semibold focus:ring-2 focus:ring-emerald-500">
+            <option value="t5-10" selected>T5 HO Linear Tube 10.0 / 12% Desert (Recommended)</option>
+            <option value="t5-5">T5 HO Linear Tube 5.0 / 6% Tropical</option>
+            <option value="compact">Compact Coil Bulb (Low Efficacy)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Live Calculation Results & Direct Product Recommendation -->
+      <div class="bg-gradient-to-br from-amber-50/50 via-white to-amber-50/30 p-6 rounded-2xl border-2 border-amber-200/80 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-800 flex items-center gap-1.5">
+              <span>☀️</span> Clinical UVB Specification
+            </span>
+            <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold" id="zone-badge">Ferguson Zone 3</span>
+          </div>
+
+          <div class="text-center py-4 bg-white rounded-2xl border border-amber-100 shadow-xs mb-4">
+            <div class="text-xs text-stone-400 font-medium mb-1">Calibrated Basking Perch Distance</div>
+            <div class="text-3xl sm:text-4xl font-extrabold text-stone-900" id="distance-display">12 – 15 Inches</div>
+            <div class="text-[11px] text-amber-700 font-bold mt-1" id="uvi-display">Target UVI: 2.9 – 4.5 at Basking Zone</div>
+          </div>
+
+          <!-- Product Recommendation Card -->
+          <div class="p-3.5 bg-white rounded-xl border border-amber-200 text-xs space-y-2 mb-4">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase text-amber-700">Herpetological Apparatus</span>
+              <span class="text-[10px] text-stone-400 font-medium">FTC Sponsored</span>
+            </div>
+            <strong class="block text-stone-900 font-bold" id="uvb-product-name">Zoo Med ReptiSun 10.0 T5 HO Linear Fixture (24W / 39W)</strong>
+            <p class="text-[11px] text-stone-500 leading-relaxed m-0" id="uvb-product-desc">
+              High-output German linear tube preventing metabolic bone disease and stimulating natural D3 synthesis.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <a id="uvb-aff-cta" href="https://www.amazon.com/s?k=reptiSun+t5+ho+10.0+uvb&tag=<%= config.monetization.affiliateTag %>" target="_blank" rel="sponsored nofollow noopener" class="w-full block text-center py-3.5 px-4 bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs rounded-xl transition shadow-md">
+            Check T5 HO Fixtures on Amazon & Petco &rarr;
+          </a>
+          <span class="text-[10px] text-stone-400 text-center block mt-2">
+            Amazon & Petco Partner &bull; Tested with Solarmeter 6.5R &bull; Safe Gradient
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const SPECIES_UVB_DATA = {
+    'bearded-dragon': { zone: 'Ferguson Zone 3 / 4', uvi: '2.9 – 4.5 UVI', distMesh: '12 – 14 Inches', distInside: '15 – 18 Inches', rec: 'Zoo Med ReptiSun 10.0 T5 HO Linear Fixture', query: 'reptiSun+t5+ho+10.0+uvb' },
+    'leopard-gecko': { zone: 'Ferguson Zone 1 (Crepuscular)', uvi: '0.5 – 1.0 UVI', distMesh: '12 – 15 Inches', distInside: '16 – 20 Inches', rec: 'Arcadia ShadeDweller Pro T5 7% UVB', query: 'arcadia+shadedweller+pro+t5' },
+    'ball-python': { zone: 'Ferguson Zone 1 / 2', uvi: '0.7 – 1.4 UVI', distMesh: '14 – 18 Inches', distInside: '18 – 22 Inches', rec: 'Arcadia Forest 6% T5 HO Linear Lamp', query: 'arcadia+forest+t5+uvb' },
+    'crested-gecko': { zone: 'Ferguson Zone 1 (Arboreal)', uvi: '0.5 – 1.2 UVI', distMesh: '10 – 12 Inches', distInside: '14 – 16 Inches', rec: 'Arcadia ShadeDweller Arboreal 2.4% UVB', query: 'arcadia+shadedweller+arboreal' },
+    'veiled-chameleon': { zone: 'Ferguson Zone 3 (Basking Arboreal)', uvi: '2.5 – 3.8 UVI', distMesh: '8 – 10 Inches', distInside: '12 – 14 Inches', rec: 'Zoo Med T5 HO 5.0 or 10.0 Linear Fixture', query: 'zoo+med+reptisun+5.0+t5+ho' },
+    'russian-tortoise': { zone: 'Ferguson Zone 3 / 4 (Desert)', uvi: '3.0 – 4.5 UVI', distMesh: '12 – 14 Inches', distInside: '14 – 16 Inches', rec: 'Arcadia Desert 12% T5 HO High Output', query: 'arcadia+desert+12+t5' },
+    'corn-snake': { zone: 'Ferguson Zone 1 / 2 (Low Shade)', uvi: '0.7 – 1.5 UVI', distMesh: '12 – 16 Inches', distInside: '16 – 20 Inches', rec: 'Arcadia ShadeDweller Pro T5', query: 'arcadia+shadedweller+t5' }
+  };
+
+  function calculateUvb() {
+    const sp = document.getElementById('reptile-select').value;
+    const mesh = document.getElementById('screen-type').value;
+    const data = SPECIES_UVB_DATA[sp] || SPECIES_UVB_DATA['bearded-dragon'];
+
+    document.getElementById('zone-badge').innerText = data.zone;
+    document.getElementById('uvi-display').innerText = `Target UVI: ${data.uvi} at Primary Perch`;
+    document.getElementById('distance-display').innerText = mesh === 'mesh' ? data.distMesh : data.distInside;
+    document.getElementById('uvb-product-name').innerText = data.rec;
+    document.getElementById('uvb-aff-cta').href = `https://www.amazon.com/s?k=${data.query}&tag=<%= config.monetization.affiliateTag %>`;
+  }
+
+  document.addEventListener('DOMContentLoaded', calculateUvb);
+</script>
+
+<%- include('partials/footer') %>

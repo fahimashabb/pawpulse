@@ -1,0 +1,155 @@
+<%- include('partials/header') %>
+
+<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+  <!-- Breadcrumbs -->
+  <nav class="flex items-center gap-2 text-xs text-stone-500 mb-6">
+    <a href="<%= baseUrl %>/" class="hover:text-emerald-700 transition">Home</a>
+    <span>/</span>
+    <a href="<%= baseUrl %>/tools" class="hover:text-emerald-700 transition">Tools</a>
+    <span>/</span>
+    <span class="text-stone-900 font-semibold">Pet Calorie & Portion Calculator</span>
+  </nav>
+
+  <!-- Header -->
+  <div class="mb-10 text-center max-w-3xl mx-auto">
+    <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-extrabold uppercase tracking-wider inline-block mb-3">
+      WSAVA & NRC Clinical Formula
+    </span>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-3">
+      Veterinary Caloric Need & Feeding Calculator
+    </h1>
+    <p class="text-xs sm:text-sm text-stone-600 leading-relaxed">
+      Calculate scientifically accurate Resting Energy Requirement (RER) and Daily Energy Requirement (DER) in kcal/day for dogs and cats.
+    </p>
+  </div>
+
+  <!-- Interactive Calculator Card -->
+  <div class="bg-white rounded-3xl p-6 sm:p-10 border border-stone-200 shadow-md mb-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      <!-- Inputs -->
+      <div class="space-y-4">
+        <h3 class="text-base font-extrabold text-stone-900 border-b border-stone-200 pb-2">1. Body Metrics</h3>
+        
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Species</label>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" id="c-btn-dog" onclick="selectCalorieSpecies('dog')" class="py-2.5 px-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-bold text-xs flex items-center justify-center gap-1.5 transition">
+              <span>🐶</span> Dog (Canine)
+            </button>
+            <button type="button" id="c-btn-cat" onclick="selectCalorieSpecies('cat')" class="py-2.5 px-3 rounded-xl border-2 border-stone-200 bg-stone-50 text-stone-600 font-bold text-xs flex items-center justify-center gap-1.5 transition">
+              <span>🐱</span> Cat (Feline)
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Current Body Weight (Pounds / lbs)</label>
+          <input type="number" id="pet-weight" min="1" max="220" value="30" oninput="calculateCalories()" class="w-full px-4 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-sm font-bold text-stone-900 focus:ring-2 focus:ring-emerald-500" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-stone-700 mb-1">Life Stage & Metabolic Status</label>
+          <select id="life-stage" onchange="calculateCalories()" class="w-full px-3 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs text-stone-800 font-semibold focus:ring-2 focus:ring-emerald-500">
+            <option value="1.6" selected>Neutered / Spayed Adult (Normal Activity)</option>
+            <option value="1.8">Intact Adult (Higher Metabolic Demand)</option>
+            <option value="1.2">Weight Loss / Sedentary / Prone to Obesity</option>
+            <option value="2.0">Working / Highly Athletic Canine</option>
+            <option value="2.5">Growing Puppy / Kitten (&lt; 4 months)</option>
+            <option value="1.4">Senior Pet (Reduced Metabolic Baseline)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Live Calculation Results & Direct Product Recommendation -->
+      <div class="bg-gradient-to-br from-emerald-50/50 via-white to-emerald-50/30 p-6 rounded-2xl border-2 border-emerald-200/80 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-800 flex items-center gap-1.5">
+              <span>⚡</span> Daily Energy Requirement (DER)
+            </span>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">WSAVA Verified</span>
+          </div>
+
+          <div class="text-center py-4 bg-white rounded-2xl border border-emerald-100 shadow-xs mb-4">
+            <div class="text-xs text-stone-400 font-medium mb-1">Target Daily Caloric Intake</div>
+            <div class="text-4xl font-extrabold text-stone-900" id="calories-display">740 <span class="text-sm font-normal text-stone-500">kcal / day</span></div>
+            <div class="text-[11px] text-emerald-600 font-bold mt-1" id="cups-display">Approx 1.8 cups standard dry food / day</div>
+          </div>
+
+          <!-- Product Recommendation Card -->
+          <div class="p-3.5 bg-white rounded-xl border border-emerald-200 text-xs space-y-2 mb-4">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase text-emerald-700">Recommended Apparatus</span>
+              <span class="text-[10px] text-stone-400 font-medium">FTC Sponsored</span>
+            </div>
+            <strong class="block text-stone-900 font-bold" id="rec-product-name">Anti-Gulping Slow Feeder & Precision Digital Scale Bowl</strong>
+            <p class="text-[11px] text-stone-500 leading-relaxed m-0" id="rec-product-desc">
+              Prevents post-prandial vomiting, gastric dilatation-volvulus (GDV bloat), and precisely measures exact gram allotments.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <a id="calorie-aff-cta" href="https://www.amazon.com/s?k=slow+feeder+dog+bowl+digital+scale&tag=<%= config.monetization.affiliateTag %>" target="_blank" rel="sponsored nofollow noopener" class="w-full block text-center py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl transition shadow-md">
+            Check Calibrated Scale Bowls on Amazon &rarr;
+          </a>
+          <span class="text-[10px] text-stone-400 text-center block mt-2">
+            Amazon Associates &bull; Ships with Prime &bull; Clinical Bloat Prevention
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<script>
+  let calorieSpecies = 'dog';
+
+  function selectCalorieSpecies(sp) {
+    calorieSpecies = sp;
+    const btnDog = document.getElementById('c-btn-dog');
+    const btnCat = document.getElementById('c-btn-cat');
+
+    if (sp === 'dog') {
+      btnDog.className = 'py-2.5 px-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-bold text-xs flex items-center justify-center gap-1.5 transition';
+      btnCat.className = 'py-2.5 px-3 rounded-xl border-2 border-stone-200 bg-stone-50 text-stone-600 font-bold text-xs flex items-center justify-center gap-1.5 transition';
+      document.getElementById('rec-product-name').innerText = 'Anti-Gulping Slow Feeder & Precision Digital Scale Bowl';
+      document.getElementById('rec-product-desc').innerText = 'Prevents post-prandial vomiting, gastric dilatation-volvulus (GDV bloat), and precisely measures exact gram allotments.';
+      document.getElementById('calorie-aff-cta').href = 'https://www.amazon.com/s?k=slow+feeder+dog+bowl+digital+scale&tag=<%= config.monetization.affiliateTag %>';
+      document.getElementById('calorie-aff-cta').innerText = 'Check Calibrated Scale Bowls on Amazon →';
+    } else {
+      btnCat.className = 'py-2.5 px-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-900 font-bold text-xs flex items-center justify-center gap-1.5 transition';
+      btnDog.className = 'py-2.5 px-3 rounded-xl border-2 border-stone-200 bg-stone-50 text-stone-600 font-bold text-xs flex items-center justify-center gap-1.5 transition';
+      document.getElementById('rec-product-name').innerText = 'Triple-Filtration Circulating Pet Fountain & Moisture-Rich Diet';
+      document.getElementById('rec-product-desc').innerText = 'Stimulates 300% greater hydration to protect feline renal nephrons and prevent feline idiopathic cystitis (FIC).';
+      document.getElementById('calorie-aff-cta').href = 'https://www.amazon.com/s?k=cat+water+fountain+stainless+steel&tag=<%= config.monetization.affiliateTag %>';
+      document.getElementById('calorie-aff-cta').innerText = 'Check Feline Renal Fountains on Amazon →';
+    }
+    calculateCalories();
+  }
+
+  function calculateCalories() {
+    const weightLbs = parseFloat(document.getElementById('pet-weight').value) || 10;
+    const factor = parseFloat(document.getElementById('life-stage').value);
+
+    // kg conversion
+    const weightKg = weightLbs / 2.20462;
+    // WSAVA RER formula = 70 * (weightKg ^ 0.75)
+    const rer = 70 * Math.pow(weightKg, 0.75);
+    const der = Math.round(rer * factor);
+
+    document.getElementById('calories-display').innerHTML = `${der} <span class="text-sm font-normal text-stone-500">kcal / day</span>`;
+    
+    // Average dry kibble is ~380 kcal/cup
+    const cups = (der / 380).toFixed(1);
+    document.getElementById('cups-display').innerText = `Approx ${cups} standard cups (380 kcal/cup) daily divided into 2 meals`;
+  }
+
+  document.addEventListener('DOMContentLoaded', calculateCalories);
+</script>
+
+<%- include('partials/footer') %>

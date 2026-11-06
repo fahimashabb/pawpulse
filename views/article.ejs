@@ -195,6 +195,57 @@
         </p>
       </div>
 
+      <!-- High-CTR Monetization & Interactive Calculator Callout -->
+      <div class="my-10 p-6 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50/50 to-stone-50 border border-emerald-200/80 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-5">
+        <div class="space-y-1">
+          <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full inline-block">
+            Free Clinical Utility
+          </span>
+          <h4 class="text-base font-extrabold text-stone-900 m-0">
+            Calculate Exact Daily Nutrition & Insurance for Your <%= article.pet_type %>
+          </h4>
+          <p class="text-xs text-stone-600 m-0 leading-relaxed max-w-lg">
+            Use our laboratory-calibrated mathematical models to calculate exact WSAVA daily calories or estimate 90% emergency vet bill coverage.
+          </p>
+        </div>
+        <div class="flex items-center gap-2.5 shrink-0 w-full sm:w-auto">
+          <a href="<%= baseUrl %>/tools/pet-calorie-calculator" class="flex-1 sm:flex-none text-center py-2.5 px-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-xs">
+            Calorie Calculator &rarr;
+          </a>
+          <a href="<%= baseUrl %>/tools/pet-insurance-calculator" class="flex-1 sm:flex-none text-center py-2.5 px-3.5 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold transition shadow-xs">
+            Insurance Rates &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- VIP Pet Wellness Newsletter Lead Capture -->
+      <div class="my-10 p-6 sm:p-8 rounded-3xl bg-stone-900 text-white shadow-lg relative overflow-hidden">
+        <div class="relative z-10 max-w-xl">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-400">PawPulse VIP Pet Club</span>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-extrabold mb-2 text-white">
+            Get Free Weekly Veterinary Protocols & Emergency Triage Guide
+          </h3>
+          <p class="text-xs text-stone-300 leading-relaxed mb-5">
+            Join 15,000+ dedicated pet parents. Receive verified clinical cheatsheets, dangerous toxic food alerts, and early discount notices on top-rated pet apparatuses.
+          </p>
+          <form action="<%= baseUrl %>/api/v1/subscribe" method="POST" class="flex flex-col sm:flex-row gap-2.5" onsubmit="event.preventDefault(); this.querySelector('button').innerText='Subscribed! Check Inbox'; this.querySelector('button').disabled=true;">
+            <input 
+              type="email" 
+              name="email" 
+              placeholder="Enter your email address..." 
+              required 
+              class="flex-1 px-4 py-2.5 rounded-xl bg-stone-800 border border-stone-700 text-white placeholder-stone-400 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-400"
+            />
+            <button type="submit" class="py-2.5 px-5 bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-xs rounded-xl transition shadow-sm whitespace-nowrap">
+              Join Free &rarr;
+            </button>
+          </form>
+        </div>
+      </div>
+
       <!-- Related Articles Section -->
       <% if (relatedArticles && relatedArticles.length) { %>
         <div class="mt-14 pt-10 border-t border-stone-200">

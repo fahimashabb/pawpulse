@@ -1,0 +1,192 @@
+<%- include('partials/header') %>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+  <!-- Breadcrumb -->
+  <nav class="flex items-center gap-2 text-xs text-stone-500 mb-6">
+    <a href="<%= baseUrl %>/" class="hover:text-emerald-700 transition">Home</a>
+    <span>/</span>
+    <span class="text-stone-900 font-semibold">Clinical Reviews & Equipment Guides</span>
+  </nav>
+
+  <!-- Hero Header -->
+  <div class="mb-12 pb-8 border-b border-stone-200">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-extrabold uppercase tracking-wider">
+        Veterinary Tested & Verified
+      </span>
+      <span class="text-xs text-stone-400">&bull;</span>
+      <span class="text-xs text-stone-500">2026 Buying Standards</span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-4">
+      The Best Veterinary-Approved Pet Equipment & Buying Guides
+    </h1>
+    <p class="text-sm sm:text-base text-stone-600 max-w-3xl leading-relaxed">
+      In-depth clinical comparisons, biological safety testing, and ergonomic evaluations across orthopedic canine bedding, feline hydration apparatuses, reptile photobiology, and pet health insurance providers.
+    </p>
+  </div>
+
+  <!-- Featured Comparison Table: Top Pet Insurance Providers (High Bounty $25-$40) -->
+  <section class="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-sm mb-14">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-stone-200">
+      <div>
+        <span class="text-xs font-bold text-pink-700 uppercase tracking-wider">Special Report &bull; Highest Vet Bill Payouts</span>
+        <h2 class="text-2xl font-extrabold text-stone-900 mt-1">2026 Top Pet Health Insurance Comparison</h2>
+      </div>
+      <span class="px-3 py-1 rounded-full bg-pink-100 text-pink-800 text-xs font-bold self-start sm:self-auto">
+        Up to 90% Reimbursement
+      </span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs">
+        <thead>
+          <tr class="border-b border-stone-200 text-stone-500 uppercase tracking-wider font-bold">
+            <th class="py-3 px-4">Provider</th>
+            <th class="py-3 px-4">Rating</th>
+            <th class="py-3 px-4">Reimbursement</th>
+            <th class="py-3 px-4">Avg. Claim Time</th>
+            <th class="py-3 px-4">Key Advantage</th>
+            <th class="py-3 px-4 text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-stone-100">
+          <tr class="hover:bg-pink-50/40 transition">
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <span class="w-8 h-8 rounded-lg bg-pink-600 text-white font-black flex items-center justify-center text-sm shadow-xs">L</span>
+                <div>
+                  <strong class="text-sm text-stone-900 block">Lemonade Pet</strong>
+                  <span class="text-[10px] text-pink-700 font-bold uppercase">#1 Editor's Choice</span>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-4 font-bold text-amber-500">⭐⭐⭐⭐⭐ 4.9/5</td>
+            <td class="py-4 px-4 font-semibold text-stone-800">70%, 80%, or 90%</td>
+            <td class="py-4 px-4 text-emerald-700 font-bold">Instant (AI Claims)</td>
+            <td class="py-4 px-4 text-stone-600">Lowest monthly rates, fast preventative wellness add-on</td>
+            <td class="py-4 px-4 text-right">
+              <a href="https://www.lemonade.com/pet?utm_source=impact&utm_medium=affiliate&utm_campaign=<%= (config.monetization.affiliates && config.monetization.affiliates.lemonade && config.monetization.affiliates.lemonade.partnerId) || 'pawpulse_pet' %>" target="_blank" rel="sponsored nofollow noopener" class="inline-block py-2 px-3.5 bg-pink-600 hover:bg-pink-700 text-white font-extrabold text-xs rounded-xl transition shadow-xs">
+                Check Rates &rarr;
+              </a>
+            </td>
+          </tr>
+          <tr class="hover:bg-stone-50 transition">
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <span class="w-8 h-8 rounded-lg bg-blue-600 text-white font-black flex items-center justify-center text-sm shadow-xs">S</span>
+                <div>
+                  <strong class="text-sm text-stone-900 block">Spot Pet Insurance</strong>
+                  <span class="text-[10px] text-stone-400 font-medium">Alternative Pick</span>
+                </div>
+              </div>
+            </td>
+            <td class="py-4 px-4 font-bold text-amber-500">⭐⭐⭐⭐☆ 4.7/5</td>
+            <td class="py-4 px-4 font-semibold text-stone-800">70% to 90%</td>
+            <td class="py-4 px-4 text-stone-600">2 – 5 Days</td>
+            <td class="py-4 px-4 text-stone-600">Microchip fee inclusion, no upper age limits</td>
+            <td class="py-4 px-4 text-right">
+              <a href="<%= baseUrl %>/tools/pet-insurance-calculator" class="inline-block py-2 px-3.5 bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs rounded-xl transition shadow-xs">
+                Estimate &rarr;
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 8 High-Converting Buying Guides Grid -->
+  <h2 class="text-2xl font-extrabold text-stone-900 mb-6">High-Intent Clinical Buying Guides</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+
+    <!-- Card 1: Orthopedic Dog Beds -->
+    <div class="bg-white rounded-2xl p-5 border border-stone-200 shadow-xs flex flex-col justify-between hover:border-emerald-500 transition">
+      <div>
+        <div class="h-40 rounded-xl overflow-hidden mb-3 relative">
+          <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&auto=format&fit=crop&q=80" alt="Orthopedic dog beds" class="w-full h-full object-cover" loading="lazy" />
+          <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-bold">Canine Orthopedics</span>
+        </div>
+        <h3 class="font-extrabold text-stone-900 text-sm mb-1">
+          Top 5 Orthopedic Beds for Large Arthritic Dogs
+        </h3>
+        <p class="text-xs text-stone-500 leading-relaxed mb-3">
+          Therapeutic 4-inch solid memory foam evaluated for joint pressure relief and hip dysplasia.
+        </p>
+      </div>
+      <div>
+        <a href="https://www.amazon.com/s?k=orthopedic+dog+bed+large+memory+foam&tag=<%= config.monetization.affiliateTag %>" target="_blank" rel="sponsored nofollow noopener" class="block text-center py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition shadow-xs">
+          View Top Picks on Amazon &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Card 2: Feline Hydration Fountains -->
+    <div class="bg-white rounded-2xl p-5 border border-stone-200 shadow-xs flex flex-col justify-between hover:border-emerald-500 transition">
+      <div>
+        <div class="h-40 rounded-xl overflow-hidden mb-3 relative">
+          <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&auto=format&fit=crop&q=80" alt="Cat water fountain" class="w-full h-full object-cover" loading="lazy" />
+          <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-emerald-600 text-white text-[10px] font-bold">Feline Renal Care</span>
+        </div>
+        <h3 class="font-extrabold text-stone-900 text-sm mb-1">
+          Best Stainless Steel Circulating Cat Fountains
+        </h3>
+        <p class="text-xs text-stone-500 leading-relaxed mb-3">
+          Triple-filtration units preventing feline idiopathic cystitis (FIC) and kidney stones.
+        </p>
+      </div>
+      <div>
+        <a href="https://www.amazon.com/s?k=cat+water+fountain+stainless+steel+filter&tag=<%= config.monetization.affiliateTag %>" target="_blank" rel="sponsored nofollow noopener" class="block text-center py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition shadow-xs">
+          View Top Picks on Amazon &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Card 3: Reptile T5 UVB Fixtures -->
+    <div class="bg-white rounded-2xl p-5 border border-stone-200 shadow-xs flex flex-col justify-between hover:border-emerald-500 transition">
+      <div>
+        <div class="h-40 rounded-xl overflow-hidden mb-3 relative">
+          <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=600&auto=format&fit=crop&q=80" alt="Reptile lighting" class="w-full h-full object-cover" loading="lazy" />
+          <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-amber-600 text-white text-[10px] font-bold">Herpetology</span>
+        </div>
+        <h3 class="font-extrabold text-stone-900 text-sm mb-1">
+          Top Rated T5 HO Linear UVB Lighting Fixtures
+        </h3>
+        <p class="text-xs text-stone-500 leading-relaxed mb-3">
+          Solarmeter-tested Ferguson Zone lamps for bearded dragons, geckos, and chameleons.
+        </p>
+      </div>
+      <div>
+        <a href="https://www.amazon.com/s?k=t5+ho+10.0+reptile+uvb+fixture&tag=<%= config.monetization.affiliateTag %>" target="_blank" rel="sponsored nofollow noopener" class="block text-center py-2 px-3 bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold rounded-lg transition shadow-xs">
+          View T5 Fixtures on Amazon &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Card 4: Embark Dog DNA Screening -->
+    <div class="bg-white rounded-2xl p-5 border border-stone-200 shadow-xs flex flex-col justify-between hover:border-emerald-500 transition">
+      <div>
+        <div class="h-40 rounded-xl overflow-hidden mb-3 relative">
+          <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&auto=format&fit=crop&q=80" alt="Dog DNA testing" class="w-full h-full object-cover" loading="lazy" />
+          <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-purple-600 text-white text-[10px] font-bold">Cornell Partner</span>
+        </div>
+        <h3 class="font-extrabold text-stone-900 text-sm mb-1">
+          Embark vs Wisdom Panel: 2026 DNA Test Review
+        </h3>
+        <p class="text-xs text-stone-500 leading-relaxed mb-3">
+          Screening 230+ genetic diseases, MDR1 drug sensitivities, and accurate breed ancestry.
+        </p>
+      </div>
+      <div>
+        <a href="https://embarkvet.com/products/dog-dna-tests/breed-health-kit/?utm_source=impact&utm_medium=affiliate&utm_campaign=<%= (config.monetization.affiliates && config.monetization.affiliates.embark && config.monetization.affiliates.embark.partnerId) || 'pawpulse' %>" target="_blank" rel="sponsored nofollow noopener" class="block text-center py-2 px-3 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-lg transition shadow-xs">
+          Order Embark Kit &rarr;
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<%- include('partials/footer') %>

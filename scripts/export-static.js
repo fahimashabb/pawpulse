@@ -172,6 +172,61 @@ async function exportStaticSite() {
   fs.writeFileSync(path.join(DIST_DIR, 'affiliates', 'index.html'), affiliatesHtml);
   fileCount++;
 
+  // 4f. Render Clinical Reviews & Buying Guides Hub (/reviews/index.html) - Top Commercial Affiliate Hub
+  const reviewsHtml = await renderTemplate('reviews', {
+    title: `Best Veterinary Pet Gear & Equipment Buying Guides (2026) — ${config.site.name}`,
+    metaDescription: 'Comprehensive clinical reviews, comparison matrices, and veterinary testing for pet health insurance, orthopedic beds, cat fountains, and reptile lighting.',
+    pageType: 'website',
+    currentPath: '/reviews'
+  });
+  ensureDirSync(path.join(DIST_DIR, 'reviews'));
+  fs.writeFileSync(path.join(DIST_DIR, 'reviews', 'index.html'), reviewsHtml);
+  fileCount++;
+
+  // 4g. Render Tools Hub (/tools/index.html)
+  const toolsHtml = await renderTemplate('tools', {
+    title: `Interactive Pet Health & Care Calculators — ${config.site.name}`,
+    metaDescription: 'Free veterinary calculators: Pet insurance rate estimator, WSAVA daily calorie formula, and reptile UVB Ferguson zone calculator.',
+    pageType: 'website',
+    currentPath: '/tools'
+  });
+  ensureDirSync(path.join(DIST_DIR, 'tools'));
+  fs.writeFileSync(path.join(DIST_DIR, 'tools', 'index.html'), toolsHtml);
+  fileCount++;
+
+  // 4h. Render Pet Insurance Calculator (/tools/pet-insurance-calculator/index.html)
+  const toolInsuranceHtml = await renderTemplate('tool-insurance', {
+    title: `Pet Health Insurance Cost & Rate Estimator (2026) — ${config.site.name}`,
+    metaDescription: 'Calculate estimated monthly pet insurance premiums with 90% veterinary reimbursement for dogs and cats.',
+    pageType: 'website',
+    currentPath: '/tools/pet-insurance-calculator'
+  });
+  ensureDirSync(path.join(DIST_DIR, 'tools', 'pet-insurance-calculator'));
+  fs.writeFileSync(path.join(DIST_DIR, 'tools', 'pet-insurance-calculator', 'index.html'), toolInsuranceHtml);
+  fileCount++;
+
+  // 4i. Render Pet Calorie Calculator (/tools/pet-calorie-calculator/index.html)
+  const toolCaloriesHtml = await renderTemplate('tool-calories', {
+    title: `Veterinary Daily Calorie & Feeding Calculator — ${config.site.name}`,
+    metaDescription: 'Calculate scientifically calibrated RER and DER daily calorie intake and feeding portion sizes for dogs and cats.',
+    pageType: 'website',
+    currentPath: '/tools/pet-calorie-calculator'
+  });
+  ensureDirSync(path.join(DIST_DIR, 'tools', 'pet-calorie-calculator'));
+  fs.writeFileSync(path.join(DIST_DIR, 'tools', 'pet-calorie-calculator', 'index.html'), toolCaloriesHtml);
+  fileCount++;
+
+  // 4j. Render Reptile UVB Calculator (/tools/reptile-uvb-calculator/index.html)
+  const toolUvbHtml = await renderTemplate('tool-uvb', {
+    title: `Reptile UVB Ferguson Zone & Lamp Distance Calculator — ${config.site.name}`,
+    metaDescription: 'Determine exact UV Index (UVI), Ferguson Zones, and T5 HO linear tube mounting distances for bearded dragons, geckos, and chameleons.',
+    pageType: 'website',
+    currentPath: '/tools/reptile-uvb-calculator'
+  });
+  ensureDirSync(path.join(DIST_DIR, 'tools', 'reptile-uvb-calculator'));
+  fs.writeFileSync(path.join(DIST_DIR, 'tools', 'reptile-uvb-calculator', 'index.html'), toolUvbHtml);
+  fileCount++;
+
   // 5. Render Search Page (/search/index.html)
   const searchHtml = await renderTemplate('search', {
     title: `Search Pet Guides — ${config.site.name}`,
@@ -236,6 +291,9 @@ async function exportStaticSite() {
     const howToSchema = seoHelper.generateHowToSchema(art, config);
     const faqSchema = seoHelper.generateFAQSchema(art.faqs_json);
     const breadcrumbSchema = seoHelper.generateBreadcrumbSchema(breadcrumbs, config);
+    const productSchema = seoHelper.generateProductReviewSchema([
+      { name: `${art.pet_type} Clinical Care & Wellness Kit`, description: art.meta_description, image: art.featured_image }
+    ], config, `${config.site.url}/blog/${art.slug}`);
     const relatedArticles = db.getRelatedArticles(art.category_slug, art.slug, 3);
 
     const artHtml = await renderTemplate('article', {
@@ -248,6 +306,7 @@ async function exportStaticSite() {
       howToSchema,
       faqSchema,
       breadcrumbSchema,
+      productSchema,
       relatedArticles,
       popularArticles,
       pageType: 'article',
@@ -263,6 +322,11 @@ async function exportStaticSite() {
   // 9. Generate Sitemap.xml in /dist
   let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
   sitemapXml += `  <url><loc>${config.site.url}/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>\n`;
+  sitemapXml += `  <url><loc>${config.site.url}/reviews</loc><changefreq>daily</changefreq><priority>0.9</priority></url>\n`;
+  sitemapXml += `  <url><loc>${config.site.url}/tools</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>\n`;
+  sitemapXml += `  <url><loc>${config.site.url}/tools/pet-insurance-calculator</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>\n`;
+  sitemapXml += `  <url><loc>${config.site.url}/tools/pet-calorie-calculator</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>\n`;
+  sitemapXml += `  <url><loc>${config.site.url}/tools/reptile-uvb-calculator</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>\n`;
   sitemapXml += `  <url><loc>${config.site.url}/popular</loc><changefreq>daily</changefreq><priority>0.8</priority></url>\n`;
   sitemapXml += `  <url><loc>${config.site.url}/affiliates</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>\n`;
   sitemapXml += `  <url><loc>${config.site.url}/about</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>\n`;

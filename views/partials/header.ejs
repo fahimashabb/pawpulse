@@ -109,6 +109,13 @@
     </script>
   <% } %>
 
+  <% if (typeof productSchema !== 'undefined' && productSchema) { %>
+    <!-- JSON-LD Product & Review Schema (Google Star Rating Rich Snippet) -->
+    <script type="application/ld+json">
+      <%- productSchema %>
+    </script>
+  <% } %>
+
   <!-- Google Sitelinks SearchBox Schema (WebSite SearchAction) -->
   <script type="application/ld+json">
     {
@@ -190,10 +197,18 @@
         </div>
 
         <!-- Quick Navigation -->
-        <nav class="flex items-center gap-3 shrink-0">
+        <nav class="flex items-center gap-2 sm:gap-3 shrink-0">
+          <a href="<%= baseUrl %>/reviews" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-stone-700 hover:bg-stone-100 transition">
+            <span class="text-amber-500 font-extrabold">⭐</span>
+            <span>Reviews</span>
+          </a>
+          <a href="<%= baseUrl %>/tools" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-stone-700 hover:bg-stone-100 transition">
+            <span class="text-emerald-600 font-extrabold">🧮</span>
+            <span>Pet Tools</span>
+          </a>
           <a href="<%= baseUrl %>/popular" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-stone-700 hover:bg-stone-100 transition">
             <span class="text-rose-500 font-extrabold">🔥</span>
-            <span>Most Popular</span>
+            <span>Trending</span>
           </a>
           <a href="<%= baseUrl %>/admin/automation" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200 text-xs font-extrabold transition">
             <span>⚙️</span>
