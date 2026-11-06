@@ -32,7 +32,7 @@
       
       <% if (articles && articles.length > 0) { %>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <% articles.forEach(art => { %>
+          <% articles.forEach((art, idx) => { %>
             <article class="bg-white rounded-2xl border border-stone-200/80 overflow-hidden shadow-xs hover:shadow-md transition duration-300 flex flex-col group">
               <div class="relative h-48 overflow-hidden bg-stone-100">
                 <img src="<%= art.featured_image %>" alt="<%= art.title %>" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" loading="lazy" />
@@ -67,6 +67,13 @@
                 </div>
               </div>
             </article>
+
+            <% if (idx === 3) { %>
+              <!-- In-Feed Native Category Ad Placement -->
+              <div class="col-span-1 md:col-span-2 my-2">
+                <%- include('partials/ad-slot', { type: 'inContentMid' }) %>
+              </div>
+            <% } %>
           <% }) %>
         </div>
 

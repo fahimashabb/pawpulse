@@ -58,6 +58,13 @@
               </div>
             </div>
           </article>
+
+          <% if (idx === 3) { %>
+            <!-- In-Feed Native Popular Ad Placement -->
+            <div class="col-span-1 md:col-span-2 my-2">
+              <%- include('partials/ad-slot', { type: 'inContentMid' }) %>
+            </div>
+          <% } %>
         <% }) %>
       </div>
     </div>
