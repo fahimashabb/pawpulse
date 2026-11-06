@@ -315,6 +315,207 @@ app.get('/rss.xml', (req, res) => {
   res.send(rss);
 });
 
+// 9b. JSON Feed v1.1 Specification (RFC/v1.1)
+app.get(['/feed.json', '/api/v1/feed.json'], (req, res) => {
+  const articles = db.getAllArticles(50, 0);
+  const baseUrl = config.site.url;
+
+  const jsonFeed = {
+    version: 'https://jsonfeed.org/version/1.1',
+    title: config.site.name,
+    home_page_url: baseUrl,
+    feed_url: `${baseUrl}/feed.json`,
+    description: config.site.description,
+    icon: `${baseUrl}/favicon.ico`,
+    favicon: `${baseUrl}/favicon.ico`,
+    authors: [
+      {
+        name: config.site.authorDefault,
+        url: `${baseUrl}/about`
+      }
+    ],
+    items: articles.map(art => ({
+      id: `${baseUrl}/blog/${art.slug}`,
+      url: `${baseUrl}/blog/${art.slug}`,
+      title: art.title,
+      summary: art.excerpt,
+      image: art.featured_image,
+      date_published: new Date(art.published_at).toISOString(),
+      date_modified: new Date(art.updated_at || art.published_at).toISOString(),
+      author: {
+        name: art.author_name
+      },
+      tags: (() => {
+        try {
+          return JSON.parse(art.tags);
+        } catch {
+          return [art.category_slug, art.pet_type];
+        }
+      })()
+    }))
+  };
+
+  res.header('Content-Type', 'application/feed+json; charset=utf-8');
+  res.json(jsonFeed);
+});
+
+// 9c. Compact Search Index API (Fast autocomplete & GitHub Pages parity)
+app.get('/api/search-index.json', (req, res) => {
+  const searchIndex = db.getSearchIndex();
+  res.header('Cache-Control', 'public, max-age=300');
+  res.json(searchIndex);
+});
+
+// =============================================================
+// REST API v1 ENDPOINTS
+// =============================================================
+
+// GET /api/v1/articles - Paginated article archive
+app.get('/api/v1/articles', (req, res) => {
+  const limit = Math.min(parseInt(req.query.limit, 10) || 20, 100);
+  const offset = Math.max(parseInt(req.query.offset, 10) || 0, 0);
+  const category = req.query.category ? req.query.category.trim() : null;
+
+  let articles = [];
+  let total = 0;
+
+  if (category) {
+    articles = db.getArticlesByCategory(category, limit, offset);
+    total = db.getCategoryArticleCount(category);
+  } else {
+    articles = db.getAllArticles(limit, offset);
+    total = db.getArticleCount();
+  }
+
+  res.json({
+    success: true,
+    count: articles.length,
+    total,
+    limit,
+    offset,
+    articles: articles.map(a => ({
+      slug: a.slug,
+      title: a.title,
+      meta_description: a.meta_description,
+      category_slug: a.category_slug,
+      pet_type: a.pet_type,
+      featured_image: a.featured_image,
+      author_name: a.author_name,
+      reading_time_minutes: a.reading_time_minutes,
+      views: a.views,
+      published_at: a.published_at
+    }))
+  });
+});
+
+// GET /api/v1/articles/:slug - Complete single article with parsed schemas
+app.get('/api/v1/articles/:slug', (req, res) => {
+  const article = db.getArticleBySlug(req.params.slug);
+  if (!article) {
+    return res.status(404).json({ success: false, error: 'Article not found' });
+  }
+
+  let faqs = [];
+  let howTo = [];
+  let tags = [];
+  try { faqs = JSON.parse(article.faqs_json); } catch {}
+  try { howTo = JSON.parse(article.how_to_json); } catch {}
+  try { tags = JSON.parse(article.tags); } catch {}
+
+  res.json({
+    success: true,
+    article: {
+      ...article,
+      faqs,
+      how_to: howTo,
+      tags
+    }
+  });
+});
+
+// GET /api/v1/search - JSON search API
+app.get('/api/v1/search', (req, res) => {
+  const query = req.query.q ? req.query.q.trim() : '';
+  const limit = Math.min(parseInt(req.query.limit, 10) || 20, 50);
+
+  if (!query) {
+    return res.json({ success: true, query: '', count: 0, results: [] });
+  }
+
+  const results = db.searchArticles(query, limit);
+  res.json({
+    success: true,
+    query,
+    count: results.length,
+    results: results.map(r => ({
+      slug: r.slug,
+      title: r.title,
+      excerpt: r.excerpt,
+      pet_type: r.pet_type,
+      category_slug: r.category_slug,
+      featured_image: r.featured_image,
+      reading_time_minutes: r.reading_time_minutes,
+      published_at: r.published_at
+    }))
+  });
+});
+
+// GET /api/v1/stats - Realtime platform metrics
+app.get('/api/v1/stats', (req, res) => {
+  const totalArticles = db.getArticleCount();
+  const categoryCounts = config.categories.map(c => ({
+    name: c.name,
+    slug: c.slug,
+    count: db.getCategoryArticleCount(c.slug)
+  }));
+  const schedulerStatus = scheduler.getSchedulerStatus();
+
+  res.json({
+    success: true,
+    platform: config.site.name,
+    totalArticles,
+    categories: categoryCounts,
+    scheduler: schedulerStatus,
+    integrations: {
+      gemini: {
+        enabled: config.integrations?.gemini?.enabled || false,
+        model: config.integrations?.gemini?.model || 'gemini-3.5-flash-lite',
+        active: !!process.env.GEMINI_API_KEY
+      },
+      monetization: {
+        adsenseEnabled: config.monetization.enabled,
+        clientId: config.monetization.adsenseClientId
+      }
+    }
+  });
+});
+
+// POST /api/v1/generate - On-demand AI article generation
+app.post('/api/v1/generate', async (req, res) => {
+  try {
+    const { prompt, species, useGemini } = req.body;
+    const article = await generateAndPublishSingleArticle(prompt || null, {
+      speciesName: species || null,
+      useGemini: useGemini !== false
+    });
+    db.checkpoint();
+    res.json({
+      success: true,
+      article: {
+        slug: article.slug,
+        title: article.title,
+        url: `${config.site.url}/blog/${article.slug}`,
+        localUrl: `/blog/${article.slug}`,
+        pet_type: article.pet_type,
+        category: article.category_slug,
+        published_at: article.published_at
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // 10. Admin Automation Dashboard
 app.get('/admin/automation', (req, res) => {
   const status = scheduler.getSchedulerStatus();
@@ -362,8 +563,12 @@ app.post('/admin/automation/toggle-scheduler', (req, res) => {
 // Admin Action: Publish Custom Single Article
 app.post('/admin/automation/publish-custom', async (req, res) => {
   try {
-    const prompt = req.body.prompt;
-    const article = await generateAndPublishSingleArticle(prompt);
+    const { prompt, species, useGemini } = req.body;
+    const article = await generateAndPublishSingleArticle(prompt, {
+      speciesName: species || null,
+      useGemini: useGemini === '1' || useGemini === 'true' || useGemini === true
+    });
+    db.checkpoint();
     res.redirect(`/blog/${article.slug}`);
   } catch (err) {
     res.redirect(`/admin/automation?msg=Error:+${encodeURIComponent(err.message)}`);

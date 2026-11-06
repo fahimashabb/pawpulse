@@ -262,6 +262,15 @@ module.exports = {
     return stmt.all(limit);
   },
 
+  getSearchIndex() {
+    const stmt = db.prepare(`
+      SELECT slug, title, pet_type, category_slug, featured_image, excerpt, reading_time_minutes, published_at
+      FROM articles 
+      ORDER BY datetime(published_at) DESC
+    `);
+    return stmt.all();
+  },
+
   checkpoint() {
     try {
       db.exec('PRAGMA wal_checkpoint(TRUNCATE);');

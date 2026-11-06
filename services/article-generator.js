@@ -5,8 +5,23 @@
  * with unique high-resolution species photography, clinical schemas, and FAQs.
  */
 
+const config = require('../config.json');
 const { insertArticle, getArticleBySlug, logPublishing, db } = require('../database/db');
 const { generateSlug, calculateReadingTime } = require('./seo-helper');
+
+// Lazy-loaded Google Gen AI Client
+let aiClient = null;
+function getGeminiClient() {
+  if (!aiClient && process.env.GEMINI_API_KEY) {
+    try {
+      const { GoogleGenAI } = require('@google/genai');
+      aiClient = new GoogleGenAI({});
+    } catch (err) {
+      console.warn('[Gemini] Failed to initialize GoogleGenAI client:', err.message);
+    }
+  }
+  return aiClient;
+}
 
 // ============================================================================
 // 1. EXTENSIVE SPECIES & BREED KNOWLEDGE GRAPH (50+ Species & Lineages)
@@ -650,40 +665,115 @@ const VET_TEAM = [
 ];
 
 // ============================================================================
-// 4. GENERATE A SINGLE COMPLETE, UNMATCHED ARTICLE
+// 4. GEMINI AI CLINICAL SYNTHESIZER
 // ============================================================================
-async function generateAndPublishSingleArticle(customPrompt = null) {
+async function generateWithGemini({ prompt, species, category }) {
+  const ai = getGeminiClient();
+  if (!ai) {
+    throw new Error('Gemini API client not initialized or GEMINI_API_KEY missing.');
+  }
+
+  const modelName = (config.integrations && config.integrations.gemini && config.integrations.gemini.model) || 'gemini-3.5-flash-lite';
+
+  const systemPrompt = `You are a board-certified veterinary medical specialist and animal ethologist writing for PawPulse.
+Provide a comprehensive, authoritative, science-backed veterinary guide on the requested pet topic.
+Respond with pure JSON only, without markdown code fences (\`\`\`json). The JSON must have these exact keys:
+{
+  "title": "Authoritative, engaging headline",
+  "lead": "Engaging 2-sentence clinical lead summarizing the core advice",
+  "section1Title": "First major section heading",
+  "section1": "Detailed paragraph exploring biological, neurological, or behavioral baselines (minimum 120 words)",
+  "section2Title": "Second major section heading",
+  "section2": "Clinical management protocols, diagnosis, or care steps (minimum 150 words)",
+  "warnings": "Critical veterinary red flags, emergency symptoms, or common owner mistakes",
+  "steps": [
+    { "stepNumber": 1, "name": "Step Title", "description": "Actionable instructions" },
+    { "stepNumber": 2, "name": "Step Title", "description": "Actionable instructions" },
+    { "stepNumber": 3, "name": "Step Title", "description": "Actionable instructions" }
+  ],
+  "faqs": [
+    { "q": "Frequently asked question 1", "a": "Clear veterinary answer" },
+    { "q": "Frequently asked question 2", "a": "Clear veterinary answer" },
+    { "q": "Frequently asked question 3", "a": "Clear veterinary answer" }
+  ],
+  "tags": ["tag1", "tag2", "tag3", "tag4"]
+}`;
+
+  const userPrompt = `Topic: "${prompt}". Species/Subject: ${species.name} (${species.latin || species.breed}). Category: ${category}.`;
+
+  const resp = await ai.models.generateContent({
+    model: modelName,
+    contents: `${systemPrompt}\n\n${userPrompt}`
+  });
+
+  const rawText = resp.text || '';
+  const cleanJson = rawText.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
+  return JSON.parse(cleanJson);
+}
+
+// ============================================================================
+// 4b. GENERATE A SINGLE COMPLETE, UNMATCHED ARTICLE
+// ============================================================================
+async function generateAndPublishSingleArticle(customPrompt = null, options = {}) {
   // 1. Select random species and archetype
-  const species = SPECIES_CATALOG[Math.floor(Math.random() * SPECIES_CATALOG.length)];
+  let species = SPECIES_CATALOG[Math.floor(Math.random() * SPECIES_CATALOG.length)];
+  if (options.speciesName) {
+    const found = SPECIES_CATALOG.find(s => s.name.toLowerCase() === options.speciesName.toLowerCase() || s.category.toLowerCase() === options.speciesName.toLowerCase());
+    if (found) species = found;
+  }
   const archetype = TOPIC_ARCHETYPES[Math.floor(Math.random() * TOPIC_ARCHETYPES.length)];
   const author = VET_TEAM[Math.floor(Math.random() * VET_TEAM.length)];
 
   let title = '';
   let contentData = null;
+  let customTags = null;
 
-  if (customPrompt) {
-    title = customPrompt;
-    contentData = archetype.generateContent(species, title, customPrompt);
-  } else if (archetype.actions) {
-    const action = archetype.actions[Math.floor(Math.random() * archetype.actions.length)];
-    const tmpl = archetype.titleTemplates[Math.floor(Math.random() * archetype.titleTemplates.length)];
-    title = tmpl.replace('{ACTION}', action).replace('{SPECIES}', species.name);
-    contentData = archetype.generateContent(species, title, action);
-  } else if (archetype.behaviors) {
-    const behavior = archetype.behaviors[Math.floor(Math.random() * archetype.behaviors.length)];
-    const tmpl = archetype.titleTemplates[Math.floor(Math.random() * archetype.titleTemplates.length)];
-    title = tmpl.replace('{BEHAVIOR}', behavior).replace('{SPECIES}', species.name);
-    contentData = archetype.generateContent(species, title, behavior);
-  } else if (archetype.pathologies) {
-    const pathology = archetype.pathologies[Math.floor(Math.random() * archetype.pathologies.length)];
-    const tmpl = archetype.titleTemplates[Math.floor(Math.random() * archetype.titleTemplates.length)];
-    title = tmpl.replace('{PATHOLOGY}', pathology).replace('{SPECIES}', species.name);
-    contentData = archetype.generateContent(species, title, pathology);
-  } else {
-    const topic = archetype.nutritionTopics[Math.floor(Math.random() * archetype.nutritionTopics.length)];
-    const tmpl = archetype.titleTemplates[Math.floor(Math.random() * archetype.titleTemplates.length)];
-    title = tmpl.replace('{NUTRITION_TOPIC}', topic).replace('{SPECIES}', species.name);
-    contentData = archetype.generateContent(species, title, topic);
+  // Try Gemini AI generation if enabled and requested
+  const shouldUseGemini = options.useGemini || (customPrompt && options.useGemini !== false && process.env.GEMINI_API_KEY && config.integrations?.gemini?.enabled);
+  if (shouldUseGemini) {
+    try {
+      console.log(`[Gemini AI] Synthesizing clinical article for "${customPrompt || species.name}"...`);
+      const geminiData = await generateWithGemini({
+        prompt: customPrompt || `Veterinary care, behavioral ethology, and clinical wellness for ${species.name}`,
+        species,
+        category: species.category
+      });
+      if (geminiData && geminiData.title && geminiData.lead) {
+        title = geminiData.title;
+        contentData = geminiData;
+        customTags = geminiData.tags || null;
+      }
+    } catch (geminiErr) {
+      console.warn('[Gemini AI] Generation error, falling back to clinical matrix engine:', geminiErr.message);
+    }
+  }
+
+  // Fallback to internal clinical matrix if not set
+  if (!contentData) {
+    if (customPrompt) {
+      title = customPrompt;
+      contentData = archetype.generateContent(species, title, customPrompt);
+    } else if (archetype.actions) {
+      const action = archetype.actions[Math.floor(Math.random() * archetype.actions.length)];
+      const tmpl = archetype.titleTemplates[Math.floor(Math.random() * archetype.titleTemplates.length)];
+      title = tmpl.replace('{ACTION}', action).replace('{SPECIES}', species.name);
+      contentData = archetype.generateContent(species, title, action);
+    } else if (archetype.behaviors) {
+      const behavior = archetype.behaviors[Math.floor(Math.random() * archetype.behaviors.length)];
+      const tmpl = archetype.titleTemplates[Math.floor(Math.random() * archetype.titleTemplates.length)];
+      title = tmpl.replace('{BEHAVIOR}', behavior).replace('{SPECIES}', species.name);
+      contentData = archetype.generateContent(species, title, behavior);
+    } else if (archetype.pathologies) {
+      const pathology = archetype.pathologies[Math.floor(Math.random() * archetype.pathologies.length)];
+      const tmpl = archetype.titleTemplates[Math.floor(Math.random() * archetype.titleTemplates.length)];
+      title = tmpl.replace('{PATHOLOGY}', pathology).replace('{SPECIES}', species.name);
+      contentData = archetype.generateContent(species, title, pathology);
+    } else {
+      const topic = archetype.nutritionTopics[Math.floor(Math.random() * archetype.nutritionTopics.length)];
+      const tmpl = archetype.titleTemplates[Math.floor(Math.random() * archetype.titleTemplates.length)];
+      title = tmpl.replace('{NUTRITION_TOPIC}', topic).replace('{SPECIES}', species.name);
+      contentData = archetype.generateContent(species, title, topic);
+    }
   }
 
   // 2. Guaranteed Unique Slug & Collision Prevention
@@ -852,7 +942,7 @@ async function generateAndPublishSingleArticle(customPrompt = null) {
     schema_type: archetype.schemaType,
     faqs_json: JSON.stringify(contentData.faqs.map(f => ({ question: f.q, answer: f.a }))),
     how_to_json: JSON.stringify(contentData.steps || []),
-    tags: JSON.stringify([species.name, species.category, 'pet-care', 'veterinary-protocol', species.breed]),
+    tags: JSON.stringify(customTags || [species.name, species.category, 'pet-care', 'veterinary-protocol', species.breed]),
     published_at: now,
     updated_at: now
   };
@@ -890,5 +980,7 @@ async function publishBatch(count = 200) {
 
 module.exports = {
   generateAndPublishSingleArticle,
-  publishBatch
+  generateWithGemini,
+  publishBatch,
+  SPECIES_CATALOG
 };

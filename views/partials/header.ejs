@@ -22,6 +22,25 @@
   <meta name="twitter:description" content="<%= metaDescription %>">
   <meta name="twitter:image" content="<%= typeof article !== 'undefined' ? article.featured_image : 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1200&auto=format&fit=crop&q=80' %>">
 
+  <!-- Webmaster Verification Tags -->
+  <% if (config.integrations && config.integrations.googleSiteVerification) { %>
+    <meta name="google-site-verification" content="<%= config.integrations.googleSiteVerification %>">
+  <% } %>
+  <% if (config.integrations && config.integrations.bingSiteVerification) { %>
+    <meta name="msvalidate.01" content="<%= config.integrations.bingSiteVerification %>">
+  <% } %>
+
+  <!-- Google Analytics 4 (GA4) -->
+  <% if (config.integrations && config.integrations.googleAnalyticsId) { %>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= config.integrations.googleAnalyticsId %>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '<%= config.integrations.googleAnalyticsId %>');
+    </script>
+  <% } %>
+
   <!-- Google AdSense Official Script Integration -->
   <% if (config.monetization.enabled && config.monetization.adsenseClientId && config.monetization.adsenseClientId !== 'ca-pub-XXXXXXXXXXXXX') { %>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=<%= config.monetization.adsenseClientId %>" crossorigin="anonymous"></script>
@@ -89,6 +108,25 @@
       <%- breadcrumbSchema %>
     </script>
   <% } %>
+
+  <!-- Google Sitelinks SearchBox Schema (WebSite SearchAction) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "<%= config.site.name %>",
+      "url": "<%= config.site.url %>/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "<%= config.site.url %>/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
+
+  <!-- Client-Side Addons: Live Search Autocomplete & Native Web Share Engine -->
+  <script defer src="<%= baseUrl %>/js/search-autocomplete.js"></script>
+  <script defer src="<%= baseUrl %>/js/share.js"></script>
 </head>
 <body class="bg-stone-50 text-stone-800 antialiased font-sans selection:bg-emerald-500 selection:text-white">
 

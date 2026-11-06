@@ -82,5 +82,20 @@
     "intervalMinutes": 7,
     "lastRun": null,
     "autoPublish": true
+  },
+  "integrations": {
+    "googleAnalyticsId": "",
+    "googleSiteVerification": "",
+    "bingSiteVerification": "",
+    "gemini": {
+      "model": "gemini-3.5-flash-lite",
+      "enabled": true
+    }
+  },
+  "addons": {
+    "liveSearchAutocomplete": true,
+    "nativeWebShare": true,
+    "readingProgressBar": true,
+    "jsonFeedApi": true
   }
 }

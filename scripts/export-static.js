@@ -279,6 +279,66 @@ async function exportStaticSite() {
   rssXml += `</channel>\n</rss>`;
   fs.writeFileSync(path.join(DIST_DIR, 'rss.xml'), rssXml);
 
+  // 12. Static JSON APIs & Search Index (Addon Suite for GitHub Pages)
+  ensureDirSync(path.join(DIST_DIR, 'api'));
+
+  // 12a. Search Index for instant client-side autocomplete
+  const searchIndex = db.getSearchIndex();
+  fs.writeFileSync(path.join(DIST_DIR, 'api', 'search-index.json'), JSON.stringify(searchIndex));
+
+  // 12b. JSON Feed v1.1 Specification (feed.json)
+  const jsonFeed = {
+    version: 'https://jsonfeed.org/version/1.1',
+    title: config.site.name,
+    home_page_url: config.site.url,
+    feed_url: `${config.site.url}/feed.json`,
+    description: config.site.description,
+    authors: [{ name: config.site.authorDefault, url: `${config.site.url}/about` }],
+    items: allArticles.slice(0, 50).map(art => ({
+      id: `${config.site.url}/blog/${art.slug}`,
+      url: `${config.site.url}/blog/${art.slug}`,
+      title: art.title,
+      summary: art.excerpt,
+      image: art.featured_image,
+      date_published: new Date(art.published_at).toISOString(),
+      author: { name: art.author_name }
+    }))
+  };
+  fs.writeFileSync(path.join(DIST_DIR, 'feed.json'), JSON.stringify(jsonFeed, null, 2));
+  fs.writeFileSync(path.join(DIST_DIR, 'api', 'feed.json'), JSON.stringify(jsonFeed, null, 2));
+
+  // 12c. Platform Stats API
+  const categoryCounts = config.categories.map(c => ({
+    name: c.name,
+    slug: c.slug,
+    count: db.getCategoryArticleCount(c.slug)
+  }));
+  const stats = {
+    platform: config.site.name,
+    totalArticles: allArticles.length,
+    categories: categoryCounts,
+    exportedAt: new Date().toISOString()
+  };
+  fs.writeFileSync(path.join(DIST_DIR, 'api', 'stats.json'), JSON.stringify(stats, null, 2));
+
+  // 12d. Articles Feed API
+  fs.writeFileSync(path.join(DIST_DIR, 'api', 'articles.json'), JSON.stringify({
+    count: Math.min(allArticles.length, 100),
+    total: allArticles.length,
+    articles: allArticles.slice(0, 100).map(a => ({
+      slug: a.slug,
+      title: a.title,
+      meta_description: a.meta_description,
+      category_slug: a.category_slug,
+      pet_type: a.pet_type,
+      featured_image: a.featured_image,
+      author_name: a.author_name,
+      reading_time_minutes: a.reading_time_minutes,
+      published_at: a.published_at
+    }))
+  }, null, 2));
+  console.log('✓ Exported static JSON APIs (search-index.json, feed.json, stats.json, articles.json)');
+
   const duration = ((Date.now() - startTime) / 1000).toFixed(1);
   console.log(`================================================================`);
   console.log(` Static Export Successful! Total ${fileCount} pages generated.`);

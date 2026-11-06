@@ -84,11 +84,20 @@
           <span>Views: <strong class="text-stone-700 font-semibold"><%= article.views %></strong></span>
         </div>
         
-        <!-- Social Share Pills -->
-        <div class="hidden sm:flex items-center gap-2">
-          <span class="text-[11px] font-bold text-stone-500">Share:</span>
-          <button onclick="navigator.clipboard.writeText(window.location.href); alert('Link copied to clipboard!');" class="p-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition">
-            📋 Copy Link
+        <!-- Social Share Pills (Native Web Share & Instant Copy) -->
+        <div class="flex items-center gap-1.5">
+          <span class="text-[11px] font-bold text-stone-500 hidden sm:inline">Share:</span>
+          <button data-share-action="native" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition shadow-xs">
+            <span>🚀</span> <span class="hidden sm:inline">Share</span>
+          </button>
+          <button data-share-action="twitter" title="Share on X / Twitter" class="p-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold transition">
+            𝕏
+          </button>
+          <button data-share-action="whatsapp" title="Share on WhatsApp" class="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-bold transition">
+            💬
+          </button>
+          <button data-share-action="native" title="Copy Link" class="p-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition">
+            📋
           </button>
         </div>
       </div>
@@ -128,6 +137,29 @@
       <!-- In-Article Bottom Advertisement Slot -->
       <div class="my-8">
         <%- include('partials/ad-slot', { type: 'inContentMid' }) %>
+      </div>
+
+      <!-- Social Distribution Callout Box -->
+      <div class="p-6 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/80 my-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h4 class="text-sm font-extrabold text-stone-900 m-0 mb-1 flex items-center gap-1.5">
+            <span>🐾</span> Pass This Clinical Knowledge Forward
+          </h4>
+          <p class="text-xs text-stone-600 m-0 max-w-md">
+            Help other <%= article.pet_type %> guardians prevent avoidable health complications. Share this veterinary protocol with your network.
+          </p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button data-share-action="native" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-xs flex items-center gap-1.5">
+            <span>🚀</span> Share Guide
+          </button>
+          <button data-share-action="twitter" title="Share on X" class="p-2 bg-white hover:bg-stone-100 text-stone-900 rounded-xl text-xs font-bold border border-emerald-200 transition shadow-xs">
+            𝕏
+          </button>
+          <button data-share-action="whatsapp" title="Share on WhatsApp" class="p-2 bg-white hover:bg-stone-100 text-emerald-600 rounded-xl text-xs font-bold border border-emerald-200 transition shadow-xs">
+            💬
+          </button>
+        </div>
       </div>
 
       <!-- Author Bio Footer Box -->

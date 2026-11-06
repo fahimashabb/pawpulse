@@ -93,26 +93,55 @@
         </form>
       </div>
 
-      <!-- Custom Topic Publisher -->
+      <!-- Custom Topic Publisher (Powered by Gemini AI + Clinical Matrix) -->
       <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs">
-        <div class="flex items-center gap-2 mb-2">
-          <span class="text-2xl">✍️</span>
-          <h3 class="text-lg font-extrabold text-stone-900 m-0">Generate Custom Topic Guide</h3>
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">✨</span>
+            <h3 class="text-lg font-extrabold text-stone-900 m-0">AI Custom Topic Research</h3>
+          </div>
+          <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold uppercase">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+            Gemini 3.5 Flash Active
+          </span>
         </div>
         <p class="text-xs text-stone-500 leading-relaxed mb-4">
-          Type any specific pet question or symptom. The engine will research the topic, format clinical steps, create FAQs, and publish it instantly.
+          Type any specific pet question or medical symptom. Google Gemini AI will conduct deep veterinary ethology research, generate step-by-step clinical protocols, format FAQs, and publish it live.
         </p>
 
-        <form action="/admin/automation/publish-custom" method="POST" class="space-y-3">
+        <form action="/admin/automation/publish-custom" method="POST" class="space-y-3" onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').innerText='Synthesizing with Gemini AI... Please wait ~4s';">
           <input 
             type="text" 
             name="prompt" 
-            placeholder="e.g. Why does my cockatiel hiss when I walk by? Complete Behavioral Protocol" 
+            placeholder="e.g. Feline Hyperesthesia Syndrome: Neurological Baselines & Low-Stress Protocols" 
             required 
             class="w-full px-4 py-3 rounded-xl bg-stone-50 border border-stone-200 text-xs text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
           />
-          <button type="submit" class="w-full py-3 px-4 bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs rounded-xl transition">
-            Generate & Publish Custom Guide &rarr;
+
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[10px] font-bold uppercase text-stone-500 mb-1">Target Species</label>
+              <select name="species" class="w-full px-3 py-2 rounded-xl bg-stone-50 border border-stone-200 text-xs text-stone-700 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <option value="">Auto-Detect from Prompt</option>
+                <option value="Cat">Cats (Feline)</option>
+                <option value="Dog">Dogs (Canine)</option>
+                <option value="Parrot">Birds (Avian)</option>
+                <option value="Bearded Dragon">Lizards & Reptiles</option>
+                <option value="Ball Python">Snakes & Serpents</option>
+                <option value="Rabbit">Small Mammals / Rabbits</option>
+                <option value="Betta Fish">Aquatics & Fish</option>
+              </select>
+            </div>
+            <div class="flex items-end">
+              <label class="flex items-center gap-2 p-2 rounded-xl bg-emerald-50/60 border border-emerald-200/80 w-full cursor-pointer">
+                <input type="checkbox" name="useGemini" value="1" checked class="rounded text-emerald-600 focus:ring-emerald-500 h-4 w-4" />
+                <span class="text-xs font-bold text-emerald-900">Use Gemini AI</span>
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-3 px-4 bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs rounded-xl transition shadow-sm">
+            Generate & Publish with Gemini AI &rarr;
           </button>
         </form>
       </div>
