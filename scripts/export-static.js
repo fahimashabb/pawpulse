@@ -128,6 +128,39 @@ async function exportStaticSite() {
   fs.writeFileSync(path.join(DIST_DIR, 'about', 'index.html'), aboutHtml);
   fileCount++;
 
+  // 4b. Render Privacy Policy Page (/privacy/index.html) - Crucial for AdSense
+  const privacyHtml = await renderTemplate('privacy', {
+    title: `Privacy Policy & Cookie Disclosures — ${config.site.name}`,
+    metaDescription: `Read ${config.site.name}'s comprehensive privacy policy, Google AdSense DART cookie disclosures, and GDPR/CCPA data rights.`,
+    pageType: 'website',
+    currentPath: '/privacy'
+  });
+  ensureDirSync(path.join(DIST_DIR, 'privacy'));
+  fs.writeFileSync(path.join(DIST_DIR, 'privacy', 'index.html'), privacyHtml);
+  fileCount++;
+
+  // 4c. Render Terms of Service Page (/terms/index.html)
+  const termsHtml = await renderTemplate('terms', {
+    title: `Terms of Service & Clinical Disclaimer — ${config.site.name}`,
+    metaDescription: `${config.site.name} Terms of Service, veterinary medical disclaimers, affiliate disclosures, and intellectual property terms.`,
+    pageType: 'website',
+    currentPath: '/terms'
+  });
+  ensureDirSync(path.join(DIST_DIR, 'terms'));
+  fs.writeFileSync(path.join(DIST_DIR, 'terms', 'index.html'), termsHtml);
+  fileCount++;
+
+  // 4d. Render Contact Page (/contact/index.html)
+  const contactHtml = await renderTemplate('contact', {
+    title: `Contact Editorial & Press Desk — ${config.site.name}`,
+    metaDescription: `Contact ${config.site.name} editorial staff, veterinarians, press relations, and advertising partnership representatives.`,
+    pageType: 'website',
+    currentPath: '/contact'
+  });
+  ensureDirSync(path.join(DIST_DIR, 'contact'));
+  fs.writeFileSync(path.join(DIST_DIR, 'contact', 'index.html'), contactHtml);
+  fileCount++;
+
   // 5. Render Search Page (/search/index.html)
   const searchHtml = await renderTemplate('search', {
     title: `Search Pet Guides — ${config.site.name}`,
@@ -220,7 +253,10 @@ async function exportStaticSite() {
   let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
   sitemapXml += `  <url><loc>${config.site.url}/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>\n`;
   sitemapXml += `  <url><loc>${config.site.url}/popular</loc><changefreq>daily</changefreq><priority>0.8</priority></url>\n`;
-  sitemapXml += `  <url><loc>${config.site.url}/about</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>\n`;
+  sitemapXml += `  <url><loc>${config.site.url}/about</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>\n`;
+  sitemapXml += `  <url><loc>${config.site.url}/contact</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>\n`;
+  sitemapXml += `  <url><loc>${config.site.url}/privacy</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>\n`;
+  sitemapXml += `  <url><loc>${config.site.url}/terms</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>\n`;
   for (const cat of config.categories) {
     sitemapXml += `  <url><loc>${config.site.url}/category/${cat.slug}</loc><changefreq>daily</changefreq><priority>0.9</priority></url>\n`;
   }

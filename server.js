@@ -198,6 +198,33 @@ app.get('/about', (req, res) => {
   });
 });
 
+// 6b. Privacy Policy (Mandatory for AdSense / CCPA / GDPR approval)
+app.get('/privacy', (req, res) => {
+  res.render('privacy', {
+    title: `Privacy Policy & Cookie Disclosures — ${config.site.name}`,
+    metaDescription: `Read ${config.site.name}'s comprehensive privacy policy, Google AdSense DART cookie disclosures, and GDPR/CCPA data rights.`,
+    pageType: 'website'
+  });
+});
+
+// 6c. Terms of Service & Medical Disclaimer
+app.get('/terms', (req, res) => {
+  res.render('terms', {
+    title: `Terms of Service & Clinical Disclaimer — ${config.site.name}`,
+    metaDescription: `${config.site.name} Terms of Service, veterinary medical disclaimers, affiliate disclosures, and intellectual property terms.`,
+    pageType: 'website'
+  });
+});
+
+// 6d. Contact Page
+app.get('/contact', (req, res) => {
+  res.render('contact', {
+    title: `Contact Editorial & Press Desk — ${config.site.name}`,
+    metaDescription: `Contact ${config.site.name} editorial staff, veterinarians, press relations, and advertising partnership representatives.`,
+    pageType: 'website'
+  });
+});
+
 // 7. Dynamic Sitemap.xml (Auto-generated for search engines)
 app.get('/sitemap.xml', (req, res) => {
   const articles = db.getAllArticles(2000, 0);

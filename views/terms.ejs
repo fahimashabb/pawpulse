@@ -1,0 +1,78 @@
+<%- include('partials/header') %>
+
+<main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="bg-white rounded-3xl p-6 sm:p-12 border border-stone-200/80 shadow-xs space-y-8">
+    
+    <div>
+      <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold uppercase tracking-wider">
+        Legal Agreements & Clinical Disclaimers
+      </span>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mt-3 mb-2">
+        Terms of Service & Veterinary Disclaimer
+      </h1>
+      <p class="text-xs text-stone-500">
+        Last Updated: <%= formatDate(new Date().toISOString()) %> | Effective Date: <%= config.site.foundedYear %>-01-01
+      </p>
+    </div>
+
+    <!-- Prominent Medical Disclaimer (AdSense & Health Authority Requirement) -->
+    <section class="p-6 bg-amber-50/80 rounded-2xl border-2 border-amber-300 text-amber-950 space-y-3">
+      <h2 class="text-lg font-bold text-amber-900 flex items-center gap-2 m-0">
+        <span>⚠️</span> Critical Veterinary Medical Disclaimer
+      </h2>
+      <p class="text-xs sm:text-sm leading-relaxed m-0">
+        All content, including text, graphics, images, step-by-step procedures, and biological insights published on <strong><%= config.site.name %></strong>, is provided strictly for educational and informational purposes. The information on this site is <strong>NOT intended to be a substitute for professional veterinary advice, clinical diagnosis, or medical treatment</strong>.
+      </p>
+      <p class="text-xs sm:text-sm leading-relaxed m-0">
+        Never disregard professional veterinary advice or delay in seeking clinical triage because of something you read on this website. If your pet or companion animal is experiencing a suspected medical emergency (such as acute respiratory distress, severe trauma, loss of consciousness, or suspected poisoning), contact your local licensed emergency veterinary hospital immediately.
+      </p>
+    </section>
+
+    <section class="space-y-4 text-sm text-stone-700 leading-relaxed">
+      <h2 class="text-xl font-bold text-stone-900">1. Acceptance of Terms</h2>
+      <p>
+        By accessing and using <a href="<%= config.site.url %>" class="text-emerald-600 hover:underline"><%= config.site.name %></a>, you agree to comply with and be bound by these Terms of Service. If you disagree with any portion of these terms, your sole remedy is to discontinue use of the website immediately.
+      </p>
+    </section>
+
+    <section class="space-y-4 text-sm text-stone-700 leading-relaxed">
+      <h2 class="text-xl font-bold text-stone-900">2. Intellectual Property Rights</h2>
+      <p>
+        Unless otherwise stated, <%= config.site.publisher %> and its licensors own the intellectual property rights for all material published on <%= config.site.name %>. All intellectual property rights are reserved. You may view and print pages from <%= config.site.url %> for your own personal, non-commercial use subject to restrictions set in these terms.
+      </p>
+      <ul class="list-disc pl-5 space-y-1 text-xs">
+        <li>You must not republish material from <%= config.site.name %> without attribution.</li>
+        <li>You must not sell, rent, or sub-license material from the website.</li>
+        <li>You must not reproduce, duplicate, or copy material for commercial dissemination.</li>
+      </ul>
+    </section>
+
+    <section class="space-y-4 text-sm text-stone-700 leading-relaxed">
+      <h2 class="text-xl font-bold text-stone-900">3. Advertising, Affiliates, & Sponsored Material</h2>
+      <p>
+        <%= config.site.name %> participates in digital advertising programs (such as Google AdSense) and affiliate marketing programs. As part of these arrangements:
+      </p>
+      <ul class="list-disc pl-5 space-y-1 text-xs">
+        <li><%= config.monetization.affiliateDisclosure %></li>
+        <li>Third-party advertisers may display advertisements on pages across <%= config.site.name %>. We do not endorse any specific third-party product or service advertised via automated programmatic ad networks.</li>
+      </ul>
+    </section>
+
+    <section class="space-y-4 text-sm text-stone-700 leading-relaxed">
+      <h2 class="text-xl font-bold text-stone-900">4. Limitation of Liability</h2>
+      <p>
+        In no event shall <%= config.site.name %>, its owners, veterinarians, researchers, or affiliates be liable for any indirect, consequential, incidental, special, or punitive damages arising from the use or inability to use the information, guides, or recommendations provided on this site.
+      </p>
+    </section>
+
+    <section class="pt-6 border-t border-stone-200 text-sm text-stone-700 space-y-2">
+      <h2 class="text-xl font-bold text-stone-900">5. Governing Law & Contact</h2>
+      <p>
+        These terms are governed by and construed in accordance with applicable laws. For questions regarding these Terms of Service, please contact <a href="mailto:<%= config.site.contactEmail %>" class="text-emerald-600 hover:underline"><%= config.site.contactEmail %></a>.
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<%- include('partials/footer') %>
