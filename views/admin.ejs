@@ -170,6 +170,216 @@
 
   </div>
 
+  <!-- Affiliate Monetization & Commercial Partner Command Center -->
+  <div class="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-xs mb-10">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-stone-200">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="text-xl">💰</span>
+          <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-700">Commercial Operations</span>
+        </div>
+        <h3 class="text-xl font-extrabold text-stone-900 m-0">
+          Affiliate Program Registry & Tracking ID Hub
+        </h3>
+        <p class="text-xs text-stone-500 mt-1">
+          Outgoing product recommendations and review CTA links in all 600+ articles automatically wrap with these tags.
+        </p>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="<%= baseUrl %>/affiliates" target="_blank" class="px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold transition flex items-center gap-1.5">
+          <span>🛡️</span>
+          <span>Public Transparency Hub &rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <form action="<%= baseUrl %>/admin/automation/save-affiliates" method="POST" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Amazon Associates -->
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200/80 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <strong class="text-xs font-bold text-amber-700 uppercase tracking-wider">Amazon Associates</strong>
+              <a href="https://affiliate-program.amazon.com/" target="_blank" rel="noopener" class="text-[10px] text-emerald-700 font-bold hover:underline">Apply Portal &rarr;</a>
+            </div>
+            <label class="block text-[11px] font-semibold text-stone-600 mb-1">Tracking Tag (Associate ID)</label>
+            <input 
+              type="text" 
+              name="amazonTag" 
+              value="<%= config.monetization.affiliateTag || 'pawpulse-20' %>" 
+              placeholder="e.g. pawpulse-20" 
+              class="w-full px-3 py-2 rounded-xl bg-white border border-stone-300 text-xs text-stone-900 font-mono focus:ring-2 focus:ring-emerald-500" 
+            />
+            <span class="text-[10px] text-stone-400 mt-1 block">1% – 3% commission &bull; 24h cookie</span>
+          </div>
+          <div class="mt-3 pt-2 border-t border-stone-200/60 flex items-center justify-between text-[11px]">
+            <span class="text-emerald-700 font-bold">✓ Active in Articles</span>
+            <a href="https://www.amazon.com/s?k=pet+care&tag=<%= config.monetization.affiliateTag %>" target="_blank" rel="noopener" class="text-stone-500 hover:text-stone-900 text-[10px] underline">Test Link</a>
+          </div>
+        </div>
+
+        <!-- Chewy (Partnerize) -->
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200/80 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <strong class="text-xs font-bold text-blue-700 uppercase tracking-wider">Chewy Affiliate</strong>
+              <a href="https://chewy.partnerize.com/" target="_blank" rel="noopener" class="text-[10px] text-blue-700 font-bold hover:underline">Apply on Partnerize &rarr;</a>
+            </div>
+            <label class="block text-[11px] font-semibold text-stone-600 mb-1">Partnerize Campaign/User ID</label>
+            <input 
+              type="text" 
+              name="chewyPartnerId" 
+              value="<%= (config.monetization.affiliates && config.monetization.affiliates.chewy && config.monetization.affiliates.chewy.partnerId) || 'pawpulse' %>" 
+              placeholder="e.g. pawpulse" 
+              class="w-full px-3 py-2 rounded-xl bg-white border border-stone-300 text-xs text-stone-900 font-mono focus:ring-2 focus:ring-emerald-500" 
+            />
+            <span class="text-[10px] text-stone-400 mt-1 block">$15 – $20 new customer bounty &bull; 15d cookie</span>
+          </div>
+          <div class="mt-3 pt-2 border-t border-stone-200/60 flex items-center justify-between text-[11px]">
+            <span class="text-blue-700 font-bold">Prescription Diets</span>
+            <a href="https://www.chewy.com/app/content/affiliate" target="_blank" rel="noopener" class="text-stone-500 hover:text-stone-900 text-[10px] underline">Guidelines</a>
+          </div>
+        </div>
+
+        <!-- Lemonade Pet Insurance -->
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200/80 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <strong class="text-xs font-bold text-pink-700 uppercase tracking-wider">Lemonade Insurance</strong>
+              <a href="https://app.impact.com/campaign-promo-signup/Lemonade.brand" target="_blank" rel="noopener" class="text-[10px] text-pink-700 font-bold hover:underline">Apply on Impact &rarr;</a>
+            </div>
+            <label class="block text-[11px] font-semibold text-stone-600 mb-1">Impact.com Partner ID / Campaign</label>
+            <input 
+              type="text" 
+              name="lemonadePartnerId" 
+              value="<%= (config.monetization.affiliates && config.monetization.affiliates.lemonade && config.monetization.affiliates.lemonade.partnerId) || 'pawpulse_pet' %>" 
+              placeholder="e.g. pawpulse_pet" 
+              class="w-full px-3 py-2 rounded-xl bg-white border border-stone-300 text-xs text-stone-900 font-mono focus:ring-2 focus:ring-emerald-500" 
+            />
+            <span class="text-[10px] text-stone-400 mt-1 block">$25 – $40 per completed quote lead</span>
+          </div>
+          <div class="mt-3 pt-2 border-t border-stone-200/60 flex items-center justify-between text-[11px]">
+            <span class="text-pink-700 font-bold">High Payout EPC</span>
+            <a href="https://www.lemonade.com/pet" target="_blank" rel="noopener" class="text-stone-500 hover:text-stone-900 text-[10px] underline">Preview Landing</a>
+          </div>
+        </div>
+
+        <!-- Embark Dog DNA -->
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200/80 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <strong class="text-xs font-bold text-purple-700 uppercase tracking-wider">Embark Vet DNA</strong>
+              <a href="https://embarkvet.com/affiliates/" target="_blank" rel="noopener" class="text-[10px] text-purple-700 font-bold hover:underline">Apply on Impact &rarr;</a>
+            </div>
+            <label class="block text-[11px] font-semibold text-stone-600 mb-1">Impact Partner Tracking Tag</label>
+            <input 
+              type="text" 
+              name="embarkPartnerId" 
+              value="<%= (config.monetization.affiliates && config.monetization.affiliates.embark && config.monetization.affiliates.embark.partnerId) || 'pawpulse' %>" 
+              placeholder="e.g. pawpulse" 
+              class="w-full px-3 py-2 rounded-xl bg-white border border-stone-300 text-xs text-stone-900 font-mono focus:ring-2 focus:ring-emerald-500" 
+            />
+            <span class="text-[10px] text-stone-400 mt-1 block">10% commission ($15 – $25/sale)</span>
+          </div>
+          <div class="mt-3 pt-2 border-t border-stone-200/60 flex items-center justify-between text-[11px]">
+            <span class="text-purple-700 font-bold">Cornell Vet Partner</span>
+            <a href="https://embarkvet.com/" target="_blank" rel="noopener" class="text-stone-500 hover:text-stone-900 text-[10px] underline">Kits</a>
+          </div>
+        </div>
+
+        <!-- Petco (CJ Affiliate) -->
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200/80 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <strong class="text-xs font-bold text-cyan-800 uppercase tracking-wider">Petco (CJ Affiliate)</strong>
+              <a href="https://www.petco.com/shop/en/petcostore/c/affiliate-program" target="_blank" rel="noopener" class="text-[10px] text-cyan-800 font-bold hover:underline">Apply on CJ &rarr;</a>
+            </div>
+            <label class="block text-[11px] font-semibold text-stone-600 mb-1">CJ Affiliate Publisher ID</label>
+            <input 
+              type="text" 
+              name="petcoPartnerId" 
+              value="<%= (config.monetization.affiliates && config.monetization.affiliates.petco && config.monetization.affiliates.petco.partnerId) || 'pawpulse' %>" 
+              placeholder="e.g. pawpulse" 
+              class="w-full px-3 py-2 rounded-xl bg-white border border-stone-300 text-xs text-stone-900 font-mono focus:ring-2 focus:ring-emerald-500" 
+            />
+            <span class="text-[10px] text-stone-400 mt-1 block">2% – 4% commission &bull; Aquatics & Reptiles</span>
+          </div>
+          <div class="mt-3 pt-2 border-t border-stone-200/60 flex items-center justify-between text-[11px]">
+            <span class="text-cyan-800 font-bold">Omnichannel Store</span>
+            <a href="https://www.petco.com/" target="_blank" rel="noopener" class="text-stone-500 hover:text-stone-900 text-[10px] underline">Shop</a>
+          </div>
+        </div>
+
+        <!-- JustAnswer 24/7 Vet Telehealth -->
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200/80 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <strong class="text-xs font-bold text-emerald-800 uppercase tracking-wider">JustAnswer Vet Triage</strong>
+              <a href="https://www.justanswer.com/affiliates" target="_blank" rel="noopener" class="text-[10px] text-emerald-800 font-bold hover:underline">Apply Portal &rarr;</a>
+            </div>
+            <label class="block text-[11px] font-semibold text-stone-600 mb-1">Referral Partner Handle</label>
+            <input 
+              type="text" 
+              name="justanswerPartnerId" 
+              value="<%= (config.monetization.affiliates && config.monetization.affiliates.justanswer && config.monetization.affiliates.justanswer.partnerId) || 'pawpulse' %>" 
+              placeholder="e.g. pawpulse" 
+              class="w-full px-3 py-2 rounded-xl bg-white border border-stone-300 text-xs text-stone-900 font-mono focus:ring-2 focus:ring-emerald-500" 
+            />
+            <span class="text-[10px] text-stone-400 mt-1 block">$5 – $15 per veterinary consult lead</span>
+          </div>
+          <div class="mt-3 pt-2 border-t border-stone-200/60 flex items-center justify-between text-[11px]">
+            <span class="text-emerald-800 font-bold">24/7 Live Triage</span>
+            <a href="https://www.justanswer.com/sip/veterinary" target="_blank" rel="noopener" class="text-stone-500 hover:text-stone-900 text-[10px] underline">Preview</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Google AdSense & Monetization Mode -->
+      <div class="p-5 rounded-2xl bg-stone-100/70 border border-stone-200">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-stone-800 mb-3 flex items-center gap-2">
+          <span>🎯</span> Google AdSense Settings
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+          <div>
+            <label class="block text-[11px] font-semibold text-stone-600 mb-1">AdSense Publisher ID (ca-pub-XXXXXXXXXXXXX)</label>
+            <input 
+              type="text" 
+              name="adsenseClientId" 
+              value="<%= config.monetization.adsenseClientId %>" 
+              placeholder="ca-pub-XXXXXXXXXXXXXXXX" 
+              class="w-full px-3 py-2 rounded-xl bg-white border border-stone-300 text-xs font-mono text-stone-900 focus:ring-2 focus:ring-emerald-500" 
+            />
+          </div>
+          <div class="pt-4 sm:pt-0">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input 
+                type="checkbox" 
+                name="demoMode" 
+                value="1" 
+                <%= config.monetization.demoMode ? 'checked' : '' %> 
+                class="rounded text-emerald-600 focus:ring-emerald-500 h-4 w-4" 
+              />
+              <span class="text-xs font-semibold text-stone-800">
+                Ad Demo Mode (Visual Placeholders for AdSense Review Audit)
+              </span>
+            </label>
+            <span class="text-[10px] text-stone-400 block mt-1">
+              Uncheck once Google AdSense approves your domain to serve real live ad inventory.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end">
+        <button type="submit" class="py-3 px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl transition shadow-md flex items-center gap-2">
+          <span>💾 Save Affiliate & Ad Monetization Settings</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
   <!-- Publishing Activity Logs -->
   <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs">
     <div class="flex items-center justify-between mb-4">

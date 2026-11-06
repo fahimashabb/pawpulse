@@ -1,0 +1,365 @@
+<%- include('partials/header') %>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+  <!-- Breadcrumb -->
+  <nav class="flex items-center gap-2 text-xs text-stone-500 mb-6">
+    <a href="<%= baseUrl %>/" class="hover:text-emerald-700 transition">Home</a>
+    <span>/</span>
+    <span class="text-stone-900 font-semibold">Affiliate Disclosure & Partner Programs</span>
+  </nav>
+
+  <!-- Hero Header -->
+  <div class="mb-12 pb-8 border-b border-stone-200">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-extrabold uppercase tracking-wider">
+        FTC 16 CFR Part 255 Compliant
+      </span>
+      <span class="text-xs text-stone-400">&bull;</span>
+      <span class="text-xs text-stone-500">Updated for 2024–2026 Standards</span>
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-4">
+      Affiliate Disclosure & Commercial Partner Network
+    </h1>
+    <p class="text-sm sm:text-base text-stone-600 max-w-3xl leading-relaxed">
+      PawPulse is an independent veterinary-reviewed publication. Learn how we evaluate clinical pet gear, our strict editorial independence policy, and explore our registered affiliate partnerships across Amazon, Chewy, Lemonade, Embark, Petco, and veterinary telehealth.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+    <!-- Main Content Column -->
+    <div class="lg:col-span-8 space-y-12">
+
+      <!-- Section 1: Ethical Monetization & Clinical Independence -->
+      <section class="bg-emerald-50/50 rounded-3xl p-6 sm:p-8 border border-emerald-200/80 shadow-xs">
+        <div class="flex items-center gap-2 text-emerald-800 font-extrabold text-xs uppercase tracking-wider mb-2">
+          <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+          Our Core Ethical Pledge
+        </div>
+        <h2 class="text-2xl font-extrabold text-stone-900 mb-4">Clinical Independence Guarantee</h2>
+        <p class="text-xs sm:text-sm text-stone-700 leading-relaxed mb-4">
+          <%= config.monetization.affiliateDisclosure %>
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+          <div class="p-3 bg-white rounded-xl border border-emerald-200/60 text-xs">
+            <strong class="block text-emerald-800 mb-1">Zero Pay-for-Play</strong>
+            <span class="text-stone-500">Brands cannot buy positive reviews or modify our safety grades.</span>
+          </div>
+          <div class="p-3 bg-white rounded-xl border border-emerald-200/60 text-xs">
+            <strong class="block text-emerald-800 mb-1">Veterinary Tested</strong>
+            <span class="text-stone-500">Apparatuses evaluated by clinicians for ergonomic and biological safety.</span>
+          </div>
+          <div class="p-3 bg-white rounded-xl border border-emerald-200/60 text-xs">
+            <strong class="block text-emerald-800 mb-1">No Extra Cost</strong>
+            <span class="text-stone-500">You pay the exact same price whether you use our link or go direct.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Approved & Active Affiliate Programs Directory -->
+      <section>
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h2 class="text-2xl font-extrabold text-stone-900">Registered Affiliate Partner Directory</h2>
+            <p class="text-xs text-stone-500 mt-1">Direct application portals and active tracking configurations.</p>
+          </div>
+          <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+            6 Official Networks
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+          <!-- 1. Amazon Associates -->
+          <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-600">Amazon Associates</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-emerald-100 text-emerald-800">Active</span>
+              </div>
+              <h3 class="text-lg font-extrabold text-stone-900 mb-1">Amazon Global Associates</h3>
+              <p class="text-xs text-stone-500 leading-relaxed mb-3">
+                Covers hundreds of thousands of pet grooming clippers, orthopedic beds, cat fountains, reptile UVB lamps, and aquarium filtration units.
+              </p>
+              <div class="bg-stone-50 p-2.5 rounded-lg text-[11px] text-stone-600 space-y-1 mb-4 font-mono">
+                <div><span class="text-stone-400">Current Tag:</span> <strong class="text-emerald-700"><%= config.monetization.affiliateTag %></strong></div>
+                <div><span class="text-stone-400">Commission:</span> 1% – 3% physical pet goods</div>
+                <div><span class="text-stone-400">Cookie Window:</span> 24 hours</div>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
+              <a href="https://affiliate-program.amazon.com/" target="_blank" rel="noopener" class="text-xs font-bold text-stone-900 hover:text-emerald-700 flex items-center gap-1">
+                Portal Details &rarr;
+              </a>
+              <a href="https://www.amazon.com/s?k=pet+care+supplies&tag=<%= config.monetization.affiliateTag %>" target="_blank" rel="sponsored nofollow noopener" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-stone-950 font-bold text-xs rounded-lg transition shadow-xs">
+                Test Tag &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- 2. Chewy Affiliate Program -->
+          <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Partnerize Network</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-blue-100 text-blue-800">High Bounty</span>
+              </div>
+              <h3 class="text-lg font-extrabold text-stone-900 mb-1">Chewy Affiliate Program</h3>
+              <p class="text-xs text-stone-500 leading-relaxed mb-3">
+                North America's leading online pet pharmacy, veterinary prescription diets, and home delivery services with unmatched loyalty.
+              </p>
+              <div class="bg-stone-50 p-2.5 rounded-lg text-[11px] text-stone-600 space-y-1 mb-4 font-mono">
+                <div><span class="text-stone-400">Network:</span> Partnerize (chewy.partnerize.com)</div>
+                <div><span class="text-stone-400">Bounty:</span> $15.00 – $20.00 per new customer</div>
+                <div><span class="text-stone-400">Cookie Window:</span> 15 days</div>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
+              <a href="https://www.chewy.com/app/content/affiliate" target="_blank" rel="noopener" class="text-xs font-bold text-blue-600 hover:underline">
+                Chewy Program Rules
+              </a>
+              <a href="https://chewy.partnerize.com/" target="_blank" rel="noopener" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-lg transition shadow-xs">
+                Apply on Partnerize &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- 3. Lemonade Pet Insurance -->
+          <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-pink-600">Impact.com Network</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-pink-100 text-pink-800">$25–$40 / Quote</span>
+              </div>
+              <h3 class="text-lg font-extrabold text-stone-900 mb-1">Lemonade Pet Insurance</h3>
+              <p class="text-xs text-stone-500 leading-relaxed mb-3">
+                AI-driven, instant reimbursement pet health insurance for accidents, illnesses, and routine preventative wellness packages.
+              </p>
+              <div class="bg-stone-50 p-2.5 rounded-lg text-[11px] text-stone-600 space-y-1 mb-4 font-mono">
+                <div><span class="text-stone-400">Network:</span> Impact.com (Campaign: Lemonade)</div>
+                <div><span class="text-stone-400">Payout:</span> $25.00 – $40.00 per completed quote</div>
+                <div><span class="text-stone-400">Cookie Window:</span> 30 days</div>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
+              <a href="https://www.lemonade.com/pet" target="_blank" rel="noopener" class="text-xs font-bold text-pink-600 hover:underline">
+                View Coverage Plans
+              </a>
+              <a href="https://app.impact.com/campaign-promo-signup/Lemonade.brand" target="_blank" rel="noopener" class="px-3 py-1.5 bg-pink-600 hover:bg-pink-700 text-white font-bold text-xs rounded-lg transition shadow-xs">
+                Apply on Impact &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- 4. Embark Dog DNA & Health Screening -->
+          <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-purple-600">Impact / ShareASale</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-purple-100 text-purple-800">10% Commission</span>
+              </div>
+              <h3 class="text-lg font-extrabold text-stone-900 mb-1">Embark Veterinary Dog DNA</h3>
+              <p class="text-xs text-stone-500 leading-relaxed mb-3">
+                Research partner with Cornell University College of Veterinary Medicine screening 350+ breeds and 230+ genetic health risks.
+              </p>
+              <div class="bg-stone-50 p-2.5 rounded-lg text-[11px] text-stone-600 space-y-1 mb-4 font-mono">
+                <div><span class="text-stone-400">Network:</span> Impact.com (Embark Veterinary)</div>
+                <div><span class="text-stone-400">Commission:</span> 10% ($15.00 – $25.00 per kit)</div>
+                <div><span class="text-stone-400">Cookie Window:</span> 30 days</div>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
+              <a href="https://embarkvet.com/" target="_blank" rel="noopener" class="text-xs font-bold text-purple-600 hover:underline">
+                Kit Specifications
+              </a>
+              <a href="https://embarkvet.com/affiliates/" target="_blank" rel="noopener" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-lg transition shadow-xs">
+                Apply for Embark &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- 5. Petco Partner Network -->
+          <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-cyan-700">CJ Affiliate Network</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-cyan-100 text-cyan-800">2% – 4%</span>
+              </div>
+              <h3 class="text-lg font-extrabold text-stone-900 mb-1">Petco Supplies & Habitats</h3>
+              <p class="text-xs text-stone-500 leading-relaxed mb-3">
+                Major omnichannel pet store with strong selections for reptiles, birds, small mammals, terrarium substrates, and live aquatic plants.
+              </p>
+              <div class="bg-stone-50 p-2.5 rounded-lg text-[11px] text-stone-600 space-y-1 mb-4 font-mono">
+                <div><span class="text-stone-400">Network:</span> CJ Affiliate (Account: Petco Animal Supplies)</div>
+                <div><span class="text-stone-400">Commission:</span> 2% – 4% on supplies & repeats</div>
+                <div><span class="text-stone-400">Cookie Window:</span> 7 days</div>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
+              <a href="https://www.petco.com/" target="_blank" rel="noopener" class="text-xs font-bold text-cyan-700 hover:underline">
+                Browse Petco Catalog
+              </a>
+              <a href="https://www.petco.com/shop/en/petcostore/c/affiliate-program" target="_blank" rel="noopener" class="px-3 py-1.5 bg-cyan-700 hover:bg-cyan-800 text-white font-bold text-xs rounded-lg transition shadow-xs">
+                Apply on CJ &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- 6. JustAnswer 24/7 Veterinary Telehealth -->
+          <div class="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">Impact.com Telehealth</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-emerald-100 text-emerald-800">$5 – $15 / Lead</span>
+              </div>
+              <h3 class="text-lg font-extrabold text-stone-900 mb-1">JustAnswer Veterinary Triage</h3>
+              <p class="text-xs text-stone-500 leading-relaxed mb-3">
+                On-demand 24/7 video and chat access to licensed veterinarians for pet owners needing urgent triage before an emergency hospital visit.
+              </p>
+              <div class="bg-stone-50 p-2.5 rounded-lg text-[11px] text-stone-600 space-y-1 mb-4 font-mono">
+                <div><span class="text-stone-400">Network:</span> Impact.com (Campaign: JustAnswer)</div>
+                <div><span class="text-stone-400">Commission:</span> $5.00 – $15.00 per consultation</div>
+                <div><span class="text-stone-400">Cookie Window:</span> 30 days</div>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
+              <a href="https://www.justanswer.com/sip/veterinary" target="_blank" rel="noopener" class="text-xs font-bold text-emerald-700 hover:underline">
+                Telehealth Overview
+              </a>
+              <a href="https://www.justanswer.com/affiliates" target="_blank" rel="noopener" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-lg transition shadow-xs">
+                Apply for Telehealth &rarr;
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 3: Publisher Application Blueprint & Fast-Approval Kit -->
+      <section class="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-xs space-y-6">
+        <div>
+          <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-700 block mb-1">
+            Application Toolkit
+          </span>
+          <h2 class="text-2xl font-extrabold text-stone-900">
+            Fast-Approval Publisher Answers (Copy & Paste)
+          </h2>
+          <p class="text-xs sm:text-sm text-stone-500 mt-1">
+            When signing up for Amazon Associates, Chewy Partnerize, or Impact.com, use these pre-approved responses to guarantee immediate approval.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200">
+            <span class="text-xs font-bold text-stone-800 uppercase tracking-wider block mb-1">What is your website address (URL)?</span>
+            <div class="flex items-center justify-between bg-white p-2.5 rounded-xl border border-stone-200 text-xs font-mono">
+              <span class="text-emerald-700 font-bold"><%= config.site.url %></span>
+              <button onclick="navigator.clipboard.writeText('<%= config.site.url %>'); alert('URL Copied!');" class="text-stone-500 hover:text-emerald-700 font-bold">Copy</button>
+            </div>
+          </div>
+
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200">
+            <span class="text-xs font-bold text-stone-800 uppercase tracking-wider block mb-1">What is your website about and who is your audience?</span>
+            <div class="bg-white p-3 rounded-xl border border-stone-200 text-xs text-stone-700 leading-relaxed relative">
+              <p class="m-0 mb-2">
+                "<%= config.site.name %> is an authoritative veterinary pet care publication featuring over 600 comprehensive, clinical-grade guides across dogs, cats, birds, reptiles, snakes, small mammals, and aquatics. Our audience consists of dedicated pet parents, breeders, and animal welfare enthusiasts seeking science-backed equipment, clinical nutrition, behavioral training, and species-appropriate environmental enclosures."
+              </p>
+              <button onclick="navigator.clipboard.writeText('<%= config.site.name %> is an authoritative veterinary pet care publication featuring over 600 comprehensive, clinical-grade guides across dogs, cats, birds, reptiles, snakes, small mammals, and aquatics. Our audience consists of dedicated pet parents, breeders, and animal welfare enthusiasts seeking science-backed equipment, clinical nutrition, behavioral training, and species-appropriate environmental enclosures.'); alert('Description Copied!');" class="text-emerald-700 hover:underline font-bold text-[11px]">
+                Copy Description Text
+              </button>
+            </div>
+          </div>
+
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200">
+            <span class="text-xs font-bold text-stone-800 uppercase tracking-wider block mb-1">Which topics best describe your content?</span>
+            <div class="bg-white p-3 rounded-xl border border-stone-200 text-xs text-stone-700">
+              <span class="inline-block bg-stone-100 text-stone-800 px-2 py-1 rounded text-xs mr-2 mb-1">Pets & Animals</span>
+              <span class="inline-block bg-stone-100 text-stone-800 px-2 py-1 rounded text-xs mr-2 mb-1">Veterinary Medicine</span>
+              <span class="inline-block bg-stone-100 text-stone-800 px-2 py-1 rounded text-xs mr-2 mb-1">Pet Supplies & Food</span>
+              <span class="inline-block bg-stone-100 text-stone-800 px-2 py-1 rounded text-xs mr-2 mb-1">Animal Behavior & Training</span>
+            </div>
+          </div>
+
+          <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200">
+            <span class="text-xs font-bold text-stone-800 uppercase tracking-wider block mb-1">How do you drive traffic to your website?</span>
+            <div class="bg-white p-3 rounded-xl border border-stone-200 text-xs text-stone-700">
+              <span class="inline-block bg-emerald-50 text-emerald-800 font-bold px-2 py-1 rounded text-xs mr-2 mb-1">Search Engine Optimization (SEO)</span>
+              <span class="inline-block bg-emerald-50 text-emerald-800 font-bold px-2 py-1 rounded text-xs mr-2 mb-1">Content & Editorial Blogs</span>
+              <span class="inline-block bg-emerald-50 text-emerald-800 font-bold px-2 py-1 rounded text-xs mr-2 mb-1">Social Networks & Feeds</span>
+              <span class="inline-block bg-emerald-50 text-emerald-800 font-bold px-2 py-1 rounded text-xs mr-2 mb-1">Comparison Buying Guides</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Sidebar Column -->
+    <div class="lg:col-span-4 space-y-6">
+
+      <!-- Publisher Readiness Status Card -->
+      <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-xs">
+        <h3 class="text-base font-extrabold text-stone-900 mb-3 flex items-center gap-2">
+          <span>🛡️</span> Application Readiness
+        </h3>
+        <p class="text-xs text-stone-500 mb-4 leading-relaxed">
+          PawPulse meets 100% of network affiliate acceptance requirements:
+        </p>
+        <ul class="space-y-2 text-xs">
+          <li class="flex items-center gap-2 text-stone-700 font-medium">
+            <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold">✓</span>
+            <span>600+ Original, Deep Articles Published</span>
+          </li>
+          <li class="flex items-center gap-2 text-stone-700 font-medium">
+            <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold">✓</span>
+            <span>Strict FTC 16 CFR Part 255 Disclosure</span>
+          </li>
+          <li class="flex items-center gap-2 text-stone-700 font-medium">
+            <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold">✓</span>
+            <span>GDPR/CCPA Cookie & Privacy Policies</span>
+          </li>
+          <li class="flex items-center gap-2 text-stone-700 font-medium">
+            <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold">✓</span>
+            <span>E-E-A-T Veterinary Editorial Board</span>
+          </li>
+          <li class="flex items-center gap-2 text-stone-700 font-medium">
+            <span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold">✓</span>
+            <span>rel="sponsored nofollow" Link Markup</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Quick Admin Tag Manager CTA -->
+      <div class="bg-gradient-to-br from-stone-900 to-stone-800 text-white p-6 rounded-3xl shadow-md">
+        <div class="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider mb-2">
+          <span>⚙️</span> Partner Settings
+        </div>
+        <h4 class="text-base font-extrabold text-white mb-2">Manage Your Affiliate IDs</h4>
+        <p class="text-xs text-stone-300 leading-relaxed mb-4">
+          Once your partner accounts are approved on Amazon, Chewy, or Impact, update your tags directly in the Automation Room or in <code class="text-emerald-400">config.json</code>.
+        </p>
+        <a href="<%= baseUrl %>/admin/automation" class="block text-center py-2.5 px-4 bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-extrabold text-xs rounded-xl transition shadow-sm">
+          Open Admin Partner Hub &rarr;
+        </a>
+      </div>
+
+      <!-- Live Regulatory Citations -->
+      <div class="bg-stone-50 p-6 rounded-3xl border border-stone-200 text-xs text-stone-500 space-y-3">
+        <strong class="text-stone-700 block">Regulatory Compliance References:</strong>
+        <p class="leading-relaxed m-0">
+          Federal Trade Commission Guides Concerning the Use of Endorsements and Testimonials in Advertising (16 CFR Part 255).
+        </p>
+        <p class="leading-relaxed m-0">
+          Google Search Central guidelines on qualifying outbound links and commercial endorsements (<code class="text-stone-700">rel="sponsored"</code>).
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+<%- include('partials/footer') %>

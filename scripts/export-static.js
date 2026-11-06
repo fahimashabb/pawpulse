@@ -161,6 +161,17 @@ async function exportStaticSite() {
   fs.writeFileSync(path.join(DIST_DIR, 'contact', 'index.html'), contactHtml);
   fileCount++;
 
+  // 4e. Render Affiliates & Partner Directory Page (/affiliates/index.html) - Mandatory for FTC & Affiliate networks
+  const affiliatesHtml = await renderTemplate('affiliates', {
+    title: `Affiliate Disclosures & Commercial Partner Directory — ${config.site.name}`,
+    metaDescription: 'Explore PawPulse registered affiliate partnerships with Amazon, Chewy, Lemonade, Embark, Petco, and veterinary telehealth services.',
+    pageType: 'website',
+    currentPath: '/affiliates'
+  });
+  ensureDirSync(path.join(DIST_DIR, 'affiliates'));
+  fs.writeFileSync(path.join(DIST_DIR, 'affiliates', 'index.html'), affiliatesHtml);
+  fileCount++;
+
   // 5. Render Search Page (/search/index.html)
   const searchHtml = await renderTemplate('search', {
     title: `Search Pet Guides — ${config.site.name}`,
@@ -253,6 +264,7 @@ async function exportStaticSite() {
   let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
   sitemapXml += `  <url><loc>${config.site.url}/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>\n`;
   sitemapXml += `  <url><loc>${config.site.url}/popular</loc><changefreq>daily</changefreq><priority>0.8</priority></url>\n`;
+  sitemapXml += `  <url><loc>${config.site.url}/affiliates</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>\n`;
   sitemapXml += `  <url><loc>${config.site.url}/about</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>\n`;
   sitemapXml += `  <url><loc>${config.site.url}/contact</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>\n`;
   sitemapXml += `  <url><loc>${config.site.url}/privacy</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>\n`;

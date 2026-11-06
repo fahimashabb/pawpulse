@@ -8,6 +8,7 @@
 const config = require('../config.json');
 const { insertArticle, getArticleBySlug, logPublishing, db } = require('../database/db');
 const { generateSlug, calculateReadingTime } = require('./seo-helper');
+const { resolveProductAffiliate } = require('./affiliate-helper');
 
 // Lazy-loaded Google Gen AI Client
 let aiClient = null;
@@ -960,6 +961,13 @@ async function generateAndPublishSingleArticle(customPrompt = null, options = {}
   const secondaryImage = getUnmatchedPhoto(species);
 
   const products = getTopicProducts(species, archetype, contentData);
+  let resolvedTypeKey = 'action';
+  if (archetype && archetype.behaviors) resolvedTypeKey = 'behavior';
+  else if (archetype && archetype.pathologies) resolvedTypeKey = 'pathology';
+  else if (archetype && archetype.nutritionTopics) resolvedTypeKey = 'nutrition';
+
+  const aff0 = resolveProductAffiliate(products[0].name || products[0].title, species.category, resolvedTypeKey);
+  const aff1 = resolveProductAffiliate(products[1].name || products[1].title, species.category, resolvedTypeKey);
 
   // 4. Construct Rich, Structured HTML Content
   let stepsHtml = '';
@@ -1045,26 +1053,52 @@ async function generateAndPublishSingleArticle(customPrompt = null, options = {}
       <div class="flex items-center justify-between border-b border-emerald-100 dark:border-emerald-900/50 pb-3 mb-4">
         <span class="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
           <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-          Clinical Equipment & Diagnostics for ${species.name}
+          Clinical Equipment & Care Essentials for ${species.name}
         </span>
         <span class="text-[11px] bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-200 px-2.5 py-0.5 rounded-full font-bold">Veterinary Verified</span>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-white dark:bg-stone-800 p-4 rounded-xl border border-stone-200 dark:border-stone-700 flex flex-col justify-between">
+        <div class="bg-white dark:bg-stone-800 p-5 rounded-xl border border-stone-200 dark:border-stone-700 flex flex-col justify-between">
           <div>
-            <span class="text-xs font-bold text-emerald-600 uppercase">${products[0].badge}</span>
-            <h4 class="font-bold text-stone-900 dark:text-white text-base mt-1 mb-2">${products[0].name || products[0].title}</h4>
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <span class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider">${products[0].badge}</span>
+              <span class="text-[10px] text-stone-400 font-medium">FTC Sponsored</span>
+            </div>
+            <h4 class="font-bold text-stone-900 dark:text-white text-base mb-2">${products[0].name || products[0].title}</h4>
             <p class="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">${products[0].description}</p>
           </div>
-          <a href="#affiliate-check" class="mt-4 block text-center py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow-sm">${products[0].cta || 'View Verified Specs \u2192'}</a>
+          <div class="mt-4 pt-3 border-t border-stone-100 dark:border-stone-700/60 space-y-2">
+            <a href="${aff0.primary.url}" target="_blank" rel="sponsored nofollow noopener" class="block text-center py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow-sm">
+              ${aff0.primary.label}
+            </a>
+            <div class="flex items-center justify-between text-[11px] px-1">
+              <a href="${aff0.secondary.url}" target="_blank" rel="sponsored nofollow noopener" class="text-stone-500 dark:text-stone-400 hover:text-emerald-600 font-semibold truncate">
+                ${aff0.secondary.label}
+              </a>
+              <a href="#affiliate-check" class="text-stone-400 hover:underline shrink-0 text-[10px]">Disclosure</a>
+            </div>
+          </div>
         </div>
-        <div class="bg-white dark:bg-stone-800 p-4 rounded-xl border border-stone-200 dark:border-stone-700 flex flex-col justify-between">
+        <div class="bg-white dark:bg-stone-800 p-5 rounded-xl border border-stone-200 dark:border-stone-700 flex flex-col justify-between">
           <div>
-            <span class="text-xs font-bold text-amber-600 uppercase">${products[1].badge}</span>
-            <h4 class="font-bold text-stone-900 dark:text-white text-base mt-1 mb-2">${products[1].name || products[1].title}</h4>
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <span class="text-[11px] font-bold text-amber-600 uppercase tracking-wider">${products[1].badge}</span>
+              <span class="text-[10px] text-stone-400 font-medium">FTC Sponsored</span>
+            </div>
+            <h4 class="font-bold text-stone-900 dark:text-white text-base mb-2">${products[1].name || products[1].title}</h4>
             <p class="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">${products[1].description}</p>
           </div>
-          <a href="#affiliate-check" class="mt-4 block text-center py-2.5 px-3 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-xs font-bold transition shadow-sm">${products[1].cta || 'Inspect Clinical Safety Analysis \u2192'}</a>
+          <div class="mt-4 pt-3 border-t border-stone-100 dark:border-stone-700/60 space-y-2">
+            <a href="${aff1.primary.url}" target="_blank" rel="sponsored nofollow noopener" class="block text-center py-2.5 px-3 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-xs font-bold transition shadow-sm">
+              ${aff1.primary.label}
+            </a>
+            <div class="flex items-center justify-between text-[11px] px-1">
+              <a href="${aff1.secondary.url}" target="_blank" rel="sponsored nofollow noopener" class="text-stone-500 dark:text-stone-400 hover:text-emerald-600 font-semibold truncate">
+                ${aff1.secondary.label}
+              </a>
+              <a href="#affiliate-check" class="text-stone-400 hover:underline shrink-0 text-[10px]">Disclosure</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -74,7 +74,75 @@
       "bottomSticky": "5566778899"
     },
     "affiliateTag": "pawpulse-20",
-    "affiliateDisclosure": "PawPulse is an independent, reader-supported publication. When you purchase products through our links, we may earn an affiliate commission at no extra cost to you. Every product featured is evaluated against clinical safety and veterinary welfare standards."
+    "affiliateDisclosure": "PawPulse is an independent, reader-supported publication. When you purchase products through our links, we may earn an affiliate commission at no extra cost to you. Every product featured is evaluated against clinical safety and veterinary welfare standards.",
+    "affiliates": {
+      "amazon": {
+        "id": "amazon",
+        "name": "Amazon Associates",
+        "network": "Amazon",
+        "tag": "pawpulse-20",
+        "status": "Active (Configured)",
+        "applyUrl": "https://affiliate-program.amazon.com/",
+        "commission": "1% - 3% on pet gear, foods, habitats",
+        "cookie": "24 hours",
+        "description": "Global marketplace for veterinary apparatus, grooming tools, terrarium lighting, and pet diets."
+      },
+      "chewy": {
+        "id": "chewy",
+        "name": "Chewy Affiliate Program",
+        "network": "Partnerize",
+        "partnerId": "pawpulse",
+        "status": "Ready to Apply",
+        "applyUrl": "https://www.chewy.com/app/content/affiliate",
+        "commission": "$15.00 - $20.00 bounty per new customer order",
+        "cookie": "15 days",
+        "description": "Leading US pet pharmacy, prescription diets, and specialized veterinary supplies."
+      },
+      "lemonade": {
+        "id": "lemonade",
+        "name": "Lemonade Pet Insurance",
+        "network": "Impact.com",
+        "partnerId": "pawpulse_pet",
+        "status": "Ready to Apply",
+        "applyUrl": "https://www.lemonade.com/affiliates",
+        "commission": "$25.00 - $40.00 per qualified insurance quote",
+        "cookie": "30 days",
+        "description": "Top-rated digital accident & illness pet health insurance with fast digital claims."
+      },
+      "embark": {
+        "id": "embark",
+        "name": "Embark Veterinary DNA",
+        "network": "Impact.com",
+        "partnerId": "pawpulse",
+        "status": "Ready to Apply",
+        "applyUrl": "https://embarkvet.com/affiliates/",
+        "commission": "Up to 10% commission on breed & health DNA kits ($15 - $25/sale)",
+        "cookie": "30 days",
+        "description": "Premier canine genetic screening kit developed in partnership with Cornell University College of Veterinary Medicine."
+      },
+      "petco": {
+        "id": "petco",
+        "name": "Petco Partner Program",
+        "network": "CJ Affiliate",
+        "partnerId": "pawpulse",
+        "status": "Ready to Apply",
+        "applyUrl": "https://www.petco.com/shop/en/petcostore/c/affiliate-program",
+        "commission": "2% - 4% on supplies, habitats, aquatic equipment",
+        "cookie": "7 days",
+        "description": "Nationwide retailer with extensive reptile, bird, and freshwater aquatic supplies."
+      },
+      "justanswer": {
+        "id": "justanswer",
+        "name": "JustAnswer 24/7 Vet Telehealth",
+        "network": "Impact.com",
+        "partnerId": "pawpulse",
+        "status": "Ready to Apply",
+        "applyUrl": "https://www.justanswer.com/affiliates",
+        "commission": "$5.00 - $15.00 per online veterinary consultation lead",
+        "cookie": "30 days",
+        "description": "24/7 online veterinary assistance for immediate symptom questions and triage."
+      }
+    }
   },
   "automation": {
     "enabled": true,

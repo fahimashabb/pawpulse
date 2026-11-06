@@ -225,6 +225,15 @@ app.get('/contact', (req, res) => {
   });
 });
 
+// 6e. Affiliate Disclosures & Commercial Partner Hub (Mandatory for FTC / Google / Affiliate networks)
+app.get('/affiliates', (req, res) => {
+  res.render('affiliates', {
+    title: `Affiliate Disclosures & Commercial Partner Directory — ${config.site.name}`,
+    metaDescription: 'Explore PawPulse registered affiliate partnerships with Amazon, Chewy, Lemonade, Embark, Petco, and veterinary telehealth services.',
+    pageType: 'website'
+  });
+});
+
 // 7. Dynamic Sitemap.xml (Auto-generated for search engines)
 app.get('/sitemap.xml', (req, res) => {
   const articles = db.getAllArticles(2000, 0);
@@ -236,7 +245,11 @@ app.get('/sitemap.xml', (req, res) => {
   // Static core pages
   xml += `  <url>\n    <loc>${baseUrl}/</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>\n`;
   xml += `  <url>\n    <loc>${baseUrl}/popular</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
-  xml += `  <url>\n    <loc>${baseUrl}/about</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.5</priority>\n  </url>\n`;
+  xml += `  <url>\n    <loc>${baseUrl}/affiliates</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.7</priority>\n  </url>\n`;
+  xml += `  <url>\n    <loc>${baseUrl}/about</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.6</priority>\n  </url>\n`;
+  xml += `  <url>\n    <loc>${baseUrl}/privacy</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.5</priority>\n  </url>\n`;
+  xml += `  <url>\n    <loc>${baseUrl}/terms</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.5</priority>\n  </url>\n`;
+  xml += `  <url>\n    <loc>${baseUrl}/contact</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.5</priority>\n  </url>\n`;
 
   // Categories
   config.categories.forEach(cat => {
@@ -572,6 +585,65 @@ app.post('/admin/automation/publish-custom', async (req, res) => {
     res.redirect(`/blog/${article.slug}`);
   } catch (err) {
     res.redirect(`/admin/automation?msg=Error:+${encodeURIComponent(err.message)}`);
+  }
+});
+
+// Admin Action: Save Affiliate IDs & Monetization Settings
+app.post('/admin/automation/save-affiliates', (req, res) => {
+  try {
+    const configPath = path.join(__dirname, 'config.json');
+    const currentConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+
+    if (!currentConfig.monetization) currentConfig.monetization = {};
+    if (!currentConfig.monetization.affiliates) currentConfig.monetization.affiliates = {};
+
+    const {
+      amazonTag,
+      chewyPartnerId,
+      lemonadePartnerId,
+      embarkPartnerId,
+      petcoPartnerId,
+      justanswerPartnerId,
+      adsenseClientId,
+      demoMode
+    } = req.body;
+
+    if (amazonTag) {
+      currentConfig.monetization.affiliateTag = amazonTag.trim();
+      if (currentConfig.monetization.affiliates.amazon) {
+        currentConfig.monetization.affiliates.amazon.tag = amazonTag.trim();
+        currentConfig.monetization.affiliates.amazon.status = 'Active (Configured)';
+      }
+    }
+    if (chewyPartnerId && currentConfig.monetization.affiliates.chewy) {
+      currentConfig.monetization.affiliates.chewy.partnerId = chewyPartnerId.trim();
+      currentConfig.monetization.affiliates.chewy.status = 'Active (Configured)';
+    }
+    if (lemonadePartnerId && currentConfig.monetization.affiliates.lemonade) {
+      currentConfig.monetization.affiliates.lemonade.partnerId = lemonadePartnerId.trim();
+      currentConfig.monetization.affiliates.lemonade.status = 'Active (Configured)';
+    }
+    if (embarkPartnerId && currentConfig.monetization.affiliates.embark) {
+      currentConfig.monetization.affiliates.embark.partnerId = embarkPartnerId.trim();
+      currentConfig.monetization.affiliates.embark.status = 'Active (Configured)';
+    }
+    if (petcoPartnerId && currentConfig.monetization.affiliates.petco) {
+      currentConfig.monetization.affiliates.petco.partnerId = petcoPartnerId.trim();
+      currentConfig.monetization.affiliates.petco.status = 'Active (Configured)';
+    }
+    if (justanswerPartnerId && currentConfig.monetization.affiliates.justanswer) {
+      currentConfig.monetization.affiliates.justanswer.partnerId = justanswerPartnerId.trim();
+      currentConfig.monetization.affiliates.justanswer.status = 'Active (Configured)';
+    }
+    if (adsenseClientId) {
+      currentConfig.monetization.adsenseClientId = adsenseClientId.trim();
+    }
+    currentConfig.monetization.demoMode = (demoMode === '1' || demoMode === 'true' || demoMode === true || demoMode === 'on');
+
+    fs.writeFileSync(configPath, JSON.stringify(currentConfig, null, 2), 'utf8');
+    res.redirect('/admin/automation?msg=Affiliate+tracking+IDs+and+monetization+settings+successfully+saved!');
+  } catch (err) {
+    res.redirect(`/admin/automation?msg=Error+saving+affiliate+settings:+${encodeURIComponent(err.message)}`);
   }
 });
 
