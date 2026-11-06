@@ -206,8 +206,8 @@ async function exportStaticSite() {
   }
   console.log(`✓ Rendered all ${config.categories.length} category hubs`);
 
-  // 8. Render All 260+ Blog Articles (/blog/<slug>/index.html)
-  const allArticles = db.getAllArticles(2000, 0);
+  // 8. Render All Blog Articles (/blog/<slug>/index.html)
+  const allArticles = db.getAllArticles(100000, 0);
   for (const art of allArticles) {
     const cat = config.categories.find(c => c.slug === art.category_slug) || {
       name: art.category_slug,

@@ -16,10 +16,10 @@ let lastPublishedTime = null;
 function startScheduler() {
   if (isRunning) return;
   isRunning = true;
-  console.log('[Scheduler] Daily 50-post automated publishing engine started.');
+  console.log(`[Scheduler] Daily 200-post automated publishing engine started (every ~${config.automation.intervalMinutes || 7} mins).`);
 
-  // Interval in milliseconds (config.automation.intervalMinutes, default 28 minutes)
-  const intervalMs = (config.automation.intervalMinutes || 28) * 60 * 1000;
+  // Interval in milliseconds (config.automation.intervalMinutes, default 7 minutes for 200/day)
+  const intervalMs = (config.automation.intervalMinutes || 7) * 60 * 1000;
 
   intervalId = setInterval(async () => {
     try {

@@ -24,7 +24,7 @@
         Automation & Publishing Control Center
       </h1>
       <p class="text-xs text-stone-500 mt-1">
-        Autonomous pipeline generating, researching, and publishing 50+ SEO-optimized pet blogs per day.
+        Autonomous pipeline generating, researching, and publishing 200+ SEO-optimized pet blogs per day.
       </p>
     </div>
 
@@ -33,7 +33,7 @@
       <form action="/admin/automation/toggle-scheduler" method="POST">
         <button type="submit" class="px-4 py-2.5 rounded-xl font-bold text-xs transition flex items-center gap-2 <%= status.isRunning ? 'bg-amber-100 hover:bg-amber-200 text-amber-900' : 'bg-emerald-600 hover:bg-emerald-700 text-white' %>">
           <span><%= status.isRunning ? '⏸️' : '▶️' %></span>
-          <span><%= status.isRunning ? 'Pause 50/Day Automation' : 'Resume 50/Day Automation' %></span>
+          <span><%= status.isRunning ? 'Pause 200/Day Automation' : 'Resume 200/Day Automation' %></span>
         </button>
       </form>
     </div>
@@ -82,13 +82,13 @@
           <h3 class="text-lg font-extrabold text-stone-900 m-0">Instant Batch Publisher</h3>
         </div>
         <p class="text-xs text-stone-500 leading-relaxed mb-4">
-          Need to publish 50 articles immediately? Click the button below to initiate full research, SEO schema generation, and publication across cats, dogs, reptiles, birds, snakes, and small pets.
+          Need to publish 200 articles immediately? Click the button below to initiate full research, SEO schema generation, and publication across cats, dogs, reptiles, birds, snakes, and small pets.
         </p>
 
-        <form action="/admin/automation/publish-batch" method="POST" onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').innerText='Generating 50 Articles... Please wait ~10s';">
-          <input type="hidden" name="count" value="50" />
+        <form action="/admin/automation/publish-batch" method="POST" onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').innerText='Generating 200 Articles... Please wait ~15s';">
+          <input type="hidden" name="count" value="200" />
           <button type="submit" class="w-full py-3.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm rounded-xl transition shadow-md flex items-center justify-center gap-2">
-            <span>🚀 Publish Batch of 50 Articles Now</span>
+            <span>🚀 Publish Batch of 200 Articles Now</span>
           </button>
         </form>
       </div>

@@ -7,8 +7,8 @@
 const { publishBatch } = require('../services/article-generator');
 const { getArticleCount, checkpoint } = require('../database/db');
 
-// Parse --count argument, default to 50
-let count = 50;
+// Parse --count argument, default to 200
+let count = 200;
 process.argv.forEach(arg => {
   if (arg.startsWith('--count=')) {
     const val = parseInt(arg.split('=')[1], 10);

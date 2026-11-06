@@ -78,8 +78,8 @@
   },
   "automation": {
     "enabled": true,
-    "postsPerDay": 50,
-    "intervalMinutes": 28,
+    "postsPerDay": 200,
+    "intervalMinutes": 7,
     "lastRun": null,
     "autoPublish": true
   }
