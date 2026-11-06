@@ -7,6 +7,10 @@
   <title><%= title %></title>
   <meta name="description" content="<%= metaDescription %>">
   <link rel="canonical" href="<%= config.site.url %><%= currentPath %>">
+  <link rel="icon" type="image/svg+xml" href="<%= baseUrl %>/favicon.svg">
+  <link rel="manifest" href="<%= baseUrl %>/manifest.json">
+  <link rel="alternate" type="application/rss+xml" title="<%= config.site.name %> RSS Feed" href="<%= baseUrl %>/rss.xml">
+  <link rel="alternate" type="application/feed+json" title="<%= config.site.name %> JSON Feed" href="<%= baseUrl %>/feed.json">
   
   <!-- OpenGraph / Social Meta Tags -->
   <meta property="og:site_name" content="<%= config.site.name %>">

@@ -342,8 +342,8 @@ async function exportStaticSite() {
   sitemapXml += `</urlset>`;
   fs.writeFileSync(path.join(DIST_DIR, 'sitemap.xml'), sitemapXml);
 
-  // 10. Generate Robots.txt in /dist
-  const robotsTxt = `User-agent: *\nAllow: /\n\nSitemap: ${config.site.url}/sitemap.xml\n`;
+  // 10. Generate Robots.txt in /dist (Explicitly allowing Googlebot & AdSense Mediapartners-Google)
+  const robotsTxt = `User-agent: *\nAllow: /\n\nUser-agent: Googlebot\nAllow: /\n\nUser-agent: Mediapartners-Google\nAllow: /\n\nUser-agent: Bingbot\nAllow: /\n\nSitemap: ${config.site.url}/sitemap.xml\n`;
   fs.writeFileSync(path.join(DIST_DIR, 'robots.txt'), robotsTxt);
 
   // 11. Generate RSS.xml in /dist

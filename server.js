@@ -352,6 +352,15 @@ app.get('/robots.txt', (req, res) => {
 Allow: /
 Disallow: /admin/
 
+User-agent: Googlebot
+Allow: /
+
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
 Sitemap: ${config.site.url}/sitemap.xml
 `
   );
