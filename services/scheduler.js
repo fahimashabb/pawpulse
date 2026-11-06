@@ -5,7 +5,7 @@
  */
 
 const { generateAndPublishSingleArticle, publishBatch } = require('./article-generator');
-const { getArticleCount } = require('../database/db');
+const { getArticleCount, checkpoint } = require('../database/db');
 const config = require('../config.json');
 
 let intervalId = null;
@@ -27,6 +27,11 @@ function startScheduler() {
       const article = await generateAndPublishSingleArticle();
       publishedToday++;
       lastPublishedTime = new Date().toISOString();
+      try {
+        checkpoint();
+      } catch (cpErr) {
+        console.warn('[Scheduler] Checkpoint non-fatal notice:', cpErr.message);
+      }
       console.log(`[Scheduler] Live Published: "${article.title}" | Total Today: ${publishedToday}`);
     } catch (err) {
       console.error('[Scheduler] Error during scheduled publishing:', err);
@@ -46,8 +51,8 @@ function stopScheduler() {
 function getSchedulerStatus() {
   return {
     isRunning,
-    intervalMinutes: config.automation.intervalMinutes || 28,
-    targetPostsPerDay: config.automation.postsPerDay || 50,
+    intervalMinutes: config.automation.intervalMinutes || 7,
+    targetPostsPerDay: config.automation.postsPerDay || 200,
     publishedToday,
     lastPublishedTime,
     totalArticlesInDb: getArticleCount()
