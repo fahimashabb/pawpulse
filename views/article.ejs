@@ -85,18 +85,21 @@
         </div>
         
         <!-- Social Share Pills (Native Web Share & Instant Copy) -->
-        <div class="flex items-center gap-1.5">
+        <div class="flex items-center gap-1.5 flex-wrap">
           <span class="text-[11px] font-bold text-stone-500 hidden sm:inline">Share:</span>
-          <button data-share-action="native" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition shadow-xs">
-            <span>🚀</span> <span class="hidden sm:inline">Share</span>
+          <button data-share-action="pinterest" title="Pin on Pinterest (High Viral Reach)" class="p-1.5 px-2.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition shadow-xs flex items-center gap-1">
+            <span>📌</span> <span class="hidden md:inline">Pin</span>
           </button>
-          <button data-share-action="twitter" title="Share on X / Twitter" class="p-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold transition">
+          <button data-share-action="reddit" title="Share to Reddit Communities" class="p-1.5 px-2.5 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold transition shadow-xs flex items-center gap-1">
+            <span>🔴</span> <span class="hidden md:inline">Reddit</span>
+          </button>
+          <button data-share-action="twitter" title="Share on X / Twitter" class="p-1.5 px-2 rounded-lg bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold transition">
             𝕏
           </button>
-          <button data-share-action="whatsapp" title="Share on WhatsApp" class="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-bold transition">
+          <button data-share-action="whatsapp" title="Share on WhatsApp" class="p-1.5 px-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition">
             💬
           </button>
-          <button data-share-action="native" title="Copy Link" class="p-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition">
+          <button data-share-action="native" title="Copy Article Link" class="p-1.5 px-2 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold transition">
             📋
           </button>
         </div>

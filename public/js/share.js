@@ -88,6 +88,11 @@
       case 'reddit':
         targetUrl = `https://reddit.com/submit?url=${url}&title=${title}`;
         break;
+      case 'pinterest': {
+        const media = encodeURIComponent(document.querySelector('meta[property="og:image"]')?.content || '');
+        targetUrl = `https://pinterest.com/pin/create/button/?url=${url}&media=${media}&description=${title}`;
+        break;
+      }
       default:
         window.pawPulseShare({ url: customUrl, title: customTitle });
         return;
