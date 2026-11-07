@@ -81,12 +81,40 @@ async function exportStaticSite() {
 
   let fileCount = 0;
 
-  // 2. Render Homepage (index.html)
-  const featured = db.getFeaturedArticles(5);
-  const heroMain = featured[0] || null;
-  const heroSub = featured.slice(1, 5);
-  const recentArticles = db.getAllArticles(12, 0);
-  const popularArticles = db.getPopularArticles(6);
+  // 2. Render Homepage (index.html) - Zero duplicate articles across blocks
+  const allPopularForPages = db.getPopularArticles(50);
+  const allLatestForPages = db.getAllArticles(100, 0);
+
+  const homeUsedSlugs = new Set();
+  const heroMain = allPopularForPages[0] || allLatestForPages[0] || null;
+  if (heroMain) homeUsedSlugs.add(heroMain.slug);
+
+  const heroSub = [];
+  for (const a of allPopularForPages.slice(1)) {
+    if (!homeUsedSlugs.has(a.slug)) {
+      heroSub.push(a);
+      homeUsedSlugs.add(a.slug);
+      if (heroSub.length >= 4) break;
+    }
+  }
+
+  const recentArticles = [];
+  for (const a of allLatestForPages) {
+    if (!homeUsedSlugs.has(a.slug)) {
+      recentArticles.push(a);
+      homeUsedSlugs.add(a.slug);
+      if (recentArticles.length >= 12) break;
+    }
+  }
+
+  const popularArticles = [];
+  for (const a of allPopularForPages) {
+    if (!homeUsedSlugs.has(a.slug)) {
+      popularArticles.push(a);
+      homeUsedSlugs.add(a.slug);
+      if (popularArticles.length >= 6) break;
+    }
+  }
   const totalArticles = db.getArticleCount();
 
   const homeHtml = await renderTemplate('index', {
@@ -254,6 +282,9 @@ async function exportStaticSite() {
   for (const cat of config.categories) {
     const articles = db.getArticlesByCategory(cat.slug, 1000, 0);
     const totalCount = db.getCategoryArticleCount(cat.slug);
+    const catPageSlugs = new Set(articles.map(a => a.slug));
+    const catPopular = allPopularForPages.filter(a => !catPageSlugs.has(a.slug)).slice(0, 6);
+
     const catHtml = await renderTemplate('category', {
       title: `${cat.name} Care & Behavioral Guides — ${config.site.name}`,
       metaDescription: cat.description,
@@ -262,7 +293,7 @@ async function exportStaticSite() {
       currentPage: 1,
       totalPages: 1,
       totalCount,
-      popularArticles,
+      popularArticles: catPopular.length >= 4 ? catPopular : popularArticles,
       pageType: 'collection',
       currentPath: `/category/${cat.slug}`
     });
@@ -295,6 +326,8 @@ async function exportStaticSite() {
       { name: `${art.pet_type} Clinical Care & Wellness Kit`, description: art.meta_description, image: art.featured_image }
     ], config, `${config.site.url}/blog/${art.slug}`);
     const relatedArticles = db.getRelatedArticles(art.category_slug, art.slug, 3);
+    const usedSlugsOnArt = new Set([art.slug, ...relatedArticles.map(r => r.slug)]);
+    const artPopular = allPopularForPages.filter(p => !usedSlugsOnArt.has(p.slug)).slice(0, 6);
 
     const artHtml = await renderTemplate('article', {
       title: `${art.title} — ${config.site.name}`,
@@ -308,7 +341,7 @@ async function exportStaticSite() {
       breadcrumbSchema,
       productSchema,
       relatedArticles,
-      popularArticles,
+      popularArticles: artPopular.length >= 4 ? artPopular : popularArticles,
       pageType: 'article',
       currentPath: `/blog/${art.slug}`
     });

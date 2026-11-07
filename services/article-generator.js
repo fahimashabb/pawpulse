@@ -9,6 +9,7 @@ const config = require('../config.json');
 const { insertArticle, getArticleBySlug, logPublishing, db } = require('../database/db');
 const { generateSlug, calculateReadingTime } = require('./seo-helper');
 const { resolveProductAffiliate } = require('./affiliate-helper');
+const { getUniquePhoto } = require('./photo-manager');
 
 // Lazy-loaded Google Gen AI Client
 let aiClient = null;
@@ -484,21 +485,15 @@ const SPECIES_CATALOG = [
 // ============================================================================
 // 2. UNMATCHED PHOTO GENERATOR WITH DYNAMIC CROPPING & UNIQUE PROCESSING
 // ============================================================================
-const photoUsageTracker = new Map();
-
-function getUnmatchedPhoto(species) {
-  const photoList = species.photos && species.photos.length > 0 ? species.photos : ['photo-1548199973-03cce0bbc87b'];
-  
-  // Track photo rotation per species to avoid repeating consecutive images
-  let lastIndex = photoUsageTracker.get(species.name) || 0;
-  let nextIndex = (lastIndex + 1) % photoList.length;
-  photoUsageTracker.set(species.name, nextIndex);
-  
-  const basePhotoId = photoList[nextIndex];
-  
-  // Add unique crop, entropy, contrast, and quality parameters so every single image URL is distinct
-  const hash = Math.floor(Math.random() * 100000).toString(36);
-  return `https://images.unsplash.com/${basePhotoId}?auto=format&fit=crop&w=1200&h=800&q=85&crop=faces,entropy&v=${hash}`;
+function getUnmatchedPhoto(species, role = 'featured', slug = '') {
+  try {
+    return getUniquePhoto(db, species.category, slug, role);
+  } catch (err) {
+    const photoList = species.photos && species.photos.length > 0 ? species.photos : ['photo-1548199973-03cce0bbc87b'];
+    const basePhotoId = photoList[Math.floor(Math.random() * photoList.length)];
+    const hash = Math.floor(Math.random() * 1000000).toString(36);
+    return `https://images.unsplash.com/${basePhotoId}?auto=format&fit=crop&w=1200&h=800&q=85&crop=faces,entropy&v=${hash}`;
+  }
 }
 
 // ============================================================================
@@ -957,8 +952,8 @@ async function generateAndPublishSingleArticle(customPrompt = null, options = {}
   }
 
   // 3. Select Unique Unmatched Photo
-  const featuredImage = getUnmatchedPhoto(species);
-  const secondaryImage = getUnmatchedPhoto(species);
+  const featuredImage = getUnmatchedPhoto(species, 'featured', slug);
+  const secondaryImage = getUnmatchedPhoto(species, 'secondary', slug);
 
   const products = getTopicProducts(species, archetype, contentData);
   let resolvedTypeKey = 'action';
